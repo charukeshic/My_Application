@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home_icon"
+            android:title="Home" />
+    </group>
+
+        <item android:title="Me">
+            <menu>
+
+                <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/profile_icon"
+                    android:title="Profile" />
+                <item
+                    android:id="@+id/nav_favourites"
+                    android:icon="@drawable/favorite_icon"
+                    android:title="Favourites" />
+                <item
+                    android:id="@+id/nav_order_history"
+                    android:icon="@drawable/history_icon"
+                    android:title="Order History" />
+                <item
+                    android:id="@+id/nav_orders"
+                    android:icon="@drawable/shopping_cart_icon"
+                    android:title="Active Orders" />
+                <item
+                    android:id="@+id/nav_events"
+                    android:icon="@drawable/event_icon"
+                    android:title="My Events" />
+
+                </group>
+
+            </menu>
+        </item>
+
+        <item android:title="Account">
+            <menu>
+                <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/settings_icon"
+                    android:title="Settings" />
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/logout_icon"
+                    android:title="Logout" />
+
+                </group>
+
+            </menu>
+        </item>
+
+
+        <item android:title="Communicate">
+            <menu>
+
+                <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_share"
+                    android:icon="@drawable/settings_icon"
+                    android:title="Share" />
+                <item
+                    android:id="@+id/nav_contact"
+                    android:icon="@drawable/logout_icon"
+                    android:title="Contact Us" />
+                </group>
+
+            </menu>
+        </item>
+
+</menu>
