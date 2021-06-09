@@ -11,4 +11,42 @@
     <string name="login_failed">"Login failed"</string>
     <string name="nav_drawer_open">Open navigation drawer</string>
     <string name="nav_drawer_close">Close navigation drawer</string>
+
+//Store details for recycler view
+    <string name="title_1">Grocery 1</string>
+    <string name="title_2">Grocery 2</string>
+    <string name="title_3">Grocery 3</string>
+    <string name="title_4">Grocery 4</string>
+    <string name="title_5">Grocery 5</string>
+
+    <string name="description_1">Welcome to visit us! 1</string>
+    <string name="description_2">Welcome to visit us! 2</string>
+    <string name="description_3">Welcome to visit us! 3</string>
+    <string name="description_4">Welcome to visit us! 4</string>
+    <string name="description_5">Welcome to visit us! 5</string>
+
+    <string name="details_1">Promotion : buy 1 free 1</string>
+    <string name="details_2">Promotion : buy 1 free 1</string>
+    <string name="details_3">Promotion : buy 1 free 1</string>
+    <string name="details_4">Promotion : buy 1 free 1</string>
+    <string name="details_5">Promotion : buy 1 free 1</string>
+
+    <string name="opHour_1">9am - 8pm</string>
+    <string name="opHour_2">9am - 8pm</string>
+    <string name="opHour_3">9am - 8pm</string>
+    <string name="opHour_4">9am - 8pm</string>
+    <string name="opHour_5">9am - 8pm</string>
+
+    <string name="addr_1">KFC</string>
+    <string name="addr_2">Orchard Rd</string>
+    <string name="addr_3">Orchard Rd</string>
+    <string name="addr_4">Orchard Rd</string>
+    <string name="addr_5">Orchard Rd</string>
+
+    <string name="contact_1">011–31074570</string>
+    <string name="contact_2">03–4598734</string>
+    <string name="contact_3">03–4598734</string>
+    <string name="contact_4">03–4598734</string>
+    <string name="contact_5">03–4598734</string>
+
 </resources>

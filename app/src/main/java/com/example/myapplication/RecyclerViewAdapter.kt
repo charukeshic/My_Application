@@ -56,8 +56,7 @@ class RecyclerViewAdapter(private val storeList : ArrayList<Store>) : RecyclerVi
 
         holder.textTitle.text = currentItem.itemTitle
         holder.textDesc.text = currentItem.itemDetails
-        currentItem?.itemImage?.let { holder.image.setImageResource(it) }
-
+        holder.image.setImageResource(currentItem.itemImage)
 
 
     }

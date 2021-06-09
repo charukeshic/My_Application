@@ -103,7 +103,7 @@
                             app:layout_constraintTop_toBottomOf="@id/item_title" />
 
                         <TextView
-                            android:id="@+id/item_details1"
+                            android:id="@+id/item_opHour"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
@@ -115,7 +115,7 @@
                             app:layout_constraintTop_toBottomOf="@id/item_details" />
 
                         <TextView
-                            android:id="@+id/item_details2"
+                            android:id="@+id/item_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
@@ -124,10 +124,10 @@
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/item_details1" />
+                            app:layout_constraintTop_toBottomOf="@id/item_opHour" />
 
                         <TextView
-                            android:id="@+id/item_details3"
+                            android:id="@+id/item_contact"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
@@ -136,10 +136,21 @@
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/item_details2" />
+                            app:layout_constraintTop_toBottomOf="@id/item_address" />
 
                         <TextView
                             android:id="@+id/item_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="Description"
+                            android:textSize="20dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/item_contact" />
+
+                        <TextView
+                            android:id="@+id/item_transport"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
@@ -147,7 +158,7 @@
                             android:textSize="20dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/item_details" />
+                            app:layout_constraintTop_toBottomOf="@id/item_description" />
 
                         <androidx.cardview.widget.CardView
 

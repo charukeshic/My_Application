@@ -17,7 +17,10 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -27,10 +30,17 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
     lateinit var navigationView: NavigationView
     lateinit var menuIcon: ImageView
 
-    private lateinit var dbref: DrawerLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var storeArrayList: ArrayList<Store>
     private lateinit var tempArrayList: ArrayList<Store>
+
+    lateinit var imageId : Array<Int>
+    lateinit var title : Array<String>
+    lateinit var details : Array<String>
+    lateinit var description : Array<String>
+    lateinit var opHour : Array<String>
+    lateinit var address : Array<String>
+    lateinit var contactNum : Array<String>
 
     lateinit var search_toolbar: Toolbar
 
@@ -52,20 +62,76 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
         recyclerView.setHasFixedSize(true)
 
         storeArrayList = arrayListOf<Store>()
+
         tempArrayList = arrayListOf<Store>()
 
 
-        var store1 = Store("Grocery 1", "Promotion : buy 1 free 1", R.drawable.navbar_bg, "Welcome to visit us! 1")
-        var store2 = Store("Grocery 2", "Promotion : buy 1 free 1", R.drawable.navbar_bg, "Welcome to visit us! 2")
-        var store3 = Store("Grocery 3", "Promotion : buy 1 free 1", R.drawable.navbar_bg, "Welcome to visit us! 3")
-        var store4 = Store("Grocery 4", "Promotion : buy 1 free 1", R.drawable.navbar_bg, "Welcome to visit us! 4")
-        var store5 = Store("Grocery 5", "Promotion : buy 1 free 1", R.drawable.navbar_bg, "Welcome to visit us! 5")
+        imageId = arrayOf(
+            R.drawable.navbar_bg,
+            R.drawable.navbar_bg,
+            R.drawable.navbar_bg,
+            R.drawable.navbar_bg,
+            R.drawable.navbar_bg
+        )
 
-        storeArrayList.add(store1)
-        storeArrayList.add(store2)
-        storeArrayList.add(store3)
-        storeArrayList.add(store4)
-        storeArrayList.add(store5)
+        title = arrayOf(
+            getString(R.string.title_1),
+            getString(R.string.title_2),
+            getString(R.string.title_3),
+            getString(R.string.title_4),
+            getString(R.string.title_5)
+        )
+
+        details = arrayOf(
+            getString(R.string.details_1),
+            getString(R.string.details_2),
+            getString(R.string.details_3),
+            getString(R.string.details_4),
+            getString(R.string.details_5)
+        )
+
+        description = arrayOf(
+            getString(R.string.description_1),
+            getString(R.string.description_2),
+            getString(R.string.description_3),
+            getString(R.string.description_4),
+            getString(R.string.description_5)
+        )
+
+        opHour = arrayOf(
+            getString(R.string.opHour_1),
+            getString(R.string.opHour_2),
+            getString(R.string.opHour_3),
+            getString(R.string.opHour_4),
+            getString(R.string.opHour_5)
+        )
+
+        address = arrayOf(
+            getString(R.string.addr_1),
+            getString(R.string.addr_2),
+            getString(R.string.addr_3),
+            getString(R.string.addr_4),
+            getString(R.string.addr_5)
+        )
+
+        contactNum = arrayOf(
+            getString(R.string.contact_1),
+            getString(R.string.contact_2),
+            getString(R.string.contact_3),
+            getString(R.string.contact_4),
+            getString(R.string.contact_5)
+        )
+
+
+        for (i in imageId.indices) {
+
+            val store = Store(title[i],details[i],imageId[i],description[i],opHour[i],address[i],contactNum[i])
+            storeArrayList.add(store)
+
+        }
+
+        recyclerView.adapter = RecyclerViewAdapter(storeArrayList)
+
 
         tempArrayList.addAll(storeArrayList)
 
@@ -73,6 +139,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val adapter = RecyclerViewAdapter(tempArrayList)
 
         recyclerView.adapter = adapter
+
 
         adapter.setOnItemClickListener(object : RecyclerViewAdapter.onItemClickListener {
 
@@ -83,6 +150,9 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 intent.putExtra("image", storeArrayList[position].itemImage)
                 intent.putExtra("details", storeArrayList[position].itemDetails)
                 intent.putExtra("description", storeArrayList[position].itemDescription)
+                intent.putExtra("operation", storeArrayList[position].opHour)
+                intent.putExtra("address", storeArrayList[position].address)
+                intent.putExtra("contact", storeArrayList[position].contactNum)
                 startActivity(intent)
 
             }
@@ -119,11 +189,14 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 if (searchText.isNotEmpty()) {
                     storeArrayList.forEach {
 
-                        if (it.itemTitle!!.toLowerCase(Locale.getDefault()).contains(searchText)) {
+                        if (it.itemTitle!!.toLowerCase(Locale.getDefault()).contains(searchText) ||
+                            it.itemDetails!!.toLowerCase(Locale.getDefault()).contains(searchText) ||
+                            it.itemDescription!!.toLowerCase(Locale.getDefault()).contains(searchText) ) {
 
                             tempArrayList.add(it)
 
                         }
+
 
                     }
 

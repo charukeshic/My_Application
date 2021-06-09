@@ -1,11 +1,13 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -19,6 +21,11 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var menuIcon: ImageView
+
+    lateinit var callBtn: Button
+    lateinit var bookBtn: Button
+    lateinit var navigateBtn: Button
+    lateinit var grabBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,17 +41,32 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val storePic : ImageView = findViewById(R.id.item_image)
         val storeDetails : TextView = findViewById(R.id.item_details)
         val storeDesc : TextView = findViewById(R.id.item_description)
+        val storeOpHour : TextView = findViewById(R.id.item_opHour)
+        val storeAddress : TextView = findViewById(R.id.item_address)
+        val storeContact : TextView = findViewById(R.id.item_contact)
+
+        callBtn = findViewById(R.id.call_btn)
+        bookBtn = findViewById(R.id.book_btn)
+        navigateBtn = findViewById(R.id.nav_btn)
+        grabBtn = findViewById(R.id.grab_btn)
+
 
         val bundle : Bundle?= intent.extras
         val title = bundle!!.getString("title")
         val image = bundle.getInt("image")
         val details = bundle.getString("details")
         val description = bundle.getString("description")
+        val opHour = bundle.getString("operation")
+        val address = bundle.getString("address")
+        val contact = bundle.getString("contact")
 
         storeName.text = title
         storePic.setImageResource(image)
         storeDetails.text = details
         storeDesc.text = description
+        storeOpHour.text = opHour
+        storeAddress.text = address
+        storeContact.text = contact
 
         /*------------Hooks--------------*/
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -52,8 +74,27 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
         menuIcon = findViewById(R.id.menu_icon)
 
 
-
         navigationDrawer()
+
+        callBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(contact)))
+            startActivity(intent)
+        }
+
+        bookBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(contact)))
+            startActivity(intent)
+        }
+
+        navigateBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0, 0?q=$address"))
+            startActivity(intent)
+        }
+
+        grabBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0, 0?q=$address"))
+            startActivity(intent)
+        }
 
 
     }
