@@ -6,31 +6,30 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import com.example.myapplication.adapters.ViewPagerAdapter
+import com.example.myapplication.fragments.CategoryFragment
+import com.example.myapplication.fragments.RecommendationFragment
+import com.example.myapplication.fragments.StoreFragment
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 
-class OnlineShopping : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class OnlineShoppingActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    //private lateinit var dbref : DatabaseReference
-    private lateinit var mallRecyclerView: RecyclerView
-
-    //private lateinit var mallArrayList: ArrayList<Mall>
+    private lateinit var viewPager : ViewPager
+    private lateinit var tabs : TabLayout
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
@@ -43,69 +42,34 @@ class OnlineShopping : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        setContentView(R.layout.activity_online_shopping)
+        setContentView(R.layout.activity_online_shopping2)
+
+        tabs = findViewById(R.id.tabs)
+        viewPager = findViewById(R.id.viewPager)
 
         /*------------Hooks--------------*/
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
 
-        mallRecyclerView = findViewById(R.id.mallList)
-
-        fetchMall()
-
         navigationDrawer()
 
+        setUpTabs()
+
+    }
+
+    private fun setUpTabs() {
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(StoreFragment(), "Stores")
+        adapter.addFragment(CategoryFragment(), "Categories")
+        adapter.addFragment(RecommendationFragment(), "Recommended")
+        viewPager.adapter = adapter
+        tabs.setupWithViewPager(viewPager)
+
 
 
     }
 
-
-    companion object {
-        val STORE_KEY = "STORE_KEY"
-    }
-
-    private fun fetchMall() {
-
-        val ref = FirebaseDatabase.getInstance().getReference("/Store")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val adapter = GroupAdapter<ViewHolder>()
-
-                snapshot.children.forEach {
-                    val mall = it.getValue(Mall::class.java)
-                    if (mall != null) {
-                        adapter.add(MallItem(mall))
-
-                    }
-                }
-
-                adapter.setOnItemClickListener {item, view ->
-
-                    val mallItem = item as MallItem
-
-                    val intent = Intent(view.context, Products::class.java)
-                    intent.putExtra(STORE_KEY, mallItem.mall.title)
-                    startActivity(intent)
-
-                    finish()
-
-                }
-
-                mallRecyclerView.adapter = adapter
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
-
-
-
-    }
 
 
     private fun navigationDrawer() {
@@ -124,8 +88,6 @@ class OnlineShopping : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         })
 
     }
-
-
 
     override fun onBackPressed() {
 
@@ -154,42 +116,42 @@ class OnlineShopping : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         when (item.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@OnlineShopping, Homepage::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, Homepage::class.java)
                 startActivity(intent)
             }
             R.id.nav_profile -> {
-                val intent = Intent(this@OnlineShopping, Favourites::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, Favourites::class.java)
                 startActivity(intent)
             }
             R.id.nav_favourites -> {
-                val intent = Intent(this@OnlineShopping, Favourites::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, Favourites::class.java)
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@OnlineShopping, OnlineShopping::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, OnlineShopping::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@OnlineShopping, OnlineShopping::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, OnlineShopping::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {
-                val intent = Intent(this@OnlineShopping, Favourites::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, Favourites::class.java)
                 startActivity(intent)
             }
             R.id.nav_settings -> {
-                val intent = Intent(this@OnlineShopping, OnlineShopping::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, OnlineShopping::class.java)
                 startActivity(intent)
             }
             R.id.nav_logout -> {
-                val intent = Intent(this@OnlineShopping, LoginActivity::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, LoginActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_share -> {
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_contact -> {
-                val intent = Intent(this@OnlineShopping, Favourites::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, Favourites::class.java)
                 startActivity(intent)
             }
 
@@ -197,20 +159,6 @@ class OnlineShopping : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-
-}
-
-class MallItem (val mall : Mall) : Item<ViewHolder>() {
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-
-        viewHolder.itemView.findViewById<Button>(R.id.mall_name).text = mall.title
-        Picasso.get().load(mall.image).into(viewHolder.itemView.findViewById<ImageView>(R.id.mall_image))
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.store_item
     }
 
 

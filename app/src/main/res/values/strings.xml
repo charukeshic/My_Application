@@ -11,8 +11,9 @@
     <string name="login_failed">"Login failed"</string>
     <string name="nav_drawer_open">Open navigation drawer</string>
     <string name="nav_drawer_close">Close navigation drawer</string>
+    <string name="chooser_title">Grab</string>
 
-//Store details for recycler view
+    //Store details for recycler view
     <string name="title_1">Grocery 1</string>
     <string name="title_2">Grocery 2</string>
     <string name="title_3">Grocery 3</string>

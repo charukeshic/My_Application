@@ -58,7 +58,7 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         })
 
         onlineShopping.setOnClickListener(View.OnClickListener { view ->
-            val intent = Intent(this@Homepage, OnlineShopping::class.java)
+            val intent = Intent(this@Homepage, OnlineShoppingActivity::class.java)
             startActivity(intent)
             drawerLayout.closeDrawer(GravityCompat.START)
         })

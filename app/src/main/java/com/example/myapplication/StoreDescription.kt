@@ -1,9 +1,11 @@
 package com.example.myapplication
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -12,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
@@ -92,10 +95,37 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
         }
 
         grabBtn.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0, 0?q=$address"))
-            startActivity(intent)
+
+            val installed  : Boolean = appInstalledOrNot("com.grabtaxi.passenger")
+
+            if (installed) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0, 0?q=$address"))
+                startActivity(intent)
+
+
+            }
+            else {
+                Log.d("Start", "what happen to this function")
+                Toast.makeText(this, "Grab app not installed", Toast.LENGTH_SHORT)
+            }
+
         }
 
+
+    }
+
+    private fun appInstalledOrNot(url : String): Boolean {
+        val packageManager = packageManager
+        val appInstalled : Boolean
+        appInstalled = try {
+            Log.d("Start", "nvr reach this function")
+            packageManager.getPackageInfo(url, PackageManager.GET_ACTIVITIES)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            Log.d("Start", "done this function")
+            false
+        }
+        return appInstalled
 
     }
 
