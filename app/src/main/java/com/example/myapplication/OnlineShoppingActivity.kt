@@ -62,7 +62,7 @@ class OnlineShoppingActivity : AppCompatActivity(), NavigationView.OnNavigationI
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(StoreFragment(), "Stores")
         adapter.addFragment(CategoryFragment(), "Categories")
-        adapter.addFragment(RecommendationFragment(), "Recommended")
+        adapter.addFragment(RecommendationFragment(), "Highlights")
         viewPager.adapter = adapter
         tabs.setupWithViewPager(viewPager)
 

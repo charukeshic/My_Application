@@ -8,12 +8,11 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.DataSnapshot
@@ -85,7 +84,7 @@ class OnlineShopping : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
                     val mallItem = item as MallItem
 
-                    val intent = Intent(view.context, Products::class.java)
+                    val intent = Intent(view.context, StoreProducts::class.java)
                     intent.putExtra(STORE_KEY, mallItem.mall.title)
                     startActivity(intent)
 
@@ -211,6 +210,20 @@ class MallItem (val mall : Mall) : Item<ViewHolder>() {
 
     override fun getLayout(): Int {
         return R.layout.store_item
+    }
+
+
+}
+
+class CategoryItem (val category : Category) : Item<ViewHolder>() {
+    override fun bind(viewHolder: ViewHolder, position: Int) {
+
+        viewHolder.itemView.findViewById<TextView>(R.id.category_name).text = category.title
+        //Picasso.get().load(category.image).into(viewHolder.itemView.findViewById<ImageView>(R.id.mall_image))
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.category_item
     }
 
 

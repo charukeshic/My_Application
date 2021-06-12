@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".StoreNavigation" />
         <activity android:name=".StoreInsert" />
-        <activity android:name=".Products" />
+        <activity android:name=".StoreProducts" />
     </application>
 
 </manifest>

@@ -6,12 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Mall
 import com.example.myapplication.MallItem
-import com.example.myapplication.Products
+import com.example.myapplication.StoreProducts
 import com.example.myapplication.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,7 +19,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 
 class StoreFragment : Fragment() {
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +48,7 @@ class StoreFragment : Fragment() {
 
                     val mallItem = item as MallItem
 
-                    val intent = Intent(view.context, Products::class.java)
+                    val intent = Intent(view.context, StoreProducts::class.java)
                     intent.putExtra(STORE_KEY, mallItem.mall.title)
                     startActivity(intent)
 
