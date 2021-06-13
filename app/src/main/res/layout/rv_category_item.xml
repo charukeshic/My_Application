@@ -5,39 +5,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:padding="8dp">
 
 <androidx.cardview.widget.CardView
 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:cardElevation="3dp"
-    app:cardCornerRadius="8dp">
+    android:layout_width="70dp"
+    android:layout_height="120dp"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/mall_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
             android:background="@color/gray"
             android:scaleType="centerCrop"
             android:src="@drawable/grocery" />
 
         <TextView
             android:id="@+id/category_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textSize="16dp"
-            android:gravity="center|left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Dairy Products"
-            android:textColor="@color/dark_teal"
-            android:backgroundTint="#F0F0F0" />
+            android:scrollHorizontally="false"
+            android:textSize="12dp"
+            android:breakStrategy="simple"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:ellipsize="none"
+            android:textColor="@color/dark_teal" />
 
     </LinearLayout>
 

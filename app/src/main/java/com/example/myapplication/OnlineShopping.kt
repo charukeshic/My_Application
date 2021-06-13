@@ -219,7 +219,7 @@ class CategoryItem (val category : Category) : Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
 
         viewHolder.itemView.findViewById<TextView>(R.id.category_name).text = category.title
-        //Picasso.get().load(category.image).into(viewHolder.itemView.findViewById<ImageView>(R.id.mall_image))
+        Picasso.get().load(category.image).into(viewHolder.itemView.findViewById<ImageView>(R.id.mall_image))
     }
 
     override fun getLayout(): Int {

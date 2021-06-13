@@ -1,6 +1,7 @@
 package com.example.myapplication.adapters
 
 import android.content.Intent
+import android.icu.number.NumberRangeFormatter.with
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.*
+import com.squareup.picasso.Picasso
 
 class CategoryAdapter(private val categoryList : ArrayList<Category>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
@@ -40,10 +42,13 @@ class CategoryAdapter(private val categoryList : ArrayList<Category>) : Recycler
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val currentItem = categoryList[position]
+        //Picasso.get().load(category.image).into(viewHolder.itemView.findViewById<ImageView>(R.id.mall_image))
+        Picasso.get().load(currentItem.image).into(holder.categoryImage)
 
         holder.categoryName.text = currentItem.title
+        //holder.categoryImage.setImageResource(currentItem.image)
         val selected = currentItem.title
-        //holder.mallImage.setImageResource(currentItem.image)
+
 
 
     }
@@ -55,6 +60,7 @@ class CategoryAdapter(private val categoryList : ArrayList<Category>) : Recycler
         //val mallImage : ImageView = itemView.findViewById(R.id.mall_image)
         //val mallName : Button = itemView.findViewById(R.id.mall_name)
         val categoryName : TextView = itemView.findViewById(R.id.category_name)
+        val categoryImage : ImageView = itemView.findViewById(R.id.mall_image)
 
         init {
             itemView.setOnClickListener {
@@ -68,9 +74,6 @@ class CategoryAdapter(private val categoryList : ArrayList<Category>) : Recycler
 
     }
 
-    companion object {
-        var CATEGORY = "CATEGORY"
-    }
 
 
 

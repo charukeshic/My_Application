@@ -56,7 +56,7 @@ class StoreInsertDetails : AppCompatActivity() {
         }
 
         uploadBtn.setOnClickListener {
-            saveStoreToDatabase()
+            uploadImage()
         }
 
 
@@ -67,7 +67,7 @@ class StoreInsertDetails : AppCompatActivity() {
     private fun uploadImage() {
 
         var fileName = itemTitle.text.toString()
-        var imageRef = FirebaseStorage.getInstance().reference.child("images/$fileName")
+        var imageRef = FirebaseStorage.getInstance().reference.child("/category/$fileName")
 
         imageRef.putFile(ImageUri)
             .addOnSuccessListener {
@@ -85,26 +85,29 @@ class StoreInsertDetails : AppCompatActivity() {
 
     }
 
-    private fun saveStoreToDatabase() {
-        //val uid = itemDetails.text.toString()
-        val item = itemDescription.text.toString()
-        val ref = FirebaseDatabase.getInstance().getReference("Store").child("99 Sppedmart").child("categories").child("Vegetables").child("$item")
-        val ref1 = FirebaseDatabase.getInstance().getReference("Store").child("AEON").child("categories").child("Vegetables").child("$item")
-        val ref2 = FirebaseDatabase.getInstance().getReference("Store").child("Tesco").child("categories").child("Vegetables").child("$item")
-        val ref3 = FirebaseDatabase.getInstance().getReference("Store").child("Giant").child("categories").child("Vegetables").child("$item")
-        val ref4 = FirebaseDatabase.getInstance().getReference("Store").child("Cold Storage").child("categories").child("Vegetables").child("$item")
+    private fun saveStoreToDatabase(storeImageUrl : String) {
+        val uid = itemDetails.text.toString()
+        //val item = itemDescription.text.toString()
+        val ref = FirebaseDatabase.getInstance().getReference("/Store/99 Sppedmart")
+        //val ref2 = FirebaseDatabase.getInstance().getReference("/Store/Tesco").child("categoriesList").child("$uid")
+        //val ref3 = FirebaseDatabase.getInstance().getReference("/Store/Giant").child("categoriesList").child("$uid")
+        //val ref4 = FirebaseDatabase.getInstance().getReference("/Store/Cold Storage").child("categoriesList").child("$uid")
+        //val ref1 = FirebaseDatabase.getInstance().getReference("Store").child("AEON").child("categories").child("Vegetables").child("$item")
+        //val ref2 = FirebaseDatabase.getInstance().getReference("Store").child("Tesco").child("categories").child("Vegetables").child("$item")
+        //val ref3 = FirebaseDatabase.getInstance().getReference("Store").child("Giant").child("categories").child("Vegetables").child("$item")
+        //val ref4 = FirebaseDatabase.getInstance().getReference("Store").child("Cold Storage").child("categories").child("Vegetables").child("$item")
 
-        val store = StoreCategories(itemDescription.text.toString(), itemName.text.toString())
+        val store = StoreCategories(storeImageUrl)
 
         ref.setValue(store)
             .addOnSuccessListener {
                 Toast.makeText(this@StoreInsertDetails, "Store added",Toast.LENGTH_SHORT).show()
             }
 
-        ref1.setValue(store)
-        ref2.setValue(store)
-        ref3.setValue(store)
-        ref4.setValue(store)
+        //ref1.setValue(store)
+        //ref2.setValue(store)
+        //ref3.setValue(store)
+        //ref4.setValue(store)
 
     }
 
@@ -129,8 +132,8 @@ class StoreInsertDetails : AppCompatActivity() {
 
 }
 
-data class StoreCategories (var itemName : String,
-                 var itemDetails : String
+data class StoreCategories (var image : String
+
 
 )
 

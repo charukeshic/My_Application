@@ -84,7 +84,7 @@ class StoreInsert : AppCompatActivity() {
 
     private fun saveStoreToDatabase(storeImageUrl : String) {
         val uid = itemTitle.text.toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/Store/$uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Store/99 Sppedmart")
 
         val store = Mall(uid, storeImageUrl, itemDetails.text.toString())
 

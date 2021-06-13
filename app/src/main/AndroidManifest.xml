@@ -22,7 +22,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".StoreNavigation" />
-        <activity android:name=".StoreInsert" />
+        <activity android:name=".StoreInsertDetails" >
+
+        </activity>
         <activity android:name=".StoreProducts" />
     </application>
 

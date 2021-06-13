@@ -11,9 +11,11 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.CategoryAdapter
+import com.example.myapplication.adapters.ProductAdapter
 import com.google.android.gms.common.data.DataBufferRef
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
@@ -27,9 +29,13 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     lateinit var menuIcon: ImageView
 
     private lateinit var categoryRecyclerView: RecyclerView
+    private lateinit var productRecyclerView: RecyclerView
 
-    private lateinit var dbref : DatabaseReference
+    private lateinit var dbrefCategories : DatabaseReference
+    private lateinit var dbrefProducts : DatabaseReference
+    private lateinit var dbrefgetProducts : DatabaseReference
     private lateinit var categoryArrayList: ArrayList<Category>
+    private lateinit var productArrayList: ArrayList<Product>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,19 +63,69 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         categoryArrayList = arrayListOf<Category>()
         getCategory()
 
+        productRecyclerView = findViewById(R.id.product_recyclerView)
+        productRecyclerView.setHasFixedSize(true)
+        productRecyclerView.layoutManager = GridLayoutManager(this, 2)
+
+        productArrayList = arrayListOf<Product>()
+        getProducts()
 
 
+
+    }
+
+    private fun getProducts() {
+        val mallName = intent.getStringExtra(OnlineShopping.STORE_KEY)
+
+        dbrefProducts = FirebaseDatabase.getInstance().getReference("/Store").child("$mallName").
+        child("categories").child("Canned Foods")
+
+        dbrefProducts.addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if(snapshot.exists()) {
+                    for (productSnapshot in snapshot.children) {
+                        val product = productSnapshot.getValue(Product::class.java)
+
+                        productArrayList.add(product!!)
+                    }
+
+                    var adapter = ProductAdapter(productArrayList)
+                    productRecyclerView.adapter = adapter
+                    adapter.setOnItemClickListener(object : ProductAdapter.onItemClickListener{
+                        override fun onItemClick(position: Int) {
+
+                            val productName = productArrayList[position].itemName
+                            Toast.makeText(this@StoreProducts, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+
+                        }
+
+
+                    })
+
+
+                }
+
+            }
+
+
+        })
     }
 
     private fun getCategory() {
 
         val mallName = intent.getStringExtra(OnlineShopping.STORE_KEY)
 
-        dbref = FirebaseDatabase.getInstance().getReference("/Store").child("$mallName").child("categories")
+        dbrefCategories = FirebaseDatabase.getInstance().getReference("/Store").child("$mallName").child("categoriesList")
 
-        dbref.addValueEventListener(object: ValueEventListener {
+
+        dbrefCategories.addValueEventListener(object: ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
-                
+
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -77,7 +133,6 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 if(snapshot.exists()) {
                     for (categorySnapshot in snapshot.children) {
                         val category = categorySnapshot.getValue(Category::class.java)
-
                         categoryArrayList.add(category!!)
                     }
 
@@ -88,6 +143,47 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
                             val categoryName = categoryArrayList[position].title
                             Toast.makeText(this@StoreProducts, "You clicked on $categoryName", Toast.LENGTH_SHORT).show()
+
+                            productArrayList.clear()
+
+                            dbrefgetProducts = FirebaseDatabase.getInstance().getReference("/Store").child("$mallName").
+                            child("categories").child("$categoryName")
+
+                            dbrefgetProducts.addValueEventListener(object: ValueEventListener {
+                                override fun onCancelled(error: DatabaseError) {
+
+                                }
+
+                                override fun onDataChange(snapshot: DataSnapshot) {
+
+                                    if(snapshot.exists()) {
+                                        for (productSnapshot in snapshot.children) {
+                                            val product = productSnapshot.getValue(Product::class.java)
+
+                                            productArrayList.add(product!!)
+                                        }
+
+                                        var adapter = ProductAdapter(productArrayList)
+                                        productRecyclerView.adapter = adapter
+                                        adapter.setOnItemClickListener(object : ProductAdapter.onItemClickListener{
+                                            override fun onItemClick(position: Int) {
+
+                                                val productName = productArrayList[position].itemName
+                                                Toast.makeText(this@StoreProducts, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+
+                                            }
+
+
+                                        })
+
+
+                                    }
+
+                                }
+
+
+                            })
+
 
                         }
 
@@ -103,6 +199,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         })
 
     }
+
 
 
     private fun fetchCategory() {
