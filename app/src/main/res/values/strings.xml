@@ -49,5 +49,7 @@
     <string name="contact_3">03–4598734</string>
     <string name="contact_4">03–4598734</string>
     <string name="contact_5">03–4598734</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

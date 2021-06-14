@@ -1,14 +1,16 @@
 package com.example.myapplication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.CategoryAdapter
 import com.example.myapplication.adapters.ProductAdapter
-import com.google.android.gms.common.data.DataBufferRef
+import com.example.myapplication.fragments.ProductFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
@@ -76,6 +78,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     private fun getProducts() {
         val mallName = intent.getStringExtra(OnlineShopping.STORE_KEY)
+        val categoryName = ("Canned Foods").toString()
 
         dbrefProducts = FirebaseDatabase.getInstance().getReference("/Store").child("$mallName").
         child("categories").child("Canned Foods")
@@ -102,6 +105,23 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                             val productName = productArrayList[position].itemName
                             Toast.makeText(this@StoreProducts, "You clicked on $productName", Toast.LENGTH_SHORT).show()
 
+                            //productArrayList.clear()
+
+
+                            val intent = Intent(this@StoreProducts, StoreProducts2::class.java)
+                            intent.putExtra("MALL", mallName)
+                            intent.putExtra("CATEGORY", categoryName)
+                            intent.putExtra("PRODUCT", productName)
+
+                            Log.d("Store Products", "$mallName")
+                            Log.d("Store Products", "$categoryName")
+                            Log.d("Store Products", "$productName")
+
+
+                            startActivity(intent)
+
+
+
                         }
 
 
@@ -115,6 +135,8 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         })
     }
+
+
 
     private fun getCategory() {
 
@@ -170,6 +192,20 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
                                                 val productName = productArrayList[position].itemName
                                                 Toast.makeText(this@StoreProducts, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+
+                                                //productArrayList.clear()
+
+                                                val intent = Intent(this@StoreProducts, StoreProducts2::class.java)
+                                                intent.putExtra("MALL", mallName)
+                                                intent.putExtra("CATEGORY", categoryName)
+                                                intent.putExtra("PRODUCT", productName)
+
+                                                Log.d("Store Products", "$mallName")
+                                                Log.d("Store Products", "$categoryName")
+                                                Log.d("Store Products", "$productName")
+
+                                                startActivity(intent)
+
 
                                             }
 
