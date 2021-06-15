@@ -65,7 +65,7 @@ class StoreProducts2 : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         val adapter = ViewPagerAdapter2(supportFragmentManager)
         adapter.addFragment(ProductFragment(mall,category,product), "Product")
-        adapter.addFragment(ComparePriceFragment(), "Compare Price")
+        adapter.addFragment(ComparePriceFragment(mall,category,product), "Compare Price")
         viewPager.adapter = adapter
         tabs.setupWithViewPager(viewPager)
 

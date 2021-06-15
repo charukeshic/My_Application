@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -53,7 +54,7 @@ class ProductFragment(val mallName : String, val categoryName : String, val prod
 
                 if(snapshot.exists()) {
                     val product = snapshot.getValue(Product::class.java)
-
+                    product?.store = mallName.toString()
                     productArrayList.add(product!!)
 
                     var adapter = ProductAdapter(productArrayList)
@@ -63,6 +64,7 @@ class ProductFragment(val mallName : String, val categoryName : String, val prod
                         override fun onItemClick(position: Int) {
 
                             val productName = productArrayList[position].itemName
+                            Toast.makeText(this@ProductFragment.context, "You clicked on $productName", Toast.LENGTH_SHORT).show()
 
                         }
 

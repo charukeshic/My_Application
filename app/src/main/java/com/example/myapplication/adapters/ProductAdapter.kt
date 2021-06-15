@@ -43,6 +43,7 @@ class ProductAdapter(private val productList : ArrayList<Product>) : RecyclerVie
 
         holder.productName.text = currentItem.itemName
         holder.productPrice.text = currentItem.itemDetails
+        holder.storeName.text = currentItem.store
         //holder.mallImage.setImageResource(currentItem.image)
 
 
@@ -56,6 +57,7 @@ class ProductAdapter(private val productList : ArrayList<Product>) : RecyclerVie
         //val mallName : Button = itemView.findViewById(R.id.mall_name)
         val productName : TextView = itemView.findViewById(R.id.product_name)
         val productPrice : TextView = itemView.findViewById(R.id.product_price)
+        val storeName : TextView = itemView.findViewById(R.id.mall_name)
 
         init {
             itemView.setOnClickListener {

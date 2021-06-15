@@ -1,60 +1,109 @@
 package com.example.myapplication.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.Mall
+import com.example.myapplication.Product
 import com.example.myapplication.R
+import com.example.myapplication.adapters.ProductAdapter
+import com.google.firebase.database.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class ComparePriceFragment(val mallName : String, val categoryName : String, val productName : String) : Fragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ComparePriceFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ComparePriceFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var productRecyclerView: RecyclerView
+    private lateinit var dbrefStore : DatabaseReference
+    private lateinit var dbrefProducts : DatabaseReference
+    private lateinit var productArrayList: ArrayList<Product>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_compare_price, container, false)
+        val view = inflater.inflate(R.layout.fragment_compare_price, container, false)
+
+        productRecyclerView = view.findViewById(R.id.product_recyclerView)
+        productRecyclerView.setHasFixedSize(true)
+        productRecyclerView.layoutManager = GridLayoutManager(productRecyclerView.context,2)
+
+        productArrayList = arrayListOf<Product>()
+
+        dbrefStore = FirebaseDatabase.getInstance().getReference("/Store")
+
+
+        dbrefStore.addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if(snapshot.exists()) {
+                    for(store in snapshot.children) {
+                        val store = store.getValue(Mall::class.java)
+                        val storeName = store!!.title.toString()
+
+                        dbrefProducts = FirebaseDatabase.getInstance().getReference("/Store").child("$storeName").
+                        child("categories").child("$categoryName").child("$productName")
+
+                        dbrefProducts.addValueEventListener(object : ValueEventListener {
+                            override fun onCancelled(error: DatabaseError) {
+
+                            }
+
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if(snapshot.exists()) {
+
+                                    val product = snapshot.getValue(Product::class.java)
+                                    product?.store = storeName.toString()
+
+                                    if(product?.store.equals(mallName)) {
+                                        productArrayList.remove(product!!)
+                                    }
+                                    else productArrayList.add(product!!)
+
+
+                                    var adapter = ProductAdapter(productArrayList)
+                                    productRecyclerView.adapter = adapter
+                                    adapter.setOnItemClickListener(object : ProductAdapter.onItemClickListener{
+
+                                        override fun onItemClick(position: Int) {
+
+                                            val productName = productArrayList[position].itemName
+                                            Toast.makeText(this@ComparePriceFragment.context, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+
+                                        }
+
+                                    })
+
+
+                                }
+                            }
+
+                        })
+
+
+
+                    }
+
+
+
+                }
+
+            }
+
+
+        })
+
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ComparePriceFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ComparePriceFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 }

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.CategoryAdapter
 import com.example.myapplication.adapters.ProductAdapter
+import com.example.myapplication.fragments.CategoryFragment
 import com.example.myapplication.fragments.ProductFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
@@ -36,6 +37,8 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     private lateinit var dbrefCategories : DatabaseReference
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var dbrefgetProducts : DatabaseReference
+    private lateinit var dbrefcatProducts : DatabaseReference
+    private lateinit var dbrefcatStore : DatabaseReference
     private lateinit var categoryArrayList: ArrayList<Category>
     private lateinit var productArrayList: ArrayList<Product>
 
@@ -76,6 +79,81 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     }
 
+    private fun getProducts2() {
+        val categoryName = intent.getStringExtra(CategoryFragment.CATEGORY_KEY)
+
+        productRecyclerView = findViewById(R.id.product_recyclerView)
+        productRecyclerView.setHasFixedSize(true)
+        productRecyclerView.layoutManager = GridLayoutManager(productRecyclerView.context,2)
+
+        productArrayList = arrayListOf<Product>()
+
+        dbrefcatStore = FirebaseDatabase.getInstance().getReference("/Store")
+
+
+        dbrefcatStore.addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if(snapshot.exists()) {
+                    for(store in snapshot.children) {
+                        val store = store.getValue(Mall::class.java)
+                        val storeName = store!!.title.toString()
+
+                        dbrefcatProducts = FirebaseDatabase.getInstance().getReference("/Store").child("$storeName").
+                        child("categories").child("$categoryName")
+
+                        dbrefcatProducts.addValueEventListener(object : ValueEventListener {
+                            override fun onCancelled(error: DatabaseError) {
+
+                            }
+
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if(snapshot.exists()) {
+
+                                    val product = snapshot.getValue(Product::class.java)
+                                    product?.store = storeName.toString()
+
+                                    productArrayList.add(product!!)
+
+
+                                    var adapter = ProductAdapter(productArrayList)
+                                    productRecyclerView.adapter = adapter
+                                    adapter.setOnItemClickListener(object : ProductAdapter.onItemClickListener{
+
+                                        override fun onItemClick(position: Int) {
+
+                                            val productName = productArrayList[position].itemName
+                                            Toast.makeText(this@StoreProducts, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+
+                                        }
+
+                                    })
+
+
+                                }
+                            }
+
+                        })
+
+
+
+                    }
+
+
+
+                }
+
+            }
+
+
+        })
+
+    }
+
     private fun getProducts() {
         val mallName = intent.getStringExtra(OnlineShopping.STORE_KEY)
         val categoryName = ("Canned Foods").toString()
@@ -93,6 +171,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 if(snapshot.exists()) {
                     for (productSnapshot in snapshot.children) {
                         val product = productSnapshot.getValue(Product::class.java)
+                        product?.store = mallName.toString()
 
                         productArrayList.add(product!!)
                     }
@@ -134,6 +213,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
 
         })
+
     }
 
 
@@ -181,6 +261,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                                     if(snapshot.exists()) {
                                         for (productSnapshot in snapshot.children) {
                                             val product = productSnapshot.getValue(Product::class.java)
+                                            product?.store = mallName.toString()
 
                                             productArrayList.add(product!!)
                                         }

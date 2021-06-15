@@ -7,25 +7,34 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.example.myapplication.adapters.ProductAdapter
 import com.example.myapplication.adapters.ViewPagerAdapter2
+import com.example.myapplication.fragments.CategoryFragment
 import com.example.myapplication.fragments.ComparePriceFragment
 import com.example.myapplication.fragments.ProductFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.database.*
 
 class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    private lateinit var viewPager : ViewPager
-    private lateinit var tabs : TabLayout
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var menuIcon: ImageView
+
+    private lateinit var productRecyclerView: RecyclerView
+    private lateinit var productArrayList: ArrayList<Product>
+
+    private lateinit var dbrefProducts : DatabaseReference
+    private lateinit var dbrefStore : DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +45,6 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
         )
         setContentView(R.layout.activity_store_products_new)
 
-        tabs = findViewById(R.id.tabs)
-        viewPager = findViewById(R.id.viewPager)
 
         /*------------Hooks--------------*/
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -46,21 +53,96 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         navigationDrawer()
 
-        setUpTabs()
+        productRecyclerView = findViewById(R.id.product_recyclerView)
+        productRecyclerView.setHasFixedSize(true)
+        productRecyclerView.layoutManager = GridLayoutManager(this, 2)
 
+        productArrayList = arrayListOf<Product>()
+        getProducts()
 
-    }
-
-
-    private fun setUpTabs() {
-        val adapter = ViewPagerAdapter2(supportFragmentManager)
-        //adapter.addFragment(ProductFragment(mall,category,product), "Products")
-        adapter.addFragment(ComparePriceFragment(), "Compare Price")
-        viewPager.adapter = adapter
-        tabs.setupWithViewPager(viewPager)
 
 
     }
+
+
+    private fun getProducts() {
+        val categoryName = intent.getStringExtra(CategoryFragment.CATEGORY_KEY)
+
+        val title = findViewById<TextView>(R.id.tabs)
+        title.text = categoryName.toString()
+
+        productRecyclerView = findViewById(R.id.product_recyclerView)
+        productRecyclerView.setHasFixedSize(true)
+        productRecyclerView.layoutManager = GridLayoutManager(productRecyclerView.context,2)
+
+        productArrayList = arrayListOf<Product>()
+
+        dbrefStore = FirebaseDatabase.getInstance().getReference("/Store")
+
+
+        dbrefStore.addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if(snapshot.exists()) {
+                    for(store in snapshot.children) {
+                        val store = store.getValue(Mall::class.java)
+                        val storeName = store!!.title.toString()
+
+                        dbrefProducts = FirebaseDatabase.getInstance().getReference("/Store").child("$storeName").
+                        child("categories").child("$categoryName")
+
+                        dbrefProducts.addValueEventListener(object : ValueEventListener {
+                            override fun onCancelled(error: DatabaseError) {
+
+                            }
+
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if(snapshot.exists()) {
+                                    for (productSnapshot in snapshot.children) {
+                                        val product = productSnapshot.getValue(Product::class.java)
+                                        product?.store = storeName.toString()
+
+                                        productArrayList.add(product!!)
+                                    }
+
+                                    var adapter = ProductAdapter(productArrayList)
+                                    productRecyclerView.adapter = adapter
+                                    adapter.setOnItemClickListener(object : ProductAdapter.onItemClickListener{
+
+                                        override fun onItemClick(position: Int) {
+
+                                            val productName = productArrayList[position].itemName
+                                            Toast.makeText(this@StoreProductsNew, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+
+                                        }
+
+                                    })
+
+
+                                }
+                            }
+
+                        })
+
+
+
+                    }
+
+
+
+                }
+
+            }
+
+
+        })
+
+    }
+
 
     private fun navigationDrawer() {
 

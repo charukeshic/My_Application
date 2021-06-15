@@ -47,7 +47,7 @@ class CategoryFragment : Fragment() {
 
                     val categoryItem = item as CategoryItem
 
-                    val intent = Intent(view.context, StoreProducts::class.java)
+                    val intent = Intent(view.context, StoreProductsNew::class.java)
                     intent.putExtra(CATEGORY_KEY, categoryItem.category.title)
                     startActivity(intent)
 
