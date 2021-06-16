@@ -29,7 +29,7 @@ class StoreInsertDetails : AppCompatActivity() {
     lateinit var itemTitle : EditText
     lateinit var itemDetails : EditText
     lateinit var itemDescription : EditText
-    lateinit var itemName : EditText
+    lateinit var itemDet : EditText
 
     companion object {
         val IMAGE_REQUEST_CODE = 100
@@ -48,7 +48,7 @@ class StoreInsertDetails : AppCompatActivity() {
         itemTitle = findViewById(R.id.item_title)
         itemDetails = findViewById(R.id.item_details)
         itemDescription = findViewById(R.id.item_description)
-        itemName = findViewById(R.id.item_name)
+        itemDet = findViewById(R.id.item_name)
 
 
         selectBtn.setOnClickListener {
@@ -56,7 +56,10 @@ class StoreInsertDetails : AppCompatActivity() {
         }
 
         uploadBtn.setOnClickListener {
-            uploadImage()
+            saveStoreToDatabase()
+            itemTitle = findViewById(R.id.item_title)
+            itemDetails = findViewById(R.id.item_details)
+            itemDescription = findViewById(R.id.item_description)
         }
 
 
@@ -85,10 +88,12 @@ class StoreInsertDetails : AppCompatActivity() {
 
     }
 
-    private fun saveStoreToDatabase(storeImageUrl : String) {
-        val uid = itemDetails.text.toString()
-        //val item = itemDescription.text.toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/Store/99 Sppedmart")
+    private fun saveStoreToDatabase() {
+        val uid = itemTitle.text.toString()
+        val itemName = itemDetails.text.toString()
+        val originalPrice = itemDescription.text.toString()
+        val discountedPrice = itemDet.text.toString()
+        val ref = FirebaseDatabase.getInstance().getReference("/Store/Tesco").child("$uid").child("$itemName")
         //val ref2 = FirebaseDatabase.getInstance().getReference("/Store/Tesco").child("categoriesList").child("$uid")
         //val ref3 = FirebaseDatabase.getInstance().getReference("/Store/Giant").child("categoriesList").child("$uid")
         //val ref4 = FirebaseDatabase.getInstance().getReference("/Store/Cold Storage").child("categoriesList").child("$uid")
@@ -97,7 +102,7 @@ class StoreInsertDetails : AppCompatActivity() {
         //val ref3 = FirebaseDatabase.getInstance().getReference("Store").child("Giant").child("categories").child("Vegetables").child("$item")
         //val ref4 = FirebaseDatabase.getInstance().getReference("Store").child("Cold Storage").child("categories").child("Vegetables").child("$item")
 
-        val store = StoreCategories(storeImageUrl)
+        val store = StoreCategories(itemName, originalPrice, discountedPrice)
 
         ref.setValue(store)
             .addOnSuccessListener {
@@ -132,9 +137,8 @@ class StoreInsertDetails : AppCompatActivity() {
 
 }
 
-data class StoreCategories (var image : String
-
-
+data class StoreCategories (var itemName : String, var originalPrice : String,
+                            var discountedPrice : String
 )
 
 

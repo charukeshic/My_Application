@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.*
+import com.squareup.picasso.Picasso
 
 class ProductAdapter(private val productList : ArrayList<Product>) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
@@ -42,8 +43,10 @@ class ProductAdapter(private val productList : ArrayList<Product>) : RecyclerVie
         val currentItem = productList[position]
 
         holder.productName.text = currentItem.itemName
-        holder.productPrice.text = currentItem.itemDetails
+        holder.productPrice.text = currentItem.price
+        //holder.productDetails.text = currentItem.itemDetails
         holder.storeName.text = currentItem.store
+        Picasso.get().load(currentItem.image).into(holder.productImage)
         //holder.mallImage.setImageResource(currentItem.image)
 
 
@@ -53,11 +56,11 @@ class ProductAdapter(private val productList : ArrayList<Product>) : RecyclerVie
 
     class ProductViewHolder(itemView: View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
-        //val mallImage : ImageView = itemView.findViewById(R.id.mall_image)
-        //val mallName : Button = itemView.findViewById(R.id.mall_name)
         val productName : TextView = itemView.findViewById(R.id.product_name)
         val productPrice : TextView = itemView.findViewById(R.id.product_price)
+        //val productDetails : TextView = itemView.findViewById(R.id.item_details)
         val storeName : TextView = itemView.findViewById(R.id.mall_name)
+        val productImage : ImageView = itemView.findViewById(R.id.mall_image)
 
         init {
             itemView.setOnClickListener {

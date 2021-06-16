@@ -46,8 +46,6 @@ class CategoryAdapter(private val categoryList : ArrayList<Category>) : Recycler
         Picasso.get().load(currentItem.image).into(holder.categoryImage)
 
         holder.categoryName.text = currentItem.title
-        //holder.categoryImage.setImageResource(currentItem.image)
-        val selected = currentItem.title
 
 
 

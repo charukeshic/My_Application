@@ -64,7 +64,7 @@ class StoreInsert : AppCompatActivity() {
     private fun uploadImage() {
 
         var fileName = itemTitle.text.toString()
-        var imageRef = FirebaseStorage.getInstance().reference.child("images/$fileName")
+        var imageRef = FirebaseStorage.getInstance().reference.child("sales/$fileName")
 
         imageRef.putFile(ImageUri)
             .addOnSuccessListener {
@@ -72,7 +72,7 @@ class StoreInsert : AppCompatActivity() {
                 Toast.makeText(this@StoreInsert, "Succesfull",Toast.LENGTH_SHORT).show()
                 imageRef.downloadUrl.addOnSuccessListener {
                     Log.d("Save", "Succesfull : $it")
-                    saveStoreToDatabase(it.toString())
+                    //saveStoreToDatabase(it.toString())
                 }
 
             }.addOnFailureListener {
@@ -84,7 +84,7 @@ class StoreInsert : AppCompatActivity() {
 
     private fun saveStoreToDatabase(storeImageUrl : String) {
         val uid = itemTitle.text.toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/Store/99 Sppedmart")
+        val ref = FirebaseDatabase.getInstance().getReference("/Store").child("$uid")
 
         val store = Mall(uid, storeImageUrl, itemDetails.text.toString())
 

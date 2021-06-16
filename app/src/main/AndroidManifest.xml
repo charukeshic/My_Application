@@ -25,7 +25,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".StoreNavigation" />
-        <activity android:name=".StoreInsertDetails" />
+        <activity android:name=".StoreInsert">
+
+        </activity>
         <activity android:name=".StoreProducts" />
         <activity android:name=".StoreProducts2">
 

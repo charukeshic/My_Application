@@ -150,7 +150,7 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         navigationView.bringToFront()
         navigationView.setNavigationItemSelectedListener(this)
-        navigationView.setCheckedItem(R.id.nav_home)
+        //navigationView.setCheckedItem(R.id.nav_home)
 
         menuIcon.setOnClickListener(View.OnClickListener {
             if (drawerLayout.isDrawerVisible(GravityCompat.START)) {

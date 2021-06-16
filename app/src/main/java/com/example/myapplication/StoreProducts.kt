@@ -366,7 +366,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         navigationView.bringToFront()
         navigationView.setNavigationItemSelectedListener(this)
-        navigationView.setCheckedItem(R.id.nav_favourites)
+        //navigationView.setCheckedItem(R.id.nav_favourites)
 
         menuIcon.setOnClickListener(View.OnClickListener {
             if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
