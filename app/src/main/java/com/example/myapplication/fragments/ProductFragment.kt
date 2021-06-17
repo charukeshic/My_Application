@@ -1,5 +1,6 @@
 package com.example.myapplication.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.Favourites
+import com.example.myapplication.GetProductDetails
 import com.example.myapplication.Product
 import com.example.myapplication.R
 import com.example.myapplication.adapters.ProductAdapter
@@ -65,6 +68,12 @@ class ProductFragment(val mallName : String, val categoryName : String, val prod
 
                             val productName = productArrayList[position].itemName
                             Toast.makeText(this@ProductFragment.context, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+
+                            val intent = Intent(this@ProductFragment.context, GetProductDetails::class.java)
+                            intent.putExtra("MALL", mallName)
+                            intent.putExtra("CATEGORY", categoryName)
+                            intent.putExtra("PRODUCT", productName)
+                            startActivity(intent)
 
                         }
 
