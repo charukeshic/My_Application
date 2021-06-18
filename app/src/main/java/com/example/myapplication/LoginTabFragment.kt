@@ -2,13 +2,16 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 
 
 class LoginTabFragment : Fragment() {
@@ -43,8 +46,24 @@ class LoginTabFragment : Fragment() {
         login.animate().translationX(0f).alpha(1f).setDuration(800).setStartDelay(700).start()
 
         login.setOnClickListener{
-            val intent = Intent(getActivity(), Homepage::class.java)
-            getActivity()?.startActivity(intent)
+            val emailAddr = email.text.toString()
+            val passWord = pass.text.toString()
+
+            if (emailAddr.isEmpty() || passWord.isEmpty()) {
+                Toast.makeText(this@LoginTabFragment.context, "Please fill up required details", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(emailAddr,passWord)
+                .addOnCompleteListener {
+                    if (!it.isSuccessful) return@addOnCompleteListener
+                    val intent = Intent(getActivity(), Homepage::class.java)
+                    getActivity()?.startActivity(intent)
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this@LoginTabFragment.context, "Invalid email & password", Toast.LENGTH_SHORT).show()
+                }
+
         }
 
         return root

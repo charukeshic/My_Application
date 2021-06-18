@@ -17,3 +17,9 @@ data class SalesProduct (var itemName : String, var store : String, var image: S
 {
     constructor() : this("", "", "", "", "", "")
 }
+
+data class User (var email : String, var username : String, var password : String, var mobileNo : String,
+                         var address : String, var image : String)
+{
+    constructor() : this("", "", "", "", "", "")
+}

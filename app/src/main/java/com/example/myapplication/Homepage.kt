@@ -87,7 +87,7 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
                 startActivity(intent)
             }
             R.id.nav_profile -> {
-                val intent = Intent(this@Homepage, Favourites::class.java)
+                val intent = Intent(this@Homepage, ProfileActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_favourites -> {

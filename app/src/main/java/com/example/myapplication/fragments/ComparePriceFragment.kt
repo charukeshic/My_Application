@@ -78,10 +78,11 @@ class ComparePriceFragment(val mallName : String, val categoryName : String, val
                                         override fun onItemClick(position: Int) {
 
                                             val productName = productArrayList[position].itemName
+                                            val storeName = productArrayList[position].store
                                             Toast.makeText(this@ComparePriceFragment.context, "You clicked on $productName", Toast.LENGTH_SHORT).show()
 
                                             val intent = Intent(this@ComparePriceFragment.context, GetProductDetails::class.java)
-                                            intent.putExtra("MALL", mallName)
+                                            intent.putExtra("MALL", storeName)
                                             intent.putExtra("CATEGORY", categoryName)
                                             intent.putExtra("PRODUCT", productName)
                                             startActivity(intent)

@@ -67,10 +67,11 @@ class ProductFragment(val mallName : String, val categoryName : String, val prod
                         override fun onItemClick(position: Int) {
 
                             val productName = productArrayList[position].itemName
+                            val storeName = productArrayList[position].store
                             Toast.makeText(this@ProductFragment.context, "You clicked on $productName", Toast.LENGTH_SHORT).show()
 
                             val intent = Intent(this@ProductFragment.context, GetProductDetails::class.java)
-                            intent.putExtra("MALL", mallName)
+                            intent.putExtra("MALL", storeName)
                             intent.putExtra("CATEGORY", categoryName)
                             intent.putExtra("PRODUCT", productName)
                             startActivity(intent)

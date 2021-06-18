@@ -16,6 +16,7 @@
         <activity android:name=".StoreDescription" />
         <activity android:name=".Favourites" />
         <activity android:name=".Homepage" />
+        <activity android:name=".ProfileActivity"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

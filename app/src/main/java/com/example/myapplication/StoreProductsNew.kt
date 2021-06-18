@@ -116,7 +116,13 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
                                         override fun onItemClick(position: Int) {
 
                                             val productName = productArrayList[position].itemName
+                                            val mallName = productArrayList[position].store
                                             Toast.makeText(this@StoreProductsNew, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+                                            val intent = Intent(this@StoreProductsNew, GetProductDetails::class.java)
+                                            intent.putExtra("MALL", mallName)
+                                            intent.putExtra("CATEGORY", categoryName)
+                                            intent.putExtra("PRODUCT", productName)
+                                            startActivity(intent)
 
                                         }
 
