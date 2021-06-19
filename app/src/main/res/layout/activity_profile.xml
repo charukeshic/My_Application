@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:text="Select Image"
             android:textAllCaps="false"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="90dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -91,8 +91,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/user_image"/>
 
-        <EditText
-            android:id="@+id/username1"
+        <TextView
+            android:id="@+id/email1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintWidth_percent=".8"
@@ -100,6 +100,8 @@
             app:layout_constraintHorizontal_bias=".5"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
+            android:textSize="18dp"
+            android:textColor="@color/black"
             android:paddingBottom="10dp"
             android:layout_marginTop="25dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -115,10 +117,10 @@
             android:layout_marginTop="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/username1"/>
+            app:layout_constraintTop_toBottomOf="@id/email1"/>
 
         <EditText
-            android:id="@+id/email1"
+            android:id="@+id/username1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintWidth_percent=".8"
@@ -130,7 +132,7 @@
             android:layout_marginTop="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/username1"  />
+            app:layout_constraintTop_toBottomOf="@id/email1"  />
 
         <TextView
             android:id="@+id/mobile"
@@ -142,7 +144,7 @@
             android:layout_marginLeft="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/email1"/>
+            app:layout_constraintTop_toBottomOf="@id/username1"/>
 
         <EditText
             android:id="@+id/mobile1"
@@ -157,34 +159,7 @@
             android:layout_marginTop="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/email1"/>
-
-        <TextView
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Password"
-            android:textStyle="bold"
-            android:layout_marginTop="9dp"
-            android:layout_marginLeft="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mobile1"/>
-
-        <EditText
-            android:id="@+id/pass1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintWidth_percent=".8"
-            app:layout_constraintVertical_bias=".3"
-            app:layout_constraintHorizontal_bias=".5"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_marginTop="25dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mobile1"/>
+            app:layout_constraintTop_toBottomOf="@id/username1"/>
 
         <TextView
             android:id="@+id/address"
@@ -196,7 +171,7 @@
             android:layout_marginTop="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pass1"/>
+            app:layout_constraintTop_toBottomOf="@id/mobile1"/>
 
         <EditText
             android:id="@+id/address1"
@@ -211,7 +186,7 @@
             android:layout_marginTop="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pass1"/>
+            app:layout_constraintTop_toBottomOf="@id/mobile1"/>
 
         <Button
             android:id="@+id/signUpButton"
@@ -224,6 +199,7 @@
             android:textStyle="bold"
             app:backgroundTint="@color/dark_teal"
             android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
             android:textAllCaps="false"
             android:fontFamily="sans-serif-condensed-medium"
             app:layout_constraintTop_toBottomOf="@id/address1"

@@ -39,6 +39,7 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         storeNavigation = findViewById(R.id.store_navigation)
         onlineShopping = findViewById(R.id.online_shopping)
 
+
         /*------------Toolbar--------------*/
         setSupportActionBar(toolbar)
 

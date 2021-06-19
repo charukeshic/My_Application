@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import java.util.*
 
 class SignUpTabFragment : Fragment() {
 
@@ -76,11 +77,7 @@ class SignUpTabFragment : Fragment() {
             .addOnCompleteListener {
                 if (!it.isSuccessful) return@addOnCompleteListener
                 Log.d("Main", "Succesful uid: ${it.result?.user?.uid}")
-                saveUserToDatabase()
-                val intent = Intent(this@SignUpTabFragment.context, ProfileActivity::class.java)
-                intent.putExtra("mobile", mobileNo)
-                startActivity(intent)
-
+                saveUserToDatabase(it.result?.user?.uid.toString())
 
 
 
@@ -92,7 +89,7 @@ class SignUpTabFragment : Fragment() {
 
     }
 
-    private fun saveUserToDatabase() {
+    private fun saveUserToDatabase(uid : String) {
 
         val emailAddr = email.text.toString()
         val passWord = pass.text.toString()
@@ -104,7 +101,7 @@ class SignUpTabFragment : Fragment() {
         Log.d("Main", "mob: $mobileNo")
         Log.d("Main", "username: $userName")
 
-        val ref = FirebaseDatabase.getInstance().getReference("/Users/$mobileNo")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users/$uid")
 
         val address = "Not Updated".toString()
         val image = "Not Updated".toString()
@@ -114,6 +111,9 @@ class SignUpTabFragment : Fragment() {
         ref.setValue(user)
             .addOnSuccessListener {
                 Toast.makeText(this@SignUpTabFragment.context, "Account created succesfully",Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@SignUpTabFragment.context, ProfileActivity::class.java)
+                intent.putExtra("userId", uid)
+                startActivity(intent)
             }
 
     }

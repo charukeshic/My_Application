@@ -11,19 +11,18 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 
 class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,13 +34,14 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     lateinit var userImage : ImageView
     lateinit var selectPhoto : Button
 
-    lateinit var email : EditText
+    lateinit var email : TextView
     lateinit var username : EditText
     lateinit var mobile : EditText
-    lateinit var password : EditText
+    //lateinit var password : EditText
     lateinit var address : EditText
 
     private lateinit var ImageUri : Uri
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +63,10 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         email = findViewById(R.id.email1)
         username = findViewById(R.id.username1)
         mobile = findViewById(R.id.mobile1)
-        password = findViewById(R.id.pass1)
+        //password = findViewById(R.id.pass1)
         address = findViewById(R.id.address1)
+
+
 
         selectPhoto.setOnClickListener {
 
@@ -74,22 +76,21 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
 
         saveChanges.setOnClickListener {
-            //saveImage()
-
-            val intent = Intent(this@ProfileActivity, Homepage::class.java)
+            saveImage()
+            //saveChangesToDatabase()
+            update()
+            val intent = Intent(this@ProfileActivity, ProfileActivity::class.java)
             startActivity(intent)
         }
 
         //getUserData()
 
-
         navigationDrawer()
 
-    }
 
-    private fun getUserData() {
-        val mobileNum = intent.getStringExtra("mobile").toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$mobileNum")
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
 
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
@@ -98,6 +99,12 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
+                email.setText(user?.email.toString())
+                username.setText(user?.username.toString())
+                mobile.setText(user?.mobileNo.toString())
+                address.setText(user?.address.toString())
+                //password.setText(user?.password.toString())
+                Picasso.get().load(user?.image).into(userImage)
 
             }
 
@@ -107,25 +114,99 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     }
 
-    private fun saveChangesToDatabase(userImage : String) {
-        val userEmail = email.text.toString()
-        val userName = username.text.toString()
-        val passWord = password.text.toString()
-        val mobileNum = mobile.text.toString()
-        val userAddress = address.text.toString()
+    private fun getUserData() {
+        val uid = intent.getStringExtra("userId").toString()
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
 
-        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$mobileNum")
-
-        val user = User(userEmail, userName, passWord, mobileNum, userAddress, userImage)
-
-        ref.setValue(user)
-            .addOnSuccessListener {
-                Toast.makeText(this@ProfileActivity, "Store added",Toast.LENGTH_SHORT).show()
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
             }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                email.setText(user?.email.toString())
+                username.setText(user?.username.toString())
+                mobile.setText(user?.mobileNo.toString())
+                address.setText(user?.address.toString())
+                //password.setText(user?.password.toString())
+                //Picasso.get().load(user?.image).into(userImage)
+
+            }
+
+        })
+
+
     }
 
-    private fun saveImage() {
-        var fileName = username.text.toString()
+
+    private fun update() {
+
+        if (isMobileNoChanged() or isNameChanged() or isAddressChanged()) {
+            Toast.makeText(this@ProfileActivity, "Data has been updated",Toast.LENGTH_LONG).show()
+        }
+
+        else
+            Toast.makeText(this@ProfileActivity, "No changes in data",Toast.LENGTH_LONG).show()
+
+    }
+
+    private fun isNameChanged(): Boolean {
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        val userName = ref.child("username").toString()
+
+        if(!userName.equals(username.text.toString())) {
+            ref.child("username").setValue(username.text.toString())
+            return true
+        }
+        else
+            return false
+
+    }
+
+    private fun isMobileNoChanged(): Boolean {
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        val userMobile = ref.child("mobileNo").toString()
+
+
+        if(!userMobile.equals(mobile.text.toString())) {
+            ref.child("mobileNo").setValue(mobile.text.toString())
+            Log.d("Profile Activity", "mobile : ${mobile.text.toString()}")
+            return true
+        }
+        else
+            return false
+
+    }
+
+    private fun isAddressChanged(): Boolean {
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        val userAddress = ref.child("address").toString()
+
+
+        if(!userAddress.equals(address.text.toString())) {
+            ref.child("address").setValue(address.text.toString())
+            return true
+        }
+
+        else
+            return false
+
+    }
+
+
+    private fun saveImage() : Boolean {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        var fileName = uid.toString()
         var imageRef = FirebaseStorage.getInstance().reference.child("users/$fileName")
 
         imageRef.putFile(ImageUri)
@@ -134,12 +215,30 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 Toast.makeText(this@ProfileActivity, "Profile Updated",Toast.LENGTH_SHORT).show()
                 imageRef.downloadUrl.addOnSuccessListener {
                     Log.d("Save", "Successful : $it")
-                    //saveChangesToDatabase(it.toString())
+                    saveChangesToDatabase(it.toString())
+                    val imageSaved = it.toString()
+
                 }
 
             }.addOnFailureListener {
                 Toast.makeText(this@ProfileActivity, "Failed",Toast.LENGTH_SHORT).show()
             }
+
+        return true
+    }
+
+    private fun saveChangesToDatabase(image: String) {
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        val userImage = ref.child("image").toString()
+
+
+        if(!userImage.isEmpty()) {
+            ref.child("image").setValue(image)
+        }
+        else ref.child("image").setValue("Not Updated")
 
     }
 
@@ -163,7 +262,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         navigationView.bringToFront()
         navigationView.setNavigationItemSelectedListener(this)
-        navigationView.setCheckedItem(R.id.nav_favourites)
+        navigationView.setCheckedItem(R.id.nav_profile)
 
         menuIcon.setOnClickListener(View.OnClickListener {
             if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
@@ -194,7 +293,9 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         }
         else {
-            super.onBackPressed()
+            //super.onBackPressed()
+            val intent = Intent(this@ProfileActivity, Homepage::class.java)
+            startActivity(intent)
         }
 
     }
@@ -206,11 +307,39 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 val intent = Intent(this@ProfileActivity, Homepage::class.java)
                 startActivity(intent)
             }
+            R.id.nav_profile -> {
+                val intent = Intent(this@ProfileActivity, ProfileActivity::class.java)
+                startActivity(intent)
+            }
             R.id.nav_favourites -> {
 
             }
+            R.id.nav_order_history -> {
+                val intent = Intent(this@ProfileActivity, Favourites::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_orders -> {
+                val intent = Intent(this@ProfileActivity, Favourites::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_events -> {
+                val intent = Intent(this@ProfileActivity, Favourites::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_settings -> {
+                val intent = Intent(this@ProfileActivity, OnlineShopping::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_logout -> {
+                val intent = Intent(this@ProfileActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
             R.id.nav_share -> {
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
+            }
+            R.id.nav_contact -> {
+                val intent = Intent(this@ProfileActivity, Favourites::class.java)
+                startActivity(intent)
             }
 
         }

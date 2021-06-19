@@ -12,6 +12,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class LoginTabFragment : Fragment() {
@@ -58,6 +62,8 @@ class LoginTabFragment : Fragment() {
                 .addOnCompleteListener {
                     if (!it.isSuccessful) return@addOnCompleteListener
                     val intent = Intent(getActivity(), Homepage::class.java)
+                    intent.putExtra("userId", it.result?.user?.uid.toString())
+                    Log.d("Login", "User uid: ${it.result?.user?.uid}")
                     getActivity()?.startActivity(intent)
                 }
                 .addOnFailureListener {
@@ -68,4 +74,6 @@ class LoginTabFragment : Fragment() {
 
         return root
     }
+
+
 }
