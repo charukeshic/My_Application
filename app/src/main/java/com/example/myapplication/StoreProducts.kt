@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +22,9 @@ import com.example.myapplication.adapters.ProductAdapter
 import com.example.myapplication.fragments.CategoryFragment
 import com.example.myapplication.fragments.ProductFragment
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 
@@ -42,6 +45,11 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     private lateinit var categoryArrayList: ArrayList<Category>
     private lateinit var productArrayList: ArrayList<Product>
 
+    lateinit var layoutHeader : View
+    lateinit var userImage : ImageView
+    lateinit var userName : TextView
+    lateinit var userEmail : TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getWindow().setFlags(
@@ -59,6 +67,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         navigationDrawer()
 
         //fetchCategory()
+        updateNavHeader()
 
 
         categoryRecyclerView = findViewById(R.id.category_recyclerView)
@@ -374,6 +383,36 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             } else
                 drawerLayout.openDrawer(GravityCompat.START)
         })
+
+    }
+
+    private fun updateNavHeader() {
+
+        layoutHeader = navigationView.getHeaderView(0)
+        userName = layoutHeader.findViewById(R.id.username1)
+        userImage = layoutHeader.findViewById(R.id.user_image)
+        userEmail = layoutHeader.findViewById(R.id.email1)
+
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                userName.text = user?.username.toString()
+                userEmail.text = user?.email.toString()
+                Picasso.get().load(user?.image).into(userImage)
+
+            }
+
+        })
+
 
     }
 

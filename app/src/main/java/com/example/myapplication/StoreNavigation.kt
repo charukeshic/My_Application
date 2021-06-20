@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
@@ -19,8 +21,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -41,6 +44,11 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
     lateinit var opHour : Array<String>
     lateinit var address : Array<String>
     lateinit var contactNum : Array<String>
+
+    lateinit var layoutHeader : View
+    lateinit var userImage : ImageView
+    lateinit var userName : TextView
+    lateinit var userEmail : TextView
 
     lateinit var search_toolbar: Toolbar
 
@@ -170,6 +178,8 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         navigationDrawer()
 
+        updateNavHeader()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -232,6 +242,36 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             } else
                 drawerLayout.openDrawer(GravityCompat.START)
         })
+
+    }
+
+    private fun updateNavHeader() {
+
+        layoutHeader = navigationView.getHeaderView(0)
+        userName = layoutHeader.findViewById(R.id.username1)
+        userImage = layoutHeader.findViewById(R.id.user_image)
+        userEmail = layoutHeader.findViewById(R.id.email1)
+
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                userName.text = user?.username.toString()
+                userEmail.text = user?.email.toString()
+                Picasso.get().load(user?.image).into(userImage)
+
+            }
+
+        })
+
 
     }
 

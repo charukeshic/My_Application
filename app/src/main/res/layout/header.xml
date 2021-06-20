@@ -9,14 +9,23 @@
     android:padding="20dp">
 
     <ImageView
+        android:id="@+id/user_image"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:src="@drawable/profile_icon" />
 
     <TextView
+        android:id="@+id/username1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Vijaybaskkar"
         android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/email1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vijaybaskkar"
+        android:textSize="12sp" />
 
 </LinearLayout>

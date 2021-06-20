@@ -19,6 +19,7 @@ import com.example.myapplication.adapters.ProductAdapter
 import com.example.myapplication.adapters.ProductDetailsAdapter
 import com.example.myapplication.fragments.ProductFragment
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 
@@ -28,14 +29,13 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
     lateinit var navigationView: NavigationView
     lateinit var menuIcon: ImageView
 
-    //val storeName : TextView = findViewById(R.id.mall_name)
-    //val productImage : ImageView = findViewById(R.id.mall_image)
-    //val itemName : TextView = findViewById(R.id.product_name)
-    //val productPrice : TextView = findViewById(R.id.product_price)
-    //val productDetails : TextView = findViewById(R.id.item_details)
-
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var productArrayList: ArrayList<ProductDetails>
+
+    lateinit var layoutHeader : View
+    lateinit var userImage : ImageView
+    lateinit var userName : TextView
+    lateinit var userEmail : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +61,8 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
         Log.d("GetProductDetails", "$product")
 
         navigationDrawer()
+
+        updateNavHeader()
 
         getProductDetails(mall, category, product)
 
@@ -107,7 +109,8 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     }
 
                     addToFav.setOnClickListener {
-                        Toast.makeText(this@GetProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
+                        addToFavourites(product!!)
+                        //Toast.makeText(this@GetProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
                     }
 
                     addToCart.setOnClickListener {
@@ -125,6 +128,20 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
 
+    private fun addToFavourites(product : ProductDetails) {
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites")
+
+        val productName = product.itemName.toString().plus("(").plus(product.store).plus(")")
+
+        ref.child("$productName").setValue(product)
+            .addOnSuccessListener {
+                Toast.makeText(this@GetProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
+            }
+
+    }
 
 
     private fun navigationDrawer() {
@@ -141,6 +158,36 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
             } else
                 drawerLayout.openDrawer(GravityCompat.START)
         })
+
+    }
+
+    private fun updateNavHeader() {
+
+        layoutHeader = navigationView.getHeaderView(0)
+        userName = layoutHeader.findViewById(R.id.username1)
+        userImage = layoutHeader.findViewById(R.id.user_image)
+        userEmail = layoutHeader.findViewById(R.id.email1)
+
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                userName.text = user?.username.toString()
+                userEmail.text = user?.email.toString()
+                Picasso.get().load(user?.image).into(userImage)
+
+            }
+
+        })
+
 
     }
 

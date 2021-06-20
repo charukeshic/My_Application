@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -22,7 +23,9 @@ import com.example.myapplication.fragments.ComparePriceFragment
 import com.example.myapplication.fragments.ProductFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 
 class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,6 +38,11 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var dbrefStore : DatabaseReference
+
+    lateinit var layoutHeader : View
+    lateinit var userImage : ImageView
+    lateinit var userName : TextView
+    lateinit var userEmail : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +60,8 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
         menuIcon = findViewById(R.id.menu_icon)
 
         navigationDrawer()
+
+        updateNavHeader()
 
         productRecyclerView = findViewById(R.id.product_recyclerView)
         productRecyclerView.setHasFixedSize(true)
@@ -164,6 +174,36 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
             } else
                 drawerLayout.openDrawer(GravityCompat.START)
         })
+
+    }
+
+    private fun updateNavHeader() {
+
+        layoutHeader = navigationView.getHeaderView(0)
+        userName = layoutHeader.findViewById(R.id.username1)
+        userImage = layoutHeader.findViewById(R.id.user_image)
+        userEmail = layoutHeader.findViewById(R.id.email1)
+
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                userName.text = user?.username.toString()
+                userEmail.text = user?.email.toString()
+                Picasso.get().load(user?.image).into(userImage)
+
+            }
+
+        })
+
 
     }
 

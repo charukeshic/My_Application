@@ -2,17 +2,23 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 
 
 class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -22,6 +28,11 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
     lateinit var toolbar: Toolbar
     lateinit var storeNavigation : Button
     lateinit var onlineShopping : Button
+
+    lateinit var layoutHeader : View
+    lateinit var userImage : ImageView
+    lateinit var userName : TextView
+    lateinit var userEmail : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -52,6 +63,10 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         navigationView.setNavigationItemSelectedListener(this)
         navigationView.setCheckedItem(R.id.nav_home)
 
+        updateNavHeader()
+
+
+
         storeNavigation.setOnClickListener(View.OnClickListener { view ->
             val intent = Intent(this@Homepage, StoreNavigation::class.java)
             startActivity(intent)
@@ -63,6 +78,7 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
             startActivity(intent)
             drawerLayout.closeDrawer(GravityCompat.START)
         })
+
 
 
     }
@@ -77,6 +93,36 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         else{
             super.onBackPressed()
         }
+
+    }
+
+    private fun updateNavHeader() {
+
+        layoutHeader = navigationView.getHeaderView(0)
+        userName = layoutHeader.findViewById(R.id.username1)
+        userImage = layoutHeader.findViewById(R.id.user_image)
+        userEmail = layoutHeader.findViewById(R.id.email1)
+
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                userName.text = user?.username.toString()
+                userEmail.text = user?.email.toString()
+                Picasso.get().load(user?.image).into(userImage)
+
+            }
+
+        })
+
 
     }
 

@@ -42,6 +42,11 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private lateinit var ImageUri : Uri
 
+    lateinit var layoutHeader : View
+    lateinit var userName : TextView
+    lateinit var userEmail : TextView
+    lateinit var existingImage : ImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,14 +63,13 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         saveChanges = findViewById(R.id.signUpButton)
         selectPhoto = findViewById(R.id.select_image)
-        userImage = findViewById(R.id.user_image)
+        userImage = findViewById(R.id.user_image2)
 
         email = findViewById(R.id.email1)
         username = findViewById(R.id.username1)
         mobile = findViewById(R.id.mobile1)
         //password = findViewById(R.id.pass1)
         address = findViewById(R.id.address1)
-
 
 
         selectPhoto.setOnClickListener {
@@ -76,14 +80,12 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
 
         saveChanges.setOnClickListener {
-            saveImage()
-            //saveChangesToDatabase()
             update()
             val intent = Intent(this@ProfileActivity, ProfileActivity::class.java)
             startActivity(intent)
         }
 
-        //getUserData()
+        updateNavHeader()
 
         navigationDrawer()
 
@@ -131,6 +133,36 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 address.setText(user?.address.toString())
                 //password.setText(user?.password.toString())
                 //Picasso.get().load(user?.image).into(userImage)
+
+            }
+
+        })
+
+
+    }
+
+    private fun updateNavHeader() {
+
+        layoutHeader = navigationView.getHeaderView(0)
+        userName = layoutHeader.findViewById(R.id.username1)
+        existingImage = layoutHeader.findViewById(R.id.user_image)
+        userEmail = layoutHeader.findViewById(R.id.email1)
+
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                userName.text = user?.username.toString()
+                userEmail.text = user?.email.toString()
+                Picasso.get().load(user?.image).into(existingImage)
 
             }
 
@@ -203,28 +235,41 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     }
 
-
-    private fun saveImage() : Boolean {
+    private fun saveImage() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         var fileName = uid.toString()
         var imageRef = FirebaseStorage.getInstance().reference.child("users/$fileName")
 
-        imageRef.putFile(ImageUri)
-            .addOnSuccessListener {
-                Log.d("Save", "Successful : ${it.metadata?.path}")
-                Toast.makeText(this@ProfileActivity, "Profile Updated",Toast.LENGTH_SHORT).show()
-                imageRef.downloadUrl.addOnSuccessListener {
-                    Log.d("Save", "Successful : $it")
-                    saveChangesToDatabase(it.toString())
-                    val imageSaved = it.toString()
+            imageRef.putFile(ImageUri)
+                .addOnSuccessListener {
+                    Log.d("Save", "Successful : ${it.metadata?.path}")
+                    Toast.makeText(this@ProfileActivity, "Profile Picture Changed",Toast.LENGTH_SHORT).show()
+                    imageRef.downloadUrl.addOnSuccessListener {
+                        Log.d("Save", "Successful : $it")
+                        //isImageChanged(it.toString())
+                        saveChangesToDatabase(it.toString())
 
+                    }
+
+                }.addOnFailureListener {
+                    Toast.makeText(this@ProfileActivity, "Failed",Toast.LENGTH_SHORT).show()
                 }
 
-            }.addOnFailureListener {
-                Toast.makeText(this@ProfileActivity, "Failed",Toast.LENGTH_SHORT).show()
-            }
 
-        return true
+    }
+
+    private fun isImageChanged(image: String) {
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        val userImage = ref.child("image").toString()
+
+        if(!userImage.equals(image)) {
+            saveChangesToDatabase(image)
+        }
+
+
     }
 
     private fun saveChangesToDatabase(image: String) {
@@ -232,13 +277,8 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
 
-        val userImage = ref.child("image").toString()
+        ref.child("image").setValue(image)
 
-
-        if(!userImage.isEmpty()) {
-            ref.child("image").setValue(image)
-        }
-        else ref.child("image").setValue("Not Updated")
 
     }
 
@@ -250,6 +290,8 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             userImage.setImageURI(data?.data)
 
             ImageUri = data?.data!!
+            saveImage()
+
         }
 
     }
