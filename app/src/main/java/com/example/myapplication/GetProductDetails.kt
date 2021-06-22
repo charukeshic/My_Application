@@ -1,8 +1,8 @@
 package com.example.myapplication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -12,12 +12,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.adapters.ProductAdapter
-import com.example.myapplication.adapters.ProductDetailsAdapter
-import com.example.myapplication.fragments.ProductFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -103,9 +100,22 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     storeName.text = product?.store.toString()
                     Picasso.get().load(product?.image).into(productImage)
 
+                    val title = "Reminder to buy ".plus(product?.itemName.toString()).plus(" from ").plus(product?.store.toString())
 
                     addEvent.setOnClickListener {
-                        Toast.makeText(this@GetProductDetails, "$productName event added", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(Intent.ACTION_INSERT)
+                        intent.data = CalendarContract.Events.CONTENT_URI
+                        intent.putExtra(CalendarContract.Events.TITLE, title)
+
+                        if(intent.resolveActivity(getPackageManager()) != null){
+                            addTheEvent(product!!)
+                            startActivity(intent);
+                        }
+                        else{
+                            Toast.makeText(this@GetProductDetails, "There is no app that support this action", Toast.LENGTH_SHORT).show();
+                        }
+
+                        //Toast.makeText(this@GetProductDetails, "$productName event added", Toast.LENGTH_SHORT).show()
                     }
 
                     addToFav.setOnClickListener {
@@ -139,6 +149,19 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
         ref.child("$productName").setValue(product)
             .addOnSuccessListener {
                 Toast.makeText(this@GetProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
+            }
+
+    }
+
+    private fun addTheEvent(product : ProductDetails) {
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Events")
+
+        val productName = product.itemName.toString().plus("(").plus(product.store).plus(")")
+        ref.child("$productName").setValue(product)
+            .addOnSuccessListener {
+                Toast.makeText(this@GetProductDetails, "Event created for $productName", Toast.LENGTH_SHORT).show()
             }
 
     }
