@@ -115,7 +115,6 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
                             Toast.makeText(this@GetProductDetails, "There is no app that support this action", Toast.LENGTH_SHORT).show();
                         }
 
-                        //Toast.makeText(this@GetProductDetails, "$productName event added", Toast.LENGTH_SHORT).show()
                     }
 
                     addToFav.setOnClickListener {
@@ -161,7 +160,7 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val productName = product.itemName.toString().plus("(").plus(product.store).plus(")")
         ref.child("$productName").setValue(product)
             .addOnSuccessListener {
-                Toast.makeText(this@GetProductDetails, "Event created for $productName", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@GetProductDetails, "Creating event for $productName", Toast.LENGTH_SHORT).show()
             }
 
     }
@@ -245,7 +244,7 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 startActivity(intent)
             }
             R.id.nav_profile -> {
-                val intent = Intent(this@GetProductDetails, Favourites::class.java)
+                val intent = Intent(this@GetProductDetails, ProfileActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_favourites -> {

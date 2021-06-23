@@ -3,22 +3,26 @@ package com.example.myapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.adapters.ProductAdapter
+import com.example.myapplication.adapters.ProductDetailsAdapter
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 
 class Favourites : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -31,6 +35,10 @@ class Favourites : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     lateinit var userImage : ImageView
     lateinit var userName : TextView
     lateinit var userEmail : TextView
+
+    private lateinit var dbrefProducts : DatabaseReference
+    private lateinit var productArrayList: ArrayList<ProductDetails>
+    private lateinit var productRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,12 +53,58 @@ class Favourites : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
 
+        productRecyclerView = findViewById(R.id.product_recyclerView)
+        productRecyclerView.setHasFixedSize(true)
+        productRecyclerView.layoutManager = LinearLayoutManager(productRecyclerView.context)
+        productArrayList = arrayListOf<ProductDetails>()
 
         navigationDrawer()
 
         updateNavHeader()
 
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        Log.d("Profile Activity", "username: $uid")
+        dbrefProducts = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites")
+
+        dbrefProducts.addValueEventListener (object: ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if (snapshot.exists()) {
+                    for (productSnapshot in snapshot.children) {
+                        val product = productSnapshot.getValue(ProductDetails::class.java)
+                        productArrayList.add(product!!)
+
+                        var adapter = ProductDetailsAdapter(productArrayList)
+                        productRecyclerView.adapter = adapter
+                        adapter.setOnItemClickListener(object: ProductDetailsAdapter.onItemClickListener {
+
+                            override fun onItemClick(position: Int) {
+
+                                val productName = productArrayList[position].itemName
+
+                                Toast.makeText(this@Favourites, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+
+
+
+                            }
+
+                        })
+                    }
+
+                }
+
+            }
+
+
+        })
+
     }
+
 
     private fun navigationDrawer() {
 
@@ -131,11 +185,40 @@ class Favourites : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 val intent = Intent(this@Favourites, Homepage::class.java)
                 startActivity(intent)
             }
+            R.id.nav_profile -> {
+                val intent = Intent(this@Favourites, Favourites::class.java)
+                startActivity(intent)
+            }
             R.id.nav_favourites -> {
-
+                val intent = Intent(this@Favourites, Favourites::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_order_history -> {
+                val intent = Intent(this@Favourites, OnlineShopping::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_orders -> {
+                val intent = Intent(this@Favourites, OnlineShopping::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_events -> {
+                val intent = Intent(this@Favourites, Favourites::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_settings -> {
+                val intent = Intent(this@Favourites, OnlineShopping::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_logout -> {
+                val intent = Intent(this@Favourites, LoginActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_share -> {
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
+            }
+            R.id.nav_contact -> {
+                val intent = Intent(this@Favourites, Favourites::class.java)
+                startActivity(intent)
             }
 
         }
