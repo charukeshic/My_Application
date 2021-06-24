@@ -96,6 +96,30 @@ class ProductDetailsAdapter(private val productList : ArrayList<ProductDetails>)
 
         }
 
+        holder.addToCart.setOnClickListener {
+
+            val cartItemName = currentItem.itemName
+            val cartItemStore = currentItem.store
+            val cartItemImage = currentItem.image
+            val cartItemDetails = currentItem.itemDetails
+            val cartItemQuantity = 1
+            val cartItemPrice = String.format("%.2f", currentItem.price.toDouble()).toDouble()
+            val cartItemTotal = String.format("%.2f", (cartItemQuantity * cartItemPrice)).toDouble()
+
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
+            val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Cart")
+
+            val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
+
+            val cartItem = CartItem(cartItemName, cartItemStore, cartItemImage, cartItemPrice, cartItemDetails, cartItemQuantity, cartItemTotal)
+
+            ref.child("$productName").setValue(cartItem)
+                .addOnSuccessListener {
+                    Toast.makeText(holder.itemView.context, "$productName added to cart", Toast.LENGTH_SHORT).show()
+                }
+
+        }
+
 
     }
 
