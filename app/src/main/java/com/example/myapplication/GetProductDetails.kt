@@ -123,7 +123,8 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     }
 
                     addToCart.setOnClickListener {
-                        Toast.makeText(this@GetProductDetails, "$productName added to Cart", Toast.LENGTH_SHORT).show()
+                        addToCart(product!!)
+                        //Toast.makeText(this@GetProductDetails, "$productName added to Cart", Toast.LENGTH_SHORT).show()
                     }
 
 
@@ -161,6 +162,31 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
         ref.child("$productName").setValue(product)
             .addOnSuccessListener {
                 Toast.makeText(this@GetProductDetails, "Creating event for $productName", Toast.LENGTH_SHORT).show()
+            }
+
+    }
+
+    private fun addToCart(product : ProductDetails) {
+
+        val cartItemName = product.itemName
+        val cartItemStore = product.store
+        val cartItemImage = product.image
+        val cartItemDetails = product.itemDetails
+        val cartItemQuantity = 1
+        val cartItemPrice = String.format("%.2f", product.price.toDouble()).toDouble()
+        val cartItemTotal = String.format("%.2f", (cartItemQuantity * cartItemPrice)).toDouble()
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Cart")
+
+        val productName = product.itemName.toString().plus("(").plus(product.store).plus(")")
+
+        val cartItem = CartItem(cartItemName, cartItemStore, cartItemImage, cartItemPrice, cartItemDetails, cartItemQuantity, cartItemTotal)
+
+        ref.child("$productName").setValue(cartItem)
+            .addOnSuccessListener {
+                Toast.makeText(this@GetProductDetails, "$productName added to cart", Toast.LENGTH_SHORT).show()
             }
 
     }
@@ -287,3 +313,4 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
 }
+
