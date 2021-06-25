@@ -25,6 +25,7 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var menuIcon: ImageView
+    lateinit var cartIcon: ImageView
 
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var productArrayList: ArrayList<ProductDetails>
@@ -46,6 +47,7 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
+        cartIcon = findViewById(R.id.cart_icon)
 
         productArrayList = arrayListOf<ProductDetails>()
 
@@ -63,6 +65,17 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         getProductDetails(mall, category, product)
 
+        cartIcon.setOnClickListener {
+            getCartItems()
+        }
+
+
+    }
+
+    private fun getCartItems() {
+
+        val intent = Intent(this@GetProductDetails, CartActivity::class.java)
+        startActivity(intent)
 
     }
 

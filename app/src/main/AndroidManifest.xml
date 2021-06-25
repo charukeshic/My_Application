@@ -9,14 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".GetProductDetails"/>
-        <activity android:name=".GetSalesProductDetails"/>
+        <activity android:name=".CartActivity"></activity>
+        <activity android:name=".GetProductDetails" />
+        <activity android:name=".GetSalesProductDetails" />
         <activity android:name=".StoreProductsNew" />
         <activity android:name=".OnlineShoppingActivity" />
         <activity android:name=".StoreDescription" />
         <activity android:name=".Favourites" />
         <activity android:name=".Homepage" />
-        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

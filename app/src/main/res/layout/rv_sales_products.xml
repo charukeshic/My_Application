@@ -54,6 +54,10 @@
                 android:textColor="@color/dark_teal"
                 android:textSize="14dp"/>
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/product_originalPrice"
                 android:layout_width="wrap_content"
@@ -63,12 +67,32 @@
                 android:ellipsize="none"
                 android:gravity="left"
                 android:paddingLeft="6dp"
+                android:layout_marginLeft="20dp"
+                android:text="5.00"
                 android:paddingBottom="0dp"
                 android:scrollHorizontally="false"
-                android:text="RM5.00"
                 android:textColor="#FF0000"
-                android:textSize="10dp" />
+                android:textSize="10dp"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RM"
+                    android:layout_weight="1"
+                    android:breakStrategy="simple"
+                    android:ellipsize="none"
+                    android:gravity="left"
+                    android:paddingLeft="6dp"
+                    android:paddingBottom="0dp"
+                    android:scrollHorizontally="false"
+                    android:textColor="#FF0000"
+                    android:textSize="10dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/product_discountedPrice"
                 android:layout_width="wrap_content"
@@ -78,11 +102,28 @@
                 android:ellipsize="none"
                 android:gravity="left"
                 android:paddingLeft="6dp"
+                android:layout_marginLeft="25dp"
                 android:scrollHorizontally="false"
-                android:text="RM5.00"
+                android:text="5.00"
                 android:textColor="@color/dark_teal"
                 android:textSize="13dp"
                 android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:breakStrategy="simple"
+                    android:ellipsize="none"
+                    android:gravity="left"
+                    android:paddingLeft="6dp"
+                    android:scrollHorizontally="false"
+                    android:text="RM"
+                    android:textColor="@color/dark_teal"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
 
 
             <TextView

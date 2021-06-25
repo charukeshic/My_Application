@@ -39,6 +39,10 @@
                 android:textSize="15dp"
                 android:textStyle="bold"/>
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/product_price"
                 android:layout_width="match_parent"
@@ -48,10 +52,26 @@
                 android:ellipsize="none"
                 android:gravity="left"
                 android:padding="6dp"
+                android:layout_marginLeft="20dp"
                 android:scrollHorizontally="false"
-                android:text="RM5.00"
+                android:text="5.00"
                 android:textColor="@color/dark_teal"
                 android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:breakStrategy="simple"
+                    android:ellipsize="none"
+                    android:gravity="left"
+                    android:padding="6dp"
+                    android:scrollHorizontally="false"
+                    android:text="RM"
+                    android:textColor="@color/dark_teal"
+                    android:textSize="12dp"/>
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/mall_name"

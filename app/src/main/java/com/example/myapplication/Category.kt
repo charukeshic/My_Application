@@ -26,5 +26,5 @@ data class User (var email : String, var username : String, var password : Strin
 
 data class CartItem (var itemName : String, var store : String, var image: String, var price : Double, var itemDetails : String,
                         var quantity : Int, var total : Double) {
-    //constructor() : this("", "", "", "", "", a, "")
+    constructor() : this("", "", "", 0.0, "", 1, 0.0)
 }

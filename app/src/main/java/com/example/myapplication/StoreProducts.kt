@@ -33,6 +33,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var menuIcon: ImageView
+    lateinit var cartIcon: ImageView
 
     private lateinit var categoryRecyclerView: RecyclerView
     private lateinit var productRecyclerView: RecyclerView
@@ -62,7 +63,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
-
+        cartIcon = findViewById(R.id.cart_icon)
 
         navigationDrawer()
 
@@ -84,6 +85,9 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         productArrayList = arrayListOf<Product>()
         getProducts()
 
+        cartIcon.setOnClickListener {
+            getCartItems()
+        }
 
 
     }
@@ -160,6 +164,13 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
 
         })
+
+    }
+
+    private fun getCartItems() {
+
+        val intent = Intent(this@StoreProducts, CartActivity::class.java)
+        startActivity(intent)
 
     }
 
