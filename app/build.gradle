@@ -61,7 +61,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
-
+    implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
 
     implementation platform('com.google.firebase:firebase-bom:28.1.0')
     implementation 'com.google.firebase:firebase-storage-ktx'

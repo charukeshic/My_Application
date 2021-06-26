@@ -32,9 +32,11 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var userImage : ImageView
     lateinit var userName : TextView
     lateinit var userEmail : TextView
+    lateinit var totalCost : TextView
 
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var productArrayList: ArrayList<CartItem>
+    private lateinit var totalCostArrayList: ArrayList<Double>
     private lateinit var productRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,11 +51,13 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
+        totalCost = findViewById(R.id.total_price)
 
         productRecyclerView = findViewById(R.id.product_recyclerView)
         productRecyclerView.setHasFixedSize(true)
         productRecyclerView.layoutManager = LinearLayoutManager(productRecyclerView.context)
         productArrayList = arrayListOf<CartItem>()
+        totalCostArrayList = arrayListOf<Double>()
 
         navigationDrawer()
 
@@ -71,10 +75,14 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
+                productArrayList.clear()
+                totalCostArrayList.clear()
+
                 if (snapshot.exists()) {
                     for (productSnapshot in snapshot.children) {
                         val product = productSnapshot.getValue(CartItem::class.java)
                         productArrayList.add(product!!)
+                        totalCostArrayList.add(product.total)
 
                         var adapter = CartItemAdapter(productArrayList)
                         productRecyclerView.adapter = adapter
@@ -91,7 +99,11 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             }
 
                         })
+
+
                     }
+
+                    totalCost.text = String.format("%.2f",totalCostArrayList.sum())
 
                 }
 
