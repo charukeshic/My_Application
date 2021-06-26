@@ -178,7 +178,7 @@ class StoreProducts2 : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 startActivity(intent)
             }
             R.id.nav_profile -> {
-                val intent = Intent(this@StoreProducts2, Favourites::class.java)
+                val intent = Intent(this@StoreProducts2, ProfileActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_favourites -> {

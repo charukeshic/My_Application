@@ -459,11 +459,40 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 val intent = Intent(this@StoreProducts, Homepage::class.java)
                 startActivity(intent)
             }
+            R.id.nav_profile -> {
+                val intent = Intent(this@StoreProducts, ProfileActivity::class.java)
+                startActivity(intent)
+            }
             R.id.nav_favourites -> {
-
+                val intent = Intent(this@StoreProducts, Favourites::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_order_history -> {
+                val intent = Intent(this@StoreProducts, OnlineShopping::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_orders -> {
+                val intent = Intent(this@StoreProducts, OnlineShopping::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_events -> {
+                val intent = Intent(this@StoreProducts, Favourites::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_settings -> {
+                val intent = Intent(this@StoreProducts, OnlineShopping::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_logout -> {
+                val intent = Intent(this@StoreProducts, LoginActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_share -> {
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
+            }
+            R.id.nav_contact -> {
+                val intent = Intent(this@StoreProducts, Favourites::class.java)
+                startActivity(intent)
             }
 
         }

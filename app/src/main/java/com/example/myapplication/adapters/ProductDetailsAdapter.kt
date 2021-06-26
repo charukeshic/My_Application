@@ -62,8 +62,7 @@ class ProductDetailsAdapter(private val productList : ArrayList<ProductDetails>)
 
             ref.child("$productName").removeValue()
                 .addOnSuccessListener {
-                    val intent = Intent(holder.itemView.context, Favourites::class.java)
-                    holder.itemView.context.startActivity(intent)
+
                     Toast.makeText(holder.itemView.context, "$productName removed from Favourites", Toast.LENGTH_SHORT).show()
                 }
 

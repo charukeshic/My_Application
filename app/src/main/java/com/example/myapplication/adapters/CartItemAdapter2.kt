@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 
-class CartItemAdapter(private val productList : ArrayList<CartItem>) : RecyclerView.Adapter<CartItemAdapter.CartItemViewHolder>() {
+class CartItemAdapter2(private val productList : ArrayList<CartItem>) : RecyclerView.Adapter<CartItemAdapter2.CartItemViewHolder>() {
 
     private lateinit var mListener : onItemClickListener
 
@@ -28,7 +28,7 @@ class CartItemAdapter(private val productList : ArrayList<CartItem>) : RecyclerV
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartItemViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_cart_item, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_order_item, parent, false)
 
         return CartItemViewHolder(itemView, mListener)
     }
@@ -45,43 +45,8 @@ class CartItemAdapter(private val productList : ArrayList<CartItem>) : RecyclerV
         holder.productDetails.text = currentItem.itemDetails
         holder.storeName.text = currentItem.store
         Picasso.get().load(currentItem.image).into(holder.productImage)
-        //holder.mallImage.setImageResource(currentItem.image)
         holder.productQuantity.text = currentItem.quantity.toString()
         holder.totalCost.text = String.format("%.2f", currentItem.total)
-        holder.editQuantity.number = currentItem.quantity.toString()
-
-        holder.editQuantity.setOnValueChangeListener { view, oldValue, newValue ->
-            currentItem.quantity = newValue
-
-            currentItem.total = currentItem.price * newValue
-
-            val uid = FirebaseAuth.getInstance().currentUser?.uid
-            Log.d("Profile Activity", "username: $uid")
-            val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Cart")
-
-            val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
-
-            ref.child("$productName").child("quantity").setValue(newValue)
-            ref.child("$productName").child("total").setValue(currentItem.total)
-
-
-        }
-
-        holder.deleteItem.setOnClickListener {
-
-            val uid = FirebaseAuth.getInstance().currentUser?.uid
-            Log.d("Profile Activity", "username: $uid")
-            val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Cart")
-
-            val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
-
-            ref.child("$productName").removeValue()
-                .addOnSuccessListener {
-                    Toast.makeText(holder.itemView.context, "$productName removed from Cart", Toast.LENGTH_SHORT).show()
-                }
-
-
-        }
 
 
     }
@@ -97,8 +62,6 @@ class CartItemAdapter(private val productList : ArrayList<CartItem>) : RecyclerV
         val productDetails : TextView = itemView.findViewById(R.id.item_details)
         val productQuantity : TextView = itemView.findViewById(R.id.quantity)
         val totalCost : TextView = itemView.findViewById(R.id.total)
-        val editQuantity : ElegantNumberButton = itemView.findViewById(R.id.qty_btn)
-        val deleteItem : ImageButton = itemView.findViewById(R.id.delete_btn)
 
 
         init {

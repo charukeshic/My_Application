@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.CartItemAdapter
 import com.example.myapplication.adapters.ProductDetailsAdapter
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -33,6 +34,7 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var userName : TextView
     lateinit var userEmail : TextView
     lateinit var totalCost : TextView
+    lateinit var placeOrder : MaterialButton
 
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var productArrayList: ArrayList<CartItem>
@@ -52,6 +54,7 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
         totalCost = findViewById(R.id.total_price)
+        placeOrder = findViewById(R.id.order_btn)
 
         productRecyclerView = findViewById(R.id.product_recyclerView)
         productRecyclerView.setHasFixedSize(true)
@@ -113,6 +116,13 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
 
 
+        placeOrder.setOnClickListener {
+
+            val intent = Intent(this@CartActivity, OrderActivity::class.java)
+            intent.putExtra("Total", totalCost.text.toString())
+            startActivity(intent)
+
+        }
 
 
     }
