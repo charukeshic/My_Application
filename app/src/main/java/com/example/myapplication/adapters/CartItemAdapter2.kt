@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
 import com.example.myapplication.*
@@ -47,6 +48,9 @@ class CartItemAdapter2(private val productList : ArrayList<CartItem>) : Recycler
         Picasso.get().load(currentItem.image).into(holder.productImage)
         holder.productQuantity.text = currentItem.quantity.toString()
         holder.totalCost.text = String.format("%.2f", currentItem.total)
+
+
+
 
 
     }

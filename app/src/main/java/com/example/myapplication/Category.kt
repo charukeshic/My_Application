@@ -28,3 +28,8 @@ data class CartItem (var itemName : String, var store : String, var image: Strin
                         var quantity : Int, var total : Double) {
     constructor() : this("", "", "", 0.0, "", 1, 0.0)
 }
+
+data class Order (var orderId : String, var username : String, var mobile : String, var address: String,
+                  var paymentMethod : String, var paymentMerchant : String, var orderPayment : Double, var paymentDate : String) {
+    constructor() : this("","", "", "", "", "",0.0,"")
+}
