@@ -174,7 +174,7 @@ class OnlineShoppingActivity : AppCompatActivity(), NavigationView.OnNavigationI
                 startActivity(intent)
             }
             R.id.nav_profile -> {
-                val intent = Intent(this@OnlineShoppingActivity, Favourites::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, ProfileActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_favourites -> {
@@ -182,7 +182,7 @@ class OnlineShoppingActivity : AppCompatActivity(), NavigationView.OnNavigationI
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@OnlineShoppingActivity, OnlineShopping::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.CategoryAdapter
 import com.example.myapplication.adapters.ProductAdapter
+import com.example.myapplication.adapters.ProductDetailsAdapter
 import com.example.myapplication.fragments.CategoryFragment
 import com.example.myapplication.fragments.ProductFragment
 import com.google.android.material.navigation.NavigationView
@@ -44,7 +45,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     private lateinit var dbrefcatProducts : DatabaseReference
     private lateinit var dbrefcatStore : DatabaseReference
     private lateinit var categoryArrayList: ArrayList<Category>
-    private lateinit var productArrayList: ArrayList<Product>
+    private lateinit var productArrayList: ArrayList<ProductDetails>
 
     lateinit var layoutHeader : View
     lateinit var userImage : ImageView
@@ -82,7 +83,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         productRecyclerView.setHasFixedSize(true)
         productRecyclerView.layoutManager = GridLayoutManager(this, 2)
 
-        productArrayList = arrayListOf<Product>()
+        productArrayList = arrayListOf<ProductDetails>()
         getProducts()
 
         cartIcon.setOnClickListener {
@@ -99,7 +100,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         productRecyclerView.setHasFixedSize(true)
         productRecyclerView.layoutManager = GridLayoutManager(productRecyclerView.context,2)
 
-        productArrayList = arrayListOf<Product>()
+        productArrayList = arrayListOf<ProductDetails>()
 
         dbrefcatStore = FirebaseDatabase.getInstance().getReference("/Store")
 
@@ -127,7 +128,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 if(snapshot.exists()) {
 
-                                    val product = snapshot.getValue(Product::class.java)
+                                    val product = snapshot.getValue(ProductDetails::class.java)
                                     product?.store = storeName.toString()
 
                                     productArrayList.add(product!!)
@@ -190,7 +191,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
                 if(snapshot.exists()) {
                     for (productSnapshot in snapshot.children) {
-                        val product = productSnapshot.getValue(Product::class.java)
+                        val product = productSnapshot.getValue(ProductDetails::class.java)
                         product?.store = mallName.toString()
 
                         productArrayList.add(product!!)
@@ -280,7 +281,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
                                     if(snapshot.exists()) {
                                         for (productSnapshot in snapshot.children) {
-                                            val product = productSnapshot.getValue(Product::class.java)
+                                            val product = productSnapshot.getValue(ProductDetails::class.java)
                                             product?.store = mallName.toString()
 
                                             productArrayList.add(product!!)
@@ -468,7 +469,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@StoreProducts, OnlineShopping::class.java)
+                val intent = Intent(this@StoreProducts, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {

@@ -207,7 +207,7 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(intent)
             }
             R.id.nav_profile -> {
-                val intent = Intent(this@CartActivity, Favourites::class.java)
+                val intent = Intent(this@CartActivity, ProfileActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_favourites -> {
@@ -215,7 +215,7 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@CartActivity, OnlineShopping::class.java)
+                val intent = Intent(this@CartActivity, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {

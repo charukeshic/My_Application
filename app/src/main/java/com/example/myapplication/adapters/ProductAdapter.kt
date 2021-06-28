@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 
-class ProductAdapter(private val productList : ArrayList<Product>) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(private val productList : ArrayList<ProductDetails>) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
 
     private lateinit var mListener : onItemClickListener

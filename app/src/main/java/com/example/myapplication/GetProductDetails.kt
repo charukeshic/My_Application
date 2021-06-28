@@ -291,7 +291,7 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@GetProductDetails, OnlineShopping::class.java)
+                val intent = Intent(this@GetProductDetails, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {

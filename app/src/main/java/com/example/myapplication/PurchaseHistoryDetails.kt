@@ -16,6 +16,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.CartItemAdapter2
+import com.example.myapplication.adapters.OrderHistoryAdapter
+import com.example.myapplication.adapters.ProductDetailsAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
@@ -26,7 +28,7 @@ import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
@@ -41,31 +43,18 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     lateinit var orUserPhone : TextView
     lateinit var orUserAddr : TextView
     lateinit var totalPrice : TextView
+    lateinit var purchaseId : TextView
+    lateinit var orderDate: TextView
 
-    lateinit var edit : TextView
-    lateinit var selectPaymentMethod : TextView
-    lateinit var selectMerchant : TextView
-    lateinit var orderBtn : MaterialButton
     lateinit var paymentMethod : TextView
     lateinit var merchantName : TextView
 
-    private lateinit var dbrefProducts : DatabaseReference
-    private lateinit var dbrefUser : DatabaseReference
-    private lateinit var productArrayList: ArrayList<CartItem>
+    private lateinit var orderItemArrayList : ArrayList<CartItem>
     private lateinit var productRecyclerView: RecyclerView
 
     private lateinit var dbrefOrder : DatabaseReference
     private lateinit var dbrefOrderItems : DatabaseReference
 
-    var selectedIndex = 0
-    var selected = 0
-    val paymentMethods = arrayOf(
-        "Cash On Delivery", "FPX / Online Banking"
-    )
-
-    val merchantNames = arrayOf(
-        "Public Bank", "Maybank2u", "CIMB Bank"
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +62,7 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        setContentView(R.layout.activity_order)
+        setContentView(R.layout.rv_order_history)
 
         /*------------Hooks--------------*/
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -83,11 +72,9 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         orUsername = findViewById(R.id.username)
         orUserPhone = findViewById(R.id.user_phone)
         orUserAddr = findViewById(R.id.user_address)
+        purchaseId = findViewById(R.id.order_id)
+        orderDate = findViewById(R.id.order_date)
 
-        edit = findViewById(R.id.edit_details)
-        selectPaymentMethod = findViewById(R.id.select_payment_method)
-        selectMerchant = findViewById(R.id.select_merchant)
-        orderBtn = findViewById(R.id.order_btn)
         paymentMethod = findViewById(R.id.payment_method)
         merchantName = findViewById(R.id.merchant_name)
 
@@ -95,7 +82,7 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         productRecyclerView = findViewById(R.id.product_recyclerView)
         productRecyclerView.setHasFixedSize(true)
         productRecyclerView.layoutManager = LinearLayoutManager(productRecyclerView.context)
-        productArrayList = arrayListOf<CartItem>()
+        orderItemArrayList = arrayListOf<CartItem>()
 
         totalPrice = findViewById(R.id.total_price)
 
@@ -103,55 +90,60 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         updateNavHeader()
 
-        val totalCost = intent.getStringExtra("Total")
-        totalPrice.text = totalCost.toString()
+        val orderId = intent.getStringExtra("OrderID")
 
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 
-        dbrefUser = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
-        dbrefUser.addListenerForSingleValueEvent(object : ValueEventListener {
+        dbrefOrder = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+            .child("Purchase History").child("$orderId")
+
+        dbrefOrder.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                val user = snapshot.getValue(User::class.java)
-                orUsername.text = user?.username.toString()
-                orUserPhone.text = user?.mobileNo.toString()
-                orUserAddr.text = user?.address.toString()
+                val order = snapshot.getValue(Order::class.java)
+
+                purchaseId.text = order?.orderId.toString()
+                orderDate.text = order?.paymentDate.toString()
+
+                orUsername.text = order?.username.toString()
+                orUserPhone.text = order?.mobile.toString()
+                orUserAddr.text = order?.address.toString()
+
+                paymentMethod.text = order?.paymentMethod.toString()
+                merchantName.text = order?.paymentMerchant.toString()
 
             }
+
 
         })
 
 
-        Log.d("Profile Activity", "username: $uid")
-        dbrefProducts = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Cart")
-
-        dbrefProducts.addValueEventListener (object: ValueEventListener {
+        dbrefOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+            .child("Purchase History").child("$orderId").child("Items")
+        dbrefOrderItems.addValueEventListener( object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                productArrayList.clear()
-
-                if (snapshot.exists()) {
+                if(snapshot.exists()) {
                     for (productSnapshot in snapshot.children) {
                         val product = productSnapshot.getValue(CartItem::class.java)
-                        productArrayList.add(product!!)
+                        orderItemArrayList.add(product!!)
 
-                        var adapter = CartItemAdapter2(productArrayList)
+                        var adapter = CartItemAdapter2(orderItemArrayList)
                         productRecyclerView.adapter = adapter
                         adapter.setOnItemClickListener(object: CartItemAdapter2.onItemClickListener {
 
                             override fun onItemClick(position: Int) {
 
-                                val productName = productArrayList[position].itemName
+                                val productName = orderItemArrayList[position].itemName
 
-                                Toast.makeText(this@OrderActivity, "You clicked on $productName", Toast.LENGTH_SHORT).show()
-
+                                Toast.makeText(this@PurchaseHistoryDetails, "You clicked on $productName", Toast.LENGTH_SHORT).show()
 
 
                             }
@@ -168,131 +160,14 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         })
 
-        edit.setOnClickListener {
 
-            val intent = Intent(this@OrderActivity, ProfileActivity::class.java)
-            startActivity(intent)
 
-        }
-
-        selectPaymentMethod.setOnClickListener {
-
-            selectedPaymentMethod(it)
-
-        }
-
-        selectMerchant.setOnClickListener {
-
-            selectedMerchant(it)
-
-        }
-
-        orderBtn.setOnClickListener {
-
-            Toast.makeText(this@OrderActivity, "Your order will be processed", Toast.LENGTH_LONG).show()
-            createOrder()
-            val intent = Intent(this@OrderActivity, OnlineShoppingActivity::class.java)
-            startActivity(intent)
-
-        }
 
 
 
 
     }
 
-    private fun createOrder() {
-
-        val uid = FirebaseAuth.getInstance().currentUser?.uid
-
-        dbrefOrder = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Purchase History")
-
-        val orderId = UUID.randomUUID().toString()
-        val orderUser = orUsername.text.toString()
-        val orderPhone = orUserPhone.text.toString()
-        val orderAddr = orUserAddr.text.toString()
-        val orderPaymentMethod = paymentMethod.text.toString()
-        val orderPaymentMerchantName = merchantName.text.toString()
-        val orderPayment = totalPrice.text.toString().toDouble()
-        val paymentDate = LocalDateTime.now().toString()
-
-        val createOrder = Order(orderId, orderUser, orderPhone, orderAddr, orderPaymentMethod, orderPaymentMerchantName, orderPayment, paymentDate)
-
-        dbrefOrder.child("$orderId").setValue(createOrder)
-
-        dbrefOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Purchase History")
-
-        for(items in productArrayList) {
-
-            val nameOfItem = items.itemName.plus("(").plus(items.store).plus(")")
-
-            dbrefOrderItems.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
-
-        }
-
-
-    }
-
-    fun selectedPaymentMethod(view: View) {
-        var selectItem = paymentMethods[selectedIndex]
-        val langDialog =  MaterialAlertDialogBuilder(this)
-        langDialog.setTitle("Select Payment Method")
-        langDialog.setSingleChoiceItems(paymentMethods,selectedIndex) {
-            dialog, which ->
-            selectedIndex = which
-            selectItem = paymentMethods[which]
-
-        }
-        langDialog.setPositiveButton("Ok") {
-                dialog, which ->
-                paymentMethod.text = selectItem
-            merchantName.text = merchantNames[0]
-            if(selectItem.equals("Cash On Delivery")) {
-                merchantName.text = "-"
-            }
-                dialog.dismiss()
-        }
-        langDialog.setNeutralButton("Cancel") {
-                dialog, which ->
-                dialog.dismiss()
-        }
-        langDialog.show()
-
-
-    }
-
-
-    fun selectedMerchant(view: View) {
-
-        if (paymentMethod.text.equals("Cash On Delivery")) {
-            merchantName.text = "-"
-            Toast.makeText(this@OrderActivity, "No merchant required for cash on delivery", Toast.LENGTH_SHORT).show()
-        }
-        else {
-
-            var selectItem = merchantNames[selected]
-            val langDialog =  MaterialAlertDialogBuilder(this)
-            langDialog.setTitle("Select Payment Method")
-            langDialog.setSingleChoiceItems(merchantNames,selected) {
-                    dialog, which ->
-                selected = which
-                selectItem = merchantNames[which]
-            }
-            langDialog.setPositiveButton("Ok") {
-                    dialog, which ->
-                merchantName.text = selectItem
-                dialog.dismiss()
-            }
-            langDialog.setNeutralButton("Cancel") {
-                    dialog, which ->
-                dialog.dismiss()
-            }
-            langDialog.show()
-
-        }
-
-
-    }
 
 
 
@@ -371,42 +246,42 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         when (item.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@OrderActivity, Homepage::class.java)
+                val intent = Intent(this@PurchaseHistoryDetails, Homepage::class.java)
                 startActivity(intent)
             }
             R.id.nav_profile -> {
-                val intent = Intent(this@OrderActivity, ProfileActivity::class.java)
+                val intent = Intent(this@PurchaseHistoryDetails, ProfileActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_favourites -> {
-                val intent = Intent(this@OrderActivity, Favourites::class.java)
+                val intent = Intent(this@PurchaseHistoryDetails, Favourites::class.java)
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@OrderActivity, PurchaseHistoryActivity::class.java)
+                val intent = Intent(this@PurchaseHistoryDetails, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@OrderActivity, OnlineShopping::class.java)
+                val intent = Intent(this@PurchaseHistoryDetails, OnlineShopping::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {
-                val intent = Intent(this@OrderActivity, Favourites::class.java)
+                val intent = Intent(this@PurchaseHistoryDetails, Favourites::class.java)
                 startActivity(intent)
             }
             R.id.nav_settings -> {
-                val intent = Intent(this@OrderActivity, OnlineShopping::class.java)
+                val intent = Intent(this@PurchaseHistoryDetails, OnlineShopping::class.java)
                 startActivity(intent)
             }
             R.id.nav_logout -> {
-                val intent = Intent(this@OrderActivity, LoginActivity::class.java)
+                val intent = Intent(this@PurchaseHistoryDetails, LoginActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_share -> {
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_contact -> {
-                val intent = Intent(this@OrderActivity, Favourites::class.java)
+                val intent = Intent(this@PurchaseHistoryDetails, Favourites::class.java)
                 startActivity(intent)
             }
 

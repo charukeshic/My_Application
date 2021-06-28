@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OrderActivity"
+    tools:context=".PurchaseHistoryDetails"
     android:id="@+id/drawer_layout"
     android:background="@color/light_green"
     android:fitsSystemWindows="true"
@@ -68,21 +68,71 @@
             android:layout_margin="10dp"
             app:cardBackgroundColor="@color/white">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text_id"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Order Summary"
-                android:gravity="center"
-                android:padding="10dp"
+                android:text="Order ID : "
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
                 android:textSize="15sp"
                 android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/order_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="kjfhbwfjbf"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/text_order_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Order Date : "
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/order_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="13/2/456"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/delivery_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="10dp">
+                android:paddingTop="20dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -115,15 +165,6 @@
                     android:paddingLeft="10dp"
                     android:text="Not Updated"/>
 
-                <TextView
-                    android:id="@+id/edit_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Edit Details"
-                    android:paddingRight="10dp"
-                    android:layout_gravity="right"
-                    android:textColor="@color/dark_teal"/>
-
             </LinearLayout>
 
             <LinearLayout
@@ -131,7 +172,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="100dp">
+                android:layout_marginTop="120dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -146,7 +187,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/product_recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="450dp"
+                    android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/rv_order_item"
                     android:layout_marginBottom="40dp"/>
@@ -174,7 +215,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:layout_marginBottom="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -212,18 +254,7 @@
                     android:layout_height="wrap_content"
                     android:text="Cash On Delivery"
                     android:paddingLeft="10dp"
-                    android:layout_below="@id/payment"
-                    android:layout_marginBottom="30dp"/>
-
-                <TextView
-                    android:id="@+id/select_payment_method"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Change"
-                    android:layout_below="@id/payment"
-                    android:layout_alignRight="@id/payment_method"
-                    android:paddingRight="10dp"
-                    android:textColor="@color/dark_teal"/>
+                    android:layout_below="@id/payment"/>
 
                 <TextView
                     android:id="@+id/merchant"
@@ -233,7 +264,7 @@
                     android:paddingLeft="10dp"
                     android:textStyle="bold"
                     android:paddingTop="5dp"
-                    android:layout_below="@id/select_payment_method"/>
+                    android:layout_below="@id/payment_method"/>
 
                 <TextView
                     android:id="@+id/merchant_name"
@@ -244,28 +275,8 @@
                     android:layout_below="@id/merchant"
                     android:layout_marginBottom="30dp"/>
 
-                <TextView
-                    android:id="@+id/select_merchant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Change"
-                    android:layout_below="@id/merchant"
-                    android:layout_alignRight="@id/merchant_name"
-                    android:paddingRight="10dp"
-                    android:textColor="@color/dark_teal"/>
-
             </RelativeLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/order_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="Confirm Order"
-                android:textAllCaps="false"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="20dp"/>
 
         </androidx.cardview.widget.CardView>
 

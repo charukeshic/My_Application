@@ -354,10 +354,11 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 startActivity(intent)
             }
             R.id.nav_favourites -> {
-
+                val intent = Intent(this@ProfileActivity, Favourites::class.java)
+                startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@ProfileActivity, Favourites::class.java)
+                val intent = Intent(this@ProfileActivity, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {

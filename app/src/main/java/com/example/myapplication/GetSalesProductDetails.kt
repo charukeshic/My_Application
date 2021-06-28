@@ -185,7 +185,7 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
                 startActivity(intent)
             }
             R.id.nav_profile -> {
-                val intent = Intent(this@GetSalesProductDetails, Favourites::class.java)
+                val intent = Intent(this@GetSalesProductDetails, ProfileActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_favourites -> {
@@ -193,7 +193,7 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@GetSalesProductDetails, OnlineShopping::class.java)
+                val intent = Intent(this@GetSalesProductDetails, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {

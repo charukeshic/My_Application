@@ -142,7 +142,7 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@Homepage, Favourites::class.java)
+                val intent = Intent(this@Homepage, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {

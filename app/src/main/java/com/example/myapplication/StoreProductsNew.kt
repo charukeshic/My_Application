@@ -35,7 +35,7 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
     lateinit var cartIcon: ImageView
 
     private lateinit var productRecyclerView: RecyclerView
-    private lateinit var productArrayList: ArrayList<Product>
+    private lateinit var productArrayList: ArrayList<ProductDetails>
 
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var dbrefStore : DatabaseReference
@@ -69,7 +69,7 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
         productRecyclerView.setHasFixedSize(true)
         productRecyclerView.layoutManager = GridLayoutManager(this, 2)
 
-        productArrayList = arrayListOf<Product>()
+        productArrayList = arrayListOf<ProductDetails>()
         getProducts()
 
 
@@ -98,7 +98,7 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
         productRecyclerView.setHasFixedSize(true)
         productRecyclerView.layoutManager = GridLayoutManager(productRecyclerView.context,2)
 
-        productArrayList = arrayListOf<Product>()
+        productArrayList = arrayListOf<ProductDetails>()
 
         dbrefStore = FirebaseDatabase.getInstance().getReference("/Store")
 
@@ -126,7 +126,7 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 if(snapshot.exists()) {
                                     for (productSnapshot in snapshot.children) {
-                                        val product = productSnapshot.getValue(Product::class.java)
+                                        val product = productSnapshot.getValue(ProductDetails::class.java)
                                         product?.store = storeName.toString()
 
                                         productArrayList.add(product!!)
@@ -259,7 +259,7 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@StoreProductsNew, OnlineShopping::class.java)
+                val intent = Intent(this@StoreProductsNew, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {

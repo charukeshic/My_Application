@@ -9,9 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.GetProductDetails
-import com.example.myapplication.Mall
-import com.example.myapplication.Product
+import com.example.myapplication.*
 import com.example.myapplication.R
 import com.example.myapplication.adapters.ProductAdapter
 import com.google.firebase.database.*
@@ -21,7 +19,7 @@ class ComparePriceFragment(val mallName : String, val categoryName : String, val
     private lateinit var productRecyclerView: RecyclerView
     private lateinit var dbrefStore : DatabaseReference
     private lateinit var dbrefProducts : DatabaseReference
-    private lateinit var productArrayList: ArrayList<Product>
+    private lateinit var productArrayList: ArrayList<ProductDetails>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +32,7 @@ class ComparePriceFragment(val mallName : String, val categoryName : String, val
         productRecyclerView.setHasFixedSize(true)
         productRecyclerView.layoutManager = GridLayoutManager(productRecyclerView.context,2)
 
-        productArrayList = arrayListOf<Product>()
+        productArrayList = arrayListOf<ProductDetails>()
 
         dbrefStore = FirebaseDatabase.getInstance().getReference("/Store")
 
@@ -62,7 +60,7 @@ class ComparePriceFragment(val mallName : String, val categoryName : String, val
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 if(snapshot.exists()) {
 
-                                    val product = snapshot.getValue(Product::class.java)
+                                    val product = snapshot.getValue(ProductDetails::class.java)
                                     product?.store = storeName.toString()
 
                                     if(product?.store.equals(mallName)) {
