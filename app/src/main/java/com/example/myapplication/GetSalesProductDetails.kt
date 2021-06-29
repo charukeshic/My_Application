@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -20,8 +21,10 @@ import com.example.myapplication.adapters.ProductAdapter
 import com.example.myapplication.adapters.ProductDetailsAdapter
 import com.example.myapplication.fragments.ProductFragment
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
+import org.w3c.dom.Text
 
 class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,6 +50,7 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
         menuIcon = findViewById(R.id.menu_icon)
         cartIcon = findViewById(R.id.cart_icon)
 
+
         productArrayList = arrayListOf<SalesProduct>()
 
         val mall = intent.getStringExtra("SALE_MALL").toString()
@@ -58,6 +62,7 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
         navigationDrawer()
 
         getProductDetails(mall, product)
+
 
         cartIcon.setOnClickListener {
             getCartItems()
@@ -92,8 +97,10 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
                 val productOriPrice : TextView = findViewById(R.id.product_original_price)
                 val productDiscPrice : TextView = findViewById(R.id.product_discounted_price)
                 val productDetails : TextView = findViewById(R.id.item_details)
+                val textPrice : TextView = findViewById(R.id.text_price)
 
                 productOriPrice.setPaintFlags(productOriPrice.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+                textPrice.setPaintFlags(textPrice.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
 
                 val addEvent : LinearLayout = findViewById(R.id.create_event)
                 val addToFav : LinearLayout = findViewById(R.id.add_to_fav)
@@ -111,17 +118,70 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
                     storeName.text = product?.store.toString()
                     Picasso.get().load(product?.image).into(productImage)
 
+                    val title = "Reminder to buy ".plus(product?.itemName.toString()).plus(" from ").plus(product?.store.toString())
 
                     addEvent.setOnClickListener {
-                        Toast.makeText(this@GetSalesProductDetails, "$productName event added", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(Intent.ACTION_INSERT)
+                        intent.data = CalendarContract.Events.CONTENT_URI
+                        intent.putExtra(CalendarContract.Events.TITLE, title)
+
+                        if(intent.resolveActivity(getPackageManager()) != null){
+
+                            val name = product?.itemName.toString()
+                            val price = product?.discountedPrice.toString()
+                            val details = product?.itemDetails.toString()
+                            val store = product?.store.toString()
+                            val image = product?.image.toString()
+
+                            val productDetail = ProductDetails(name, store, image, price, details)
+
+                            addTheEvent(productDetail)
+                            startActivity(intent);
+                        }
+                        else{
+                            Toast.makeText(this@GetSalesProductDetails, "There is no app that support this action", Toast.LENGTH_SHORT).show();
+                        }
+                        //Toast.makeText(this@GetSalesProductDetails, "$productName event added", Toast.LENGTH_SHORT).show()
                     }
 
                     addToFav.setOnClickListener {
-                        Toast.makeText(this@GetSalesProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
+
+                        val name = product?.itemName.toString()
+                        val price = product?.discountedPrice.toString()
+                        val details = product?.itemDetails.toString()
+                        val store = product?.store.toString()
+                        val image = product?.image.toString()
+
+                        val productDetail = ProductDetails(name, store, image, price, details)
+
+                        addToFavourites(productDetail)
+                        //Toast.makeText(this@GetSalesProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
                     }
 
                     addToCart.setOnClickListener {
-                        Toast.makeText(this@GetSalesProductDetails, "$productName added to Cart", Toast.LENGTH_SHORT).show()
+
+                        val cartItemName = product?.itemName.toString()
+                        val cartItemStore = product?.store.toString()
+                        val cartItemImage = product?.image.toString()
+                        val cartItemDetails = product?.itemDetails.toString()
+                        val cartItemQuantity = 1
+                        val cartItemPrice = String.format("%.2f", product?.discountedPrice?.toDouble()).toDouble()
+                        val cartItemTotal = String.format("%.2f", (cartItemQuantity * cartItemPrice)).toDouble()
+
+                        val uid = FirebaseAuth.getInstance().currentUser?.uid
+                        Log.d("Profile Activity", "username: $uid")
+                        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Cart")
+
+                        val productName = product?.itemName.toString().plus("(").plus(product?.store).plus(")")
+
+                        val cartItem = CartItem(cartItemName, cartItemStore, cartItemImage, cartItemPrice, cartItemDetails, cartItemQuantity, cartItemTotal)
+
+                        ref.child("$productName").setValue(cartItem)
+                            .addOnSuccessListener {
+                                Toast.makeText(this@GetSalesProductDetails, "$productName added to cart", Toast.LENGTH_SHORT).show()
+                            }
+
+                        //Toast.makeText(this@GetSalesProductDetails, "$productName added to Cart", Toast.LENGTH_SHORT).show()
                     }
 
 
@@ -134,7 +194,34 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
     }
 
+    private fun addToFavourites(product : ProductDetails) {
 
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites")
+
+        val productName = product.itemName.toString().plus("(").plus(product.store).plus(")")
+
+        ref.child("$productName").setValue(product)
+            .addOnSuccessListener {
+                Toast.makeText(this@GetSalesProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
+            }
+
+    }
+
+
+    private fun addTheEvent(product : ProductDetails) {
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Events")
+
+        val productName = product.itemName.toString().plus("(").plus(product.store).plus(")")
+        ref.child("$productName").setValue(product)
+            .addOnSuccessListener {
+                Toast.makeText(this@GetSalesProductDetails, "Creating event for $productName", Toast.LENGTH_SHORT).show()
+            }
+
+    }
 
 
     private fun navigationDrawer() {

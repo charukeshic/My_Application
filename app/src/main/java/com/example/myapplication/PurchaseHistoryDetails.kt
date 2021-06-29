@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.CartItemAdapter2
 import com.example.myapplication.adapters.OrderHistoryAdapter
+import com.example.myapplication.adapters.ProductAdapter
 import com.example.myapplication.adapters.ProductDetailsAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -48,6 +49,7 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
     lateinit var paymentMethod : TextView
     lateinit var merchantName : TextView
+    lateinit var buyAgain : MaterialButton
 
     private lateinit var orderItemArrayList : ArrayList<CartItem>
     private lateinit var productRecyclerView: RecyclerView
@@ -77,6 +79,7 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
         paymentMethod = findViewById(R.id.payment_method)
         merchantName = findViewById(R.id.merchant_name)
+        buyAgain = findViewById(R.id.order_btn)
 
 
         productRecyclerView = findViewById(R.id.product_recyclerView)
@@ -115,60 +118,96 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
                 paymentMethod.text = order?.paymentMethod.toString()
                 merchantName.text = order?.paymentMerchant.toString()
 
+                totalPrice.text = String.format("%.2f", order?.orderPayment)
+
+
+                dbrefOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+                    .child("Purchase History").child("$orderId").child("Items")
+                dbrefOrderItems.addValueEventListener( object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+                        if(snapshot.exists()) {
+                            for (productSnapshot in snapshot.children) {
+                                val product = productSnapshot.getValue(CartItem::class.java)
+                                orderItemArrayList.add(product!!)
+
+                                var adapter = CartItemAdapter2(orderItemArrayList)
+                                productRecyclerView.adapter = adapter
+                                adapter.setOnItemClickListener(object : CartItemAdapter2.onItemClickListener{
+
+                                    override fun onItemClick(position: Int) {
+
+                                        val productName = orderItemArrayList[position].itemName
+                                        Toast.makeText(this@PurchaseHistoryDetails, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+
+                                    }
+
+                                })
+
+
+                            }
+
+                        }
+
+                    }
+
+
+                })
+
+
+
             }
 
 
         })
 
 
-        dbrefOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
-            .child("Purchase History").child("$orderId").child("Items")
-        dbrefOrderItems.addValueEventListener( object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                if(snapshot.exists()) {
-                    for (productSnapshot in snapshot.children) {
-                        val product = productSnapshot.getValue(CartItem::class.java)
-                        orderItemArrayList.add(product!!)
-
-                        var adapter = CartItemAdapter2(orderItemArrayList)
-                        productRecyclerView.adapter = adapter
-                        adapter.setOnItemClickListener(object: CartItemAdapter2.onItemClickListener {
-
-                            override fun onItemClick(position: Int) {
-
-                                val productName = orderItemArrayList[position].itemName
-
-                                Toast.makeText(this@PurchaseHistoryDetails, "You clicked on $productName", Toast.LENGTH_SHORT).show()
 
 
-                            }
+        buyAgain.setOnClickListener {
 
-                        })
+            dbrefOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+                .child("Purchase History").child("$orderId").child("Items")
+            dbrefOrderItems.addValueEventListener( object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
 
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    if(snapshot.exists()) {
+                        for (productSnapshot in snapshot.children) {
+                            val product = productSnapshot.getValue(CartItem::class.java)
+
+                            dbrefOrder = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Cart")
+
+                            val productName = product?.itemName.toString().plus("(").plus(product?.store).plus(")")
+
+                            dbrefOrder.child("$productName").setValue(product)
+
+
+                        }
 
                     }
 
                 }
 
-            }
+
+            })
 
 
-        })
+            val intent = Intent(this@PurchaseHistoryDetails, CartActivity::class.java)
+            startActivity(intent)
 
-
-
-
+        }
 
 
 
     }
-
-
 
 
     private fun navigationDrawer() {

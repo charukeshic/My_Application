@@ -190,92 +190,103 @@
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/rv_order_item"
-                    android:layout_marginBottom="40dp"/>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/payment_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="60dp"
-                android:layout_marginTop="600dp">
-
-                <TextView
-                    android:id="@+id/total_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Total"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:layout_marginBottom="20dp"/>
 
                 <RelativeLayout
+                    android:id="@+id/payment_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:paddingRight="10dp"
-                    android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="RM"
-                    android:paddingRight="50dp"
-                    android:gravity="right"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:orientation="vertical"
+                    android:paddingBottom="60dp">
 
                     <TextView
-                        android:id="@id/total_price"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/total_text"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="10.00"
-                        android:gravity="right"
+                        android:text="Total"
+                        android:gravity="center"
                         android:textStyle="bold"
-                        android:paddingLeft="30dp"
                         android:textSize="18sp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RM"
+                            android:paddingRight="50dp"
+                            android:gravity="right"
+                            android:textStyle="bold"
+                            android:textSize="18sp"/>
+
+                        <TextView
+                            android:id="@id/total_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10.00"
+                            android:gravity="right"
+                            android:textStyle="bold"
+                            android:paddingLeft="30dp"
+                            android:textSize="18sp"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/payment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Payment Details"
+                        android:layout_marginTop="30dp"
+                        android:paddingLeft="10dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/payment_method"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cash On Delivery"
+                        android:paddingLeft="10dp"
+                        android:layout_below="@id/payment"/>
+
+                    <TextView
+                        android:id="@+id/merchant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Merchant Details"
+                        android:paddingLeft="10dp"
+                        android:textStyle="bold"
+                        android:paddingTop="5dp"
+                        android:layout_below="@id/payment_method"/>
+
+                    <TextView
+                        android:id="@+id/merchant_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:paddingLeft="10dp"
+                        android:layout_below="@id/merchant"
+                        android:layout_marginBottom="30dp"/>
+
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/payment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Payment Details"
-                    android:layout_marginTop="25dp"
-                    android:paddingLeft="10dp"
-                    android:textStyle="bold" />
+            </LinearLayout>
 
-                <TextView
-                    android:id="@+id/payment_method"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cash On Delivery"
-                    android:paddingLeft="10dp"
-                    android:layout_below="@id/payment"/>
-
-                <TextView
-                    android:id="@+id/merchant"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Merchant Details"
-                    android:paddingLeft="10dp"
-                    android:textStyle="bold"
-                    android:paddingTop="5dp"
-                    android:layout_below="@id/payment_method"/>
-
-                <TextView
-                    android:id="@+id/merchant_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:paddingLeft="10dp"
-                    android:layout_below="@id/merchant"
-                    android:layout_marginBottom="30dp"/>
-
-            </RelativeLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/order_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Buy Again"
+                android:textAllCaps="false"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="20dp"/>
 
 
         </androidx.cardview.widget.CardView>

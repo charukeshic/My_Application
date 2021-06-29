@@ -14,41 +14,73 @@
     <string name="chooser_title">Grab</string>
 
     //Store details for recycler view
-    <string name="title_1">Grocery 1</string>
-    <string name="title_2">Grocery 2</string>
-    <string name="title_3">Grocery 3</string>
-    <string name="title_4">Grocery 4</string>
-    <string name="title_5">Grocery 5</string>
+    <string name="title_1">Marini’s on 57</string>
+    <string name="title_2">Troika Sky Dining</string>
+    <string name="title_3">Thirty8</string>
+    <string name="title_4">Enak KL</string>
+    <string name="title_5">Nobu Kuala Lumpur</string>
 
-    <string name="description_1">Welcome to visit us! 1</string>
-    <string name="description_2">Welcome to visit us! 2</string>
-    <string name="description_3">Welcome to visit us! 3</string>
-    <string name="description_4">Welcome to visit us! 4</string>
-    <string name="description_5">Welcome to visit us! 5</string>
+    <string name="description_1">An exclusive Italian ristorante on the 57th floor of PETRONAS Tower 3
+        (adjacent to Suria KLCC), Marini’s on 57 is a fine dining Kuala Lumpur restaurant offering gorgeous,
+        up-close views of the iconic PETRONAS Twin Towers through its floor-to-ceiling windows and glass roof.
+        Comprising a restaurant, bar and lounge, its décor is elegant and restrained, and the
+        kitchen offers a menu of haute Italian cuisine, with standout dishes such as
+        spaghetti with botargo (mullet roe) and almonds. </string>
+    <string name="description_2">Popular with young, trendy urbanites, from the outside The Troika blends in with the
+        rest of the city’s industrial skyline, looking like just any other concrete, steel and glass structure.
+        However, inside each of the building’s dining and drinking venues is an entirely different experience with low-key
+        yet stylish design schemes that allow the views to take centre stage.</string>
+    <string name="description_3">An unbeatable dining room, wine bar and lounge on the 38th floor of Kuala Lumpur’s Grand Hyatt Hotel,
+        Thirty8 KL is a market focused temptation to local and visiting gourmet enthusiasts. Offering a diverse menu of Chinese and Thai
+        seafood, Japanese sushi and sashimi and steaks, the elegant eatery is clearly one of the city’s best restaurants. Everything on the
+        menu is excellent but we are fans of the flawless symphony of fresh sushi and sashimi. Upscale yet inviting,
+        polished yet unpretentious, large wraparound windows offer spectacular views of the prominent PETRONAS Twin Towers.</string>
+    <string name="description_4">Enak KL is one of the city’s most famous high-end Malay restaurants. It is a pork-free restaurant set in
+        the classy Starhill Gallery Mall that specialises in spicy Malay food. One of the Malaysian Tatler’s 2011 ‘Best Restaurants’,
+        it was established in 2001 and serves an international clientele.</string>
+    <string name="description_5">Nobu Kuala Lumpur is a Michelin-starred titan in the world of sushi, sashimi and tempura. The world famous
+        restaurant, co-owned by American actor Robert De Niro, first started out in 1994 in New York. It went on to win critical acclaim
+        for its glorious dishes that were classically comforting yet creative, and chef Nobu Matsuhisa and his partners went on take the
+        world by storm, opening more than 29 franchises over the globe.</string>
 
-    <string name="details_1">Promotion : buy 1 free 1</string>
-    <string name="details_2">Promotion : buy 1 free 1</string>
-    <string name="details_3">Promotion : buy 1 free 1</string>
-    <string name="details_4">Promotion : buy 1 free 1</string>
-    <string name="details_5">Promotion : buy 1 free 1</string>
+    <string name="details_1">Promotion : Collection of bottles that include single cask whiskies from independent
+        bottlers and special-edition scotches from big distilleries</string>
+    <string name="details_2">Promotion : three-course meal here with truffled poached egg (RM50) with savoury barley c
+        ream, Swiss chard, egg yolk foam, beef fat vinaigrette, crisp dried beef and truffle batonnet</string>
+    <string name="details_3">Promotion : RM150 for thick, 200g cut of tenderloin and RM130 for a barbecue Australian Black Angus bone-in short rib.</string>
+    <string name="details_4">Promotion : Enak KL’s specialty desserts – the manisan kelapa muda enak (young coconut in rich, velvety custard topped with meringue) is the best way to indulge.</string>
+    <string name="details_5">Promotion : Chilean sea bass (RM150) marinated with red jalapeño miso – at once smoky, salty and sweet in flavour – will certainly be the surefire winner of the night’s meal.</string>
 
-    <string name="opHour_1">9am - 8pm</string>
-    <string name="opHour_2">9am - 8pm</string>
-    <string name="opHour_3">9am - 8pm</string>
-    <string name="opHour_4">9am - 8pm</string>
-    <string name="opHour_5">9am - 8pm</string>
+    <string name="opHour_1">Monday – Thursday 15:00 – 01:30, Friday and Saturday 15:00 - 03:00, Sunday 17:00 - 01:30</string>
+    <string name="opHour_2">Daily 12:00 – 15:00 and 18:00 – 23:00 (Strato), 16:00 – 01:00 (Claret), 18:30 – 22:30 (Cantaloupe Dining Room)</string>
+    <string name="opHour_3">12:00 – 15:00 and 18:00 – 23:00</string>
+    <string name="opHour_4">12:00 – 01:00</string>
+    <string name="opHour_5">Monday - Friday 12:00 - 14:00, 18:00 - 22:30, Saturday and Sunday 14:30 - 16:30, 18:00 - 23:00</string>
 
-    <string name="addr_1">KFC</string>
-    <string name="addr_2">Orchard Rd</string>
-    <string name="addr_3">Orchard Rd</string>
-    <string name="addr_4">Orchard Rd</string>
-    <string name="addr_5">Orchard Rd</string>
+    <string name="addr_1">Level 57, Menara 3 Petronas, Persiaran KLCC, Kuala Lumpur</string>
+    <string name="addr_2">Level 23A, Tower B, The Troika, 19 Persiaran KLCC, Kuala Lumpur</string>
+    <string name="addr_3">Level 38, 12 Jalan Pinang, Kuala Lumpur</string>
+    <string name="addr_4">LG2, Feast Floor, Starhill Gallery, 181 Jalan Bukit Bintang, 55100 Kuala Lumpur</string>
+    <string name="addr_5">Level 56, Menara 3 Petronas, Persiaran KLCC, Kuala Lumpur</string>
 
-    <string name="contact_1">011–31074570</string>
-    <string name="contact_2">03–4598734</string>
-    <string name="contact_3">03–4598734</string>
-    <string name="contact_4">03–4598734</string>
-    <string name="contact_5">03–4598734</string>
+    <string name="contact_1">+603 2386 6030</string>
+    <string name="contact_2">+603 2162 0886</string>
+    <string name="contact_3">+603 2182 1234</string>
+    <string name="contact_4">+603 2141 8973</string>
+    <string name="contact_5">+60 3 2164 5084</string>
+
+    <string name="bus_1">303, 402, GREEN, PURPLE</string>
+    <string name="bus_2">402, GREEN, PURPLE</string>
+    <string name="bus_3">402, GREEN, PURPLE</string>
+    <string name="bus_4">GOKL</string>
+    <string name="bus_5">303, 402, GREEN, PURPLE</string>
+
+    <string name="train_1">LRT - Bukit Nanas, Dang Wangi, Raja Chulan, Monorail - Raja Chulan</string>
+    <string name="train_2">LRT - KLCC, Ampang Park, Damai, Monorail - Raja Chulan</string>
+    <string name="train_3">LRT - KLCC, Bukit Bintang, Monorail - Raja Chulan</string>
+    <string name="train_4">LRT - Bukit Bintang, Monorail - Raja Chulan</string>
+    <string name="train_5">LRT - Bukit Nanas, Dang Wangi, Monorail - Raja Chulan</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

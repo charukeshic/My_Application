@@ -209,7 +209,7 @@
                                     android:background="@color/dark_teal"
                                     android:textColor="@color/white"
                                     android:padding="10dp"
-                                    android:text="Create Event"
+                                    android:text="Remind Me"
                                     android:textStyle="bold">
 
                                 </TextView>
@@ -227,7 +227,7 @@
                                 android:id="@+id/add_to_cart"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="100dp">
+                                android:layout_marginLeft="98dp">
 
                                 <TextView
                                     android:layout_width="wrap_content"

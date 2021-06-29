@@ -27,6 +27,7 @@ class PurchaseHistoryActivity : AppCompatActivity(), NavigationView.OnNavigation
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var menuIcon: ImageView
+    lateinit var cartIcon: ImageView
 
     lateinit var layoutHeader : View
     lateinit var userImage : ImageView
@@ -55,6 +56,7 @@ class PurchaseHistoryActivity : AppCompatActivity(), NavigationView.OnNavigation
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
+        cartIcon = findViewById(R.id.cart_icon)
 
         productRecyclerView = findViewById(R.id.product_recyclerView)
         productRecyclerView.setHasFixedSize(true)
@@ -111,7 +113,18 @@ class PurchaseHistoryActivity : AppCompatActivity(), NavigationView.OnNavigation
 
         })
 
+        cartIcon.setOnClickListener {
+            getCartItems()
+        }
 
+
+
+    }
+
+    private fun getCartItems() {
+
+        val intent = Intent(this@PurchaseHistoryActivity, CartActivity::class.java)
+        startActivity(intent)
 
     }
 

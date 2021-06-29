@@ -194,8 +194,8 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             val intent = Intent(this@OrderActivity, OnlineShoppingActivity::class.java)
             startActivity(intent)
 
-        }
 
+        }
 
 
 
@@ -227,6 +227,9 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             val nameOfItem = items.itemName.plus("(").plus(items.store).plus(")")
 
             dbrefOrderItems.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
+
+            dbrefProducts = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Cart")
+            dbrefProducts.child("$nameOfItem").removeValue()
 
         }
 

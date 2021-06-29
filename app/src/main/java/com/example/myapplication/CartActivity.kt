@@ -110,6 +110,13 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 }
 
+                else {
+                    totalCost.text = "0.00"
+                    placeOrder.setOnClickListener {
+                        Toast.makeText(this@CartActivity, "Nothing in cart", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
             }
 
 

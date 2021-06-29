@@ -18,6 +18,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 
 class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -29,6 +35,11 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
     lateinit var bookBtn: Button
     lateinit var navigateBtn: Button
     lateinit var grabBtn: Button
+
+    lateinit var layoutHeader : View
+    lateinit var userImage : ImageView
+    lateinit var userName : TextView
+    lateinit var userEmail : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +59,9 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val storeAddress : TextView = findViewById(R.id.item_address)
         val storeContact : TextView = findViewById(R.id.item_contact)
 
+        val busDetails : TextView = findViewById(R.id.bus_details)
+        val trainDetails : TextView = findViewById(R.id.train_details)
+
         callBtn = findViewById(R.id.call_btn)
         bookBtn = findViewById(R.id.book_btn)
         navigateBtn = findViewById(R.id.nav_btn)
@@ -62,6 +76,9 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val opHour = bundle.getString("operation")
         val address = bundle.getString("address")
         val contact = bundle.getString("contact")
+        val bus = bundle.getString("bus")
+        val train = bundle.getString("train")
+
 
         storeName.text = title
         storePic.setImageResource(image)
@@ -70,6 +87,8 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
         storeOpHour.text = opHour
         storeAddress.text = address
         storeContact.text = contact
+        busDetails.text = bus
+        trainDetails.text = train
 
         /*------------Hooks--------------*/
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -79,13 +98,16 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         navigationDrawer()
 
+        updateNavHeader()
+
         callBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(contact)))
             startActivity(intent)
         }
 
         bookBtn.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(contact)))
+
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("http://www.google.com")))
             startActivity(intent)
         }
 
@@ -144,6 +166,36 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
             } else
                 drawerLayout.openDrawer(GravityCompat.START)
         })
+
+    }
+
+    private fun updateNavHeader() {
+
+        layoutHeader = navigationView.getHeaderView(0)
+        userName = layoutHeader.findViewById(R.id.username1)
+        userImage = layoutHeader.findViewById(R.id.user_image)
+        userEmail = layoutHeader.findViewById(R.id.email1)
+
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                userName.text = user?.username.toString()
+                userEmail.text = user?.email.toString()
+                Picasso.get().load(user?.image).into(userImage)
+
+            }
+
+        })
+
 
     }
 

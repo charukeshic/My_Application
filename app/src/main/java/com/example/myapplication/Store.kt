@@ -7,5 +7,7 @@ data class Store(var itemTitle : String,
                  var itemDescription : String,
                  var opHour : String,
                  var address : String,
-                 var contactNum : String
+                 var contactNum : String,
+                 var busDetails : String,
+                 var trainDetails : String
 )

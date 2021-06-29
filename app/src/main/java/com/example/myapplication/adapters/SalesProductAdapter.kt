@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.SalesProduct
+import com.google.firebase.auth.TwitterAuthCredential
 import com.squareup.picasso.Picasso
 
 class SalesProductAdapter(private val productList : ArrayList<SalesProduct>) : RecyclerView.Adapter<SalesProductAdapter.SalesProductViewHolder>() {
@@ -45,6 +46,7 @@ class SalesProductAdapter(private val productList : ArrayList<SalesProduct>) : R
         holder.productDetails.text = currentItem.itemDetails
         holder.storeName.text = currentItem.store
         Picasso.get().load(currentItem.image).into(holder.productImage)
+        holder.priceText.setPaintFlags(holder.priceText.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
         //holder.mallImage.setImageResource(currentItem.image)
     }
 
@@ -57,6 +59,7 @@ class SalesProductAdapter(private val productList : ArrayList<SalesProduct>) : R
         val originalPrice : TextView = itemView.findViewById(R.id.product_originalPrice)
         val discountedPrice : TextView = itemView.findViewById(R.id.product_discountedPrice)
         val productDetails : TextView = itemView.findViewById(R.id.item_details)
+        val priceText : TextView = itemView.findViewById(R.id.text_price)
 
         init {
             itemView.setOnClickListener {

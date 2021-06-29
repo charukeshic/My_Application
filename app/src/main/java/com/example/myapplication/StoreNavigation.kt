@@ -19,7 +19,6 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -44,6 +43,8 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
     lateinit var opHour : Array<String>
     lateinit var address : Array<String>
     lateinit var contactNum : Array<String>
+    lateinit var bus : Array<String>
+    lateinit var train : Array<String>
 
     lateinit var layoutHeader : View
     lateinit var userImage : ImageView
@@ -75,11 +76,11 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
         imageId = arrayOf(
-            R.drawable.navbar_bg,
-            R.drawable.navbar_bg,
-            R.drawable.navbar_bg,
-            R.drawable.navbar_bg,
-            R.drawable.navbar_bg
+            R.drawable.marini,
+            R.drawable.troika,
+            R.drawable.thirty8,
+            R.drawable.enakkl,
+            R.drawable.nobukl
         )
 
         title = arrayOf(
@@ -130,10 +131,26 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.contact_5)
         )
 
+        bus = arrayOf(
+            getString(R.string.bus_1),
+            getString(R.string.bus_2),
+            getString(R.string.bus_3),
+            getString(R.string.bus_4),
+            getString(R.string.bus_5)
+        )
+
+        train = arrayOf(
+            getString(R.string.train_1),
+            getString(R.string.train_2),
+            getString(R.string.train_3),
+            getString(R.string.train_4),
+            getString(R.string.train_5)
+        )
+
 
         for (i in imageId.indices) {
 
-            val store = Store(title[i],details[i],imageId[i],description[i],opHour[i],address[i],contactNum[i])
+            val store = Store(title[i],details[i],imageId[i],description[i],opHour[i],address[i],contactNum[i], bus[i], train[i])
             storeArrayList.add(store)
 
         }
@@ -161,6 +178,8 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 intent.putExtra("operation", storeArrayList[position].opHour)
                 intent.putExtra("address", storeArrayList[position].address)
                 intent.putExtra("contact", storeArrayList[position].contactNum)
+                intent.putExtra("bus", storeArrayList[position].busDetails)
+                intent.putExtra("train", storeArrayList[position].trainDetails)
                 startActivity(intent)
 
             }
@@ -173,7 +192,6 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
-
 
 
         navigationDrawer()
@@ -308,7 +326,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 startActivity(intent)
             }
             R.id.nav_profile -> {
-                val intent = Intent(this@StoreNavigation, Favourites::class.java)
+                val intent = Intent(this@StoreNavigation, ProfileActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_favourites -> {
@@ -316,7 +334,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@StoreNavigation, OnlineShopping::class.java)
+                val intent = Intent(this@StoreNavigation, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {
