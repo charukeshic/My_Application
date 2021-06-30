@@ -195,6 +195,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                         product?.store = mallName.toString()
 
                         productArrayList.add(product!!)
+
                     }
 
                     var adapter = ProductAdapter(productArrayList)
@@ -236,6 +237,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         })
 
     }
+
 
 
 

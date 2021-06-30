@@ -14,7 +14,10 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import kotlin.coroutines.coroutineContext
 
@@ -52,19 +55,63 @@ class ProductDetailsAdapter(private val productList : ArrayList<ProductDetails>)
         Picasso.get().load(currentItem.image).into(holder.productImage)
         //holder.mallImage.setImageResource(currentItem.image)
 
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
+
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites").child("$productName")
+
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if(snapshot.exists()) {
+                    holder.favBtn.setImageResource(R.drawable.fav_icon_pink)
+                }
+                else
+                    holder.favBtn.setImageResource(R.drawable.heart_icon)
+
+            }
+
+        })
+
         holder.addToFav.setOnClickListener {
 
-            val uid = FirebaseAuth.getInstance().currentUser?.uid
-            Log.d("Profile Activity", "username: $uid")
-            val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites")
+            if(holder.favBtn.drawable.constantState == holder.favBtn.resources.getDrawable(R.drawable.heart_icon).constantState){
 
-            val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
+                val uid = FirebaseAuth.getInstance().currentUser?.uid
+                Log.d("Profile Activity", "username: $uid")
+                val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites")
 
-            ref.child("$productName").removeValue()
-                .addOnSuccessListener {
+                val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
 
-                    Toast.makeText(holder.itemView.context, "$productName removed from Favourites", Toast.LENGTH_SHORT).show()
-                }
+                ref.child("$productName").setValue(currentItem)
+                    .addOnSuccessListener {
+                        Toast.makeText(holder.itemView.context, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
+                    }
+
+                holder.favBtn.setImageResource(R.drawable.fav_icon_pink)
+            }
+            else if(holder.favBtn.drawable.constantState == holder.favBtn.resources.getDrawable(R.drawable.fav_icon_pink).constantState){
+
+                val uid = FirebaseAuth.getInstance().currentUser?.uid
+                Log.d("Profile Activity", "username: $uid")
+                val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites")
+
+                val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
+
+                ref.child("$productName").removeValue()
+                    .addOnSuccessListener {
+                        Toast.makeText(holder.itemView.context, "$productName removed from Favourites", Toast.LENGTH_SHORT).show()
+                    }
+
+
+                holder.favBtn.setImageResource(R.drawable.heart_icon)
+            }
 
         }
 
@@ -123,6 +170,8 @@ class ProductDetailsAdapter(private val productList : ArrayList<ProductDetails>)
     }
 
 
+
+
     class ProductDetailsViewHolder(itemView: View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
 
@@ -134,6 +183,7 @@ class ProductDetailsAdapter(private val productList : ArrayList<ProductDetails>)
         val addEvent : LinearLayout = itemView.findViewById(R.id.create_event)
         val addToFav : LinearLayout = itemView.findViewById(R.id.add_to_fav)
         val addToCart : LinearLayout = itemView.findViewById(R.id.add_to_cart)
+        val favBtn : ImageView = itemView.findViewById(R.id.fav_btn)
 
         init {
             itemView.setOnClickListener {

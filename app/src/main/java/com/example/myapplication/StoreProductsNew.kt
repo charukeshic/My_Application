@@ -130,6 +130,7 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
                                         product?.store = storeName.toString()
 
                                         productArrayList.add(product!!)
+
                                     }
 
                                     var adapter = ProductAdapter(productArrayList)
@@ -171,6 +172,7 @@ class StoreProductsNew : AppCompatActivity(), NavigationView.OnNavigationItemSel
         })
 
     }
+
 
 
     private fun navigationDrawer() {
