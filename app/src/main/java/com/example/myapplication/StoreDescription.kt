@@ -78,6 +78,7 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val contact = bundle.getString("contact")
         val bus = bundle.getString("bus")
         val train = bundle.getString("train")
+        val web = bundle.getString("web")
 
 
         storeName.text = title
@@ -107,7 +108,8 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         bookBtn.setOnClickListener {
 
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("http://www.google.com")))
+            val reservation = web.toString()
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("$reservation")))
             startActivity(intent)
         }
 
@@ -244,7 +246,7 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@StoreDescription, OnlineShopping::class.java)
+                val intent = Intent(this@StoreDescription, ActiveOrders::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {

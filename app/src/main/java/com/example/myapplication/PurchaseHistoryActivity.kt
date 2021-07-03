@@ -219,7 +219,7 @@ class PurchaseHistoryActivity : AppCompatActivity(), NavigationView.OnNavigation
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@PurchaseHistoryActivity, OnlineShopping::class.java)
+                val intent = Intent(this@PurchaseHistoryActivity, ActiveOrders::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {

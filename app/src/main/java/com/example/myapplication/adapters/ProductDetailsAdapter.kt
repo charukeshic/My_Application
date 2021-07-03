@@ -10,20 +10,23 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.*
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
-import kotlin.coroutines.coroutineContext
 
 class ProductDetailsAdapter(private val productList : ArrayList<ProductDetails>) : RecyclerView.Adapter<ProductDetailsAdapter.ProductDetailsViewHolder>() {
 
     private lateinit var mListener : onItemClickListener
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     interface onItemClickListener {
         fun onItemClick(position: Int)
@@ -37,7 +40,7 @@ class ProductDetailsAdapter(private val productList : ArrayList<ProductDetails>)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductDetailsViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_product_details, parent, false)
-
+        firebaseAnalytics = Firebase.analytics
         return ProductDetailsViewHolder(itemView, mListener)
     }
 
@@ -93,6 +96,10 @@ class ProductDetailsAdapter(private val productList : ArrayList<ProductDetails>)
                     .addOnSuccessListener {
                         Toast.makeText(holder.itemView.context, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
                     }
+
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                    param(FirebaseAnalytics.Param.ITEM_ID, productName)
+                }
 
                 holder.favBtn.setImageResource(R.drawable.fav_icon_pink)
             }
@@ -168,7 +175,6 @@ class ProductDetailsAdapter(private val productList : ArrayList<ProductDetails>)
 
 
     }
-
 
 
 

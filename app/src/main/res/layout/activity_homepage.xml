@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
@@ -80,6 +81,7 @@
             app:layout_constraintVertical_bias="0.617" />
 
         <ImageView
+            android:id="@+id/store_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginBottom="20dp"
@@ -92,6 +94,7 @@
             app:layout_constraintVertical_bias="0.998" />
 
         <ImageView
+            android:id="@+id/shopping_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginBottom="20dp"

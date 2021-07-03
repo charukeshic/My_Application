@@ -186,7 +186,7 @@ class OnlineShoppingActivity : AppCompatActivity(), NavigationView.OnNavigationI
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@OnlineShoppingActivity, OnlineShopping::class.java)
+                val intent = Intent(this@OnlineShoppingActivity, ActiveOrders::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {

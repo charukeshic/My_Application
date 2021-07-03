@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">AI Online Shopping Assistant</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -19,6 +19,11 @@
     <string name="title_3">Thirty8</string>
     <string name="title_4">Enak KL</string>
     <string name="title_5">Nobu Kuala Lumpur</string>
+    <string name="title_6">Marble 8 on 56</string>
+    <string name="title_7">El Toro Loco KL</string>
+    <string name="title_8">Positano Risto</string>
+    <string name="title_9">Canopy Rooftop Bar and Lounge</string>
+    <string name="title_10">Qureshi Malaysia</string>
 
     <string name="description_1">An exclusive Italian ristorante on the 57th floor of PETRONAS Tower 3
         (adjacent to Suria KLCC), Marini’s on 57 is a fine dining Kuala Lumpur restaurant offering gorgeous,
@@ -42,44 +47,108 @@
         restaurant, co-owned by American actor Robert De Niro, first started out in 1994 in New York. It went on to win critical acclaim
         for its glorious dishes that were classically comforting yet creative, and chef Nobu Matsuhisa and his partners went on take the
         world by storm, opening more than 29 franchises over the globe.</string>
+    <string name="description_6">Envisaged as the pinnacle of steakhouse dining with its own signature Marble 8 Cuts,
+        this part of the journey will redefine your understanding and appreciation of dry-aged beef, all against the
+        backdrop of Kuala Lumpur’s most desirable skyline, that of the majestic Twin Towers soaring into the sky. You
+        are most welcome to view the Steakhouse Menu Here. Before you conclude your evening’s magical journey, indulge
+        in the finest selection of whiskey and cigars amidst the trappings of old world charms in our privé.</string>
+    <string name="description_7">There are no limits or restrictions as to what defines a good tapa, which is why we at El Toro Loco present you with a
+        combination of old school classical as well as creative modern tapas.</string>
+    <string name="description_8">Positano Risto was created to give diners all over the world the choice for an amazing alcohol free Italian
+        dining experience. We strive to provide delicious food using only halal ingredients at great value with a unique ambience and fantastic
+        service while being able to do good for the community as well.</string>
+    <string name="description_9">Canopylounge by Tigerbay is the ultimate shisha smoking experience in Kuala Lumpur
+        with our exclusive cocktails and premium range of shisha tobacco from around the globe. Come and Relax in our Shisha Terrace / Rooftop
+        Restaurant or kick back in style in our VIP lounge and let our friendly staff do the rest. Enjoy fresh food &amp; desserts from our delicious
+        menu, all designed with a twist on the traditional indo-chinese cuisine and to be enjoyed on our spectacular rooftop terrace overlooking
+        the magnificent Petronas towers. We have the perfect setting to come and relax with friends and watch live sports or to enjoy one of many
+        of our live events including belly dancers and snake charmers. Come and visit us today!</string>
+    <string name="description_10">The distinction of making Indian Heritage cuisine world famous undoubtedly belongs to Grand Master Chef Imtiaz Qureshi. He was responsible for introducing the concept of the \'Stand-up Tandoor\' and \'Dum\'
+        by researching and perfecting them as Chef, at the various restaurants. Chef Imtiaz created recipes that are now on the menus of numerous
+        Indian restaurants world over. Qureshi’s name has been synonymous with good eating for over 200 years that they have been in operation.</string>
 
-    <string name="details_1">Promotion : Collection of bottles that include single cask whiskies from independent
+
+    <string name="details_1">Collection of bottles that include single cask whiskies from independent
         bottlers and special-edition scotches from big distilleries</string>
-    <string name="details_2">Promotion : three-course meal here with truffled poached egg (RM50) with savoury barley c
+    <string name="details_2">Three-course meal here with truffled poached egg (RM50) with savoury barley c
         ream, Swiss chard, egg yolk foam, beef fat vinaigrette, crisp dried beef and truffle batonnet</string>
-    <string name="details_3">Promotion : RM150 for thick, 200g cut of tenderloin and RM130 for a barbecue Australian Black Angus bone-in short rib.</string>
-    <string name="details_4">Promotion : Enak KL’s specialty desserts – the manisan kelapa muda enak (young coconut in rich, velvety custard topped with meringue) is the best way to indulge.</string>
-    <string name="details_5">Promotion : Chilean sea bass (RM150) marinated with red jalapeño miso – at once smoky, salty and sweet in flavour – will certainly be the surefire winner of the night’s meal.</string>
+    <string name="details_3">RM150 for thick, 200g cut of tenderloin and RM130 for a barbecue Australian Black Angus bone-in short rib.</string>
+    <string name="details_4">Enak KL’s specialty desserts – the manisan kelapa muda enak (young coconut in rich, velvety custard topped with meringue) is the best way to indulge.</string>
+    <string name="details_5">Chilean sea bass (RM150) marinated with red jalapeño miso – at once smoky, salty and sweet in flavour – will certainly be the surefire winner of the night’s meal.</string>
+    <string name="details_6">Lighter options on Marble 8 Steakhouse’s menu includes soy sauce marinated blue-eyed cod, rosemary grilled
+        spring chicken, as well as veal bacon carbonara with fettucine pasta and 32-month aged parmesan.</string>
+    <string name="details_7">Authentic Spanish tapas, wines and creative cocktails in a cozy streetside setting in the heart of Kuala Lumpur\'s CBD. Price range : MYR 4 - MYR 15</string>
+    <string name="details_8">Show us your MySejahtera and get an additional 10% off TOTAL BILL on top of all our current promotions. Let\'s do this together!</string>
+    <string name="details_9">For those with pure food indulgence in mind, choose from our authentically delicious Indian cuisine, from our mouth-watering dessert menu alongside our expertly made
+        cocktails guaranteed to spice up your evening. Our Kitchen is open till late night!</string>
+    <string name="details_10">Family Meals price range RM 45 - RM 70</string>
 
     <string name="opHour_1">Monday – Thursday 15:00 – 01:30, Friday and Saturday 15:00 - 03:00, Sunday 17:00 - 01:30</string>
     <string name="opHour_2">Daily 12:00 – 15:00 and 18:00 – 23:00 (Strato), 16:00 – 01:00 (Claret), 18:30 – 22:30 (Cantaloupe Dining Room)</string>
     <string name="opHour_3">12:00 – 15:00 and 18:00 – 23:00</string>
     <string name="opHour_4">12:00 – 01:00</string>
     <string name="opHour_5">Monday - Friday 12:00 - 14:00, 18:00 - 22:30, Saturday and Sunday 14:30 - 16:30, 18:00 - 23:00</string>
+    <string name="opHour_6">Lunch - 12 pm to 2.30 pm, last call 2.15 pm; Dinner - 7 pm to 11 pm, last call 10.45 pm</string>
+    <string name="opHour_7">Lunch - 12 pm to 2.30 pm, last call 2.15 pm; Dinner - 7 pm to 11 pm, last call 10.45 pm</string>
+    <string name="opHour_8">Lunch, Dinner, Brunch</string>
+    <string name="opHour_9">Our opening times are 3pm – 10pm only valid for takeaway &amp; delivery and no dine in</string>
+    <string name="opHour_10">11.30am - 10:30pm</string>
+
 
     <string name="addr_1">Level 57, Menara 3 Petronas, Persiaran KLCC, Kuala Lumpur</string>
     <string name="addr_2">Level 23A, Tower B, The Troika, 19 Persiaran KLCC, Kuala Lumpur</string>
     <string name="addr_3">Level 38, 12 Jalan Pinang, Kuala Lumpur</string>
     <string name="addr_4">LG2, Feast Floor, Starhill Gallery, 181 Jalan Bukit Bintang, 55100 Kuala Lumpur</string>
     <string name="addr_5">Level 56, Menara 3 Petronas, Persiaran KLCC, Kuala Lumpur</string>
+    <string name="addr_6">Level 56, Petronas Tower 3, Persiaran KLCC, Kuala Lumpur</string>
+    <string name="addr_7">Fraser Place Lot 163 10 Jalan Perak, Kuala Lumpur 50450 Malaysia</string>
+    <string name="addr_8">Block C1, Lot 2, Level G3, Publika Shopping Gallery, No. 1, Jalan Dutamas 1, Solaris Dutamas, 50480 Kuala Lumpur, Malaysia</string>
+    <string name="addr_9">2nd Floor 183 Jalan Mayang Off Jalan Yap Kwan Seng, Kuala Lumpur 50450 Malaysia</string>
+    <string name="addr_10">1 Ground Floor, East Wing, TPC Kuala Lumpur , No 10 Jalan 1/70D Off Jalan Bukit Kiara, Kuala Lumpur 60000 Malaysia</string>
 
     <string name="contact_1">+603 2386 6030</string>
     <string name="contact_2">+603 2162 0886</string>
     <string name="contact_3">+603 2182 1234</string>
     <string name="contact_4">+603 2141 8973</string>
-    <string name="contact_5">+60 3 2164 5084</string>
+    <string name="contact_5">+603 2164 5084</string>
+    <string name="contact_6">+603 2386 6030</string>
+    <string name="contact_7">+60 3-2181 7388</string>
+    <string name="contact_8">+60 3-6411 3799</string>
+    <string name="contact_9">+60 11-5139 8301</string>
+    <string name="contact_10">+60 17-244 0135</string>
 
     <string name="bus_1">303, 402, GREEN, PURPLE</string>
     <string name="bus_2">402, GREEN, PURPLE</string>
     <string name="bus_3">402, GREEN, PURPLE</string>
     <string name="bus_4">GOKL</string>
     <string name="bus_5">303, 402, GREEN, PURPLE</string>
+    <string name="bus_6">303, 402, GREEN, PURPLE</string>
+    <string name="bus_7">303, 402, GREEN, PURPLE</string>
+    <string name="bus_8">303, 402, GREEN, PURPLE</string>
+    <string name="bus_9">303, 402, GREEN, PURPLE</string>
+    <string name="bus_10">303, 402, GREEN, PURPLE</string>
 
     <string name="train_1">LRT - Bukit Nanas, Dang Wangi, Raja Chulan, Monorail - Raja Chulan</string>
     <string name="train_2">LRT - KLCC, Ampang Park, Damai, Monorail - Raja Chulan</string>
     <string name="train_3">LRT - KLCC, Bukit Bintang, Monorail - Raja Chulan</string>
     <string name="train_4">LRT - Bukit Bintang, Monorail - Raja Chulan</string>
     <string name="train_5">LRT - Bukit Nanas, Dang Wangi, Monorail - Raja Chulan</string>
+    <string name="train_6">LRT - Bukit Nanas, Dang Wangi, Raja Chulan, Monorail - Raja Chulan</string>
+    <string name="train_7">LRT - Bukit Nanas, Dang Wangi, Monorail - Raja Chulan</string>
+    <string name="train_8">LRT - Bukit Nanas, Dang Wangi, Monorail - Raja Chulan</string>
+    <string name="train_9">LRT - Bukit Nanas, Dang Wangi, Monorail - Raja Chulan</string>
+    <string name="train_10">LRT - Bukit Nanas, Dang Wangi, Monorail - Raja Chulan</string>
+
+    <string name="web_1">https://www.marble-8.com/online-reservation/</string>
+    <string name="web_2">https://etlkl.com/</string>
+    <string name="web_3">https://positanoristo.com.my/reservations/</string>
+    <string name="web_4">https://www.canopylounge.my/reservations/</string>
+    <string name="web_5">https://www.qureshi-intl.com/2/reservation.php</string>
+    <string name="web_6">https://www.marble-8.com/online-reservation/</string>
+    <string name="web_7">https://etlkl.com/</string>
+    <string name="web_8">https://positanoristo.com.my/reservations/</string>
+    <string name="web_9">https://www.canopylounge.my/reservations/</string>
+    <string name="web_10">https://www.qureshi-intl.com/2/reservation.php</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

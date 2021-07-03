@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -10,26 +11,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.viewpager.widget.ViewPager
-import com.example.myapplication.adapters.ViewPagerAdapter2
-import com.example.myapplication.fragments.ComparePriceFragment
-import com.example.myapplication.fragments.ProductFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.adapters.OrderHistoryAdapter
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 
-class StoreProducts2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    private lateinit var viewPager : ViewPager
-    private lateinit var tabs : TabLayout
+class ActiveOrders : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
@@ -40,8 +32,17 @@ class StoreProducts2 : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     lateinit var userImage : ImageView
     lateinit var userName : TextView
     lateinit var userEmail : TextView
+    lateinit var idTabs  : TextView
 
-    private lateinit var categoryArrayList: ArrayList<Category>
+
+    private lateinit var dbrefProducts : DatabaseReference
+    private lateinit var dbrefUser : DatabaseReference
+    private lateinit var productArrayList: ArrayList<Order>
+    private lateinit var productRecyclerView: RecyclerView
+
+    private lateinit var dbrefOrder : DatabaseReference
+    private lateinit var dbrefOrderItems : DatabaseReference
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,10 +51,7 @@ class StoreProducts2 : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        setContentView(R.layout.activity_store_products2)
-
-        tabs = findViewById(R.id.tabs)
-        viewPager = findViewById(R.id.viewPager)
+        setContentView(R.layout.activity_purchase_history)
 
         /*------------Hooks--------------*/
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -61,12 +59,63 @@ class StoreProducts2 : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         menuIcon = findViewById(R.id.menu_icon)
         cartIcon = findViewById(R.id.cart_icon)
 
+        productRecyclerView = findViewById(R.id.product_recyclerView)
+        productRecyclerView.setHasFixedSize(true)
+        productRecyclerView.layoutManager = LinearLayoutManager(productRecyclerView.context)
+        productArrayList = arrayListOf<Order>()
+
+        idTabs = findViewById(R.id.tabs)
+        idTabs.text = "Active Orders"
 
         navigationDrawer()
 
         updateNavHeader()
 
-        setUpTabs()
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        dbrefOrder = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Active Orders")
+
+        dbrefOrder.addValueEventListener (object: ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if (snapshot.exists()) {
+                    for (productSnapshot in snapshot.children) {
+                        val product = productSnapshot.getValue(Order::class.java)
+                        productArrayList.add(product!!)
+
+                        var adapter = OrderHistoryAdapter(productArrayList)
+                        productRecyclerView.adapter = adapter
+                        adapter.setOnItemClickListener(object: OrderHistoryAdapter.onItemClickListener {
+
+                            override fun onItemClick(position: Int) {
+
+                                val productName = productArrayList[position].orderId.toString()
+
+                                Toast.makeText(this@ActiveOrders, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this@ActiveOrders, ActiveOrderDetails::class.java)
+                                intent.putExtra("OrderID", productName)
+                                startActivity(intent)
+
+
+
+                            }
+
+                        })
+
+
+                    }
+
+                }
+
+            }
+
+
+        })
 
         cartIcon.setOnClickListener {
             getCartItems()
@@ -75,27 +124,9 @@ class StoreProducts2 : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
     }
 
-
-
-    private fun setUpTabs() {
-
-        val mall = intent.getStringExtra("MALL").toString()
-        val category = intent.getStringExtra("CATEGORY").toString()
-        val product = intent.getStringExtra("PRODUCT").toString()
-
-        val adapter = ViewPagerAdapter2(supportFragmentManager)
-        adapter.addFragment(ProductFragment(mall,category,product), "Product")
-        adapter.addFragment(ComparePriceFragment(mall,category,product), "Compare Price")
-        viewPager.adapter = adapter
-        tabs.setupWithViewPager(viewPager)
-
-
-
-    }
-
     private fun getCartItems() {
 
-        val intent = Intent(this@StoreProducts2, CartActivity::class.java)
+        val intent = Intent(this@ActiveOrders, CartActivity::class.java)
         startActivity(intent)
 
     }
@@ -106,7 +137,7 @@ class StoreProducts2 : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         navigationView.bringToFront()
         navigationView.setNavigationItemSelectedListener(this)
-        //navigationView.setCheckedItem(R.id.nav_home)
+        //navigationView.setCheckedItem(R.id.nav_favourites)
 
         menuIcon.setOnClickListener(View.OnClickListener {
             if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
@@ -145,6 +176,7 @@ class StoreProducts2 : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         })
 
 
+
     }
 
     override fun onBackPressed() {
@@ -174,42 +206,42 @@ class StoreProducts2 : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         when (item.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@StoreProducts2, Homepage::class.java)
+                val intent = Intent(this@ActiveOrders, Homepage::class.java)
                 startActivity(intent)
             }
             R.id.nav_profile -> {
-                val intent = Intent(this@StoreProducts2, ProfileActivity::class.java)
+                val intent = Intent(this@ActiveOrders, ProfileActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_favourites -> {
-                val intent = Intent(this@StoreProducts2, Favourites::class.java)
+                val intent = Intent(this@ActiveOrders, Favourites::class.java)
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@StoreProducts2, PurchaseHistoryActivity::class.java)
+                val intent = Intent(this@ActiveOrders, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@StoreProducts2, ActiveOrders::class.java)
+                val intent = Intent(this@ActiveOrders, ActiveOrders::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {
-                val intent = Intent(this@StoreProducts2, Favourites::class.java)
+                val intent = Intent(this@ActiveOrders, Favourites::class.java)
                 startActivity(intent)
             }
             R.id.nav_settings -> {
-                val intent = Intent(this@StoreProducts2, OnlineShopping::class.java)
+                val intent = Intent(this@ActiveOrders, OnlineShopping::class.java)
                 startActivity(intent)
             }
             R.id.nav_logout -> {
-                val intent = Intent(this@StoreProducts2, LoginActivity::class.java)
+                val intent = Intent(this@ActiveOrders, LoginActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_share -> {
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_contact -> {
-                val intent = Intent(this@StoreProducts2, Favourites::class.java)
+                val intent = Intent(this@ActiveOrders, Favourites::class.java)
                 startActivity(intent)
             }
 

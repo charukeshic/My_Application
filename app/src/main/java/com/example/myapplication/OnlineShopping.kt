@@ -11,9 +11,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.fragments.StoreFragment
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -206,6 +209,15 @@ class MallItem (val mall : Mall) : Item<ViewHolder>() {
 
         viewHolder.itemView.findViewById<Button>(R.id.mall_name).text = mall.title
         Picasso.get().load(mall.image).into(viewHolder.itemView.findViewById<ImageView>(R.id.mall_image))
+
+        viewHolder.itemView.findViewById<Button>(R.id.mall_name).setOnClickListener {
+
+            val intent = Intent(viewHolder.itemView.findViewById<Button>(R.id.mall_name).context, StoreProducts::class.java)
+            intent.putExtra(StoreFragment.STORE_KEY, mall.title)
+            startActivity(viewHolder.itemView.findViewById<Button>(R.id.mall_name).context, intent, null)
+
+        }
+
     }
 
     override fun getLayout(): Int {

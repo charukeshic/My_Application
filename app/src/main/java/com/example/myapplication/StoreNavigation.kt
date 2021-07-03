@@ -45,6 +45,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
     lateinit var contactNum : Array<String>
     lateinit var bus : Array<String>
     lateinit var train : Array<String>
+    lateinit var web : Array<String>
 
     lateinit var layoutHeader : View
     lateinit var userImage : ImageView
@@ -80,7 +81,12 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             R.drawable.troika,
             R.drawable.thirty8,
             R.drawable.enakkl,
-            R.drawable.nobukl
+            R.drawable.nobukl,
+            R.drawable.marble8,
+            R.drawable.toroloco,
+            R.drawable.positano,
+            R.drawable.roof_top4,
+            R.drawable.qureshi
         )
 
         title = arrayOf(
@@ -88,7 +94,13 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.title_2),
             getString(R.string.title_3),
             getString(R.string.title_4),
-            getString(R.string.title_5)
+            getString(R.string.title_5),
+            getString(R.string.title_6),
+            getString(R.string.title_7),
+            getString(R.string.title_8),
+            getString(R.string.title_9),
+            getString(R.string.title_10)
+
         )
 
         details = arrayOf(
@@ -96,7 +108,12 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.details_2),
             getString(R.string.details_3),
             getString(R.string.details_4),
-            getString(R.string.details_5)
+            getString(R.string.details_5),
+            getString(R.string.details_6),
+            getString(R.string.details_7),
+            getString(R.string.details_8),
+            getString(R.string.details_9),
+            getString(R.string.details_10)
         )
 
         description = arrayOf(
@@ -104,7 +121,13 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.description_2),
             getString(R.string.description_3),
             getString(R.string.description_4),
-            getString(R.string.description_5)
+            getString(R.string.description_5),
+            getString(R.string.description_6),
+            getString(R.string.description_7),
+            getString(R.string.description_8),
+            getString(R.string.description_9),
+            getString(R.string.description_10)
+
         )
 
         opHour = arrayOf(
@@ -112,7 +135,12 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.opHour_2),
             getString(R.string.opHour_3),
             getString(R.string.opHour_4),
-            getString(R.string.opHour_5)
+            getString(R.string.opHour_5),
+            getString(R.string.opHour_6),
+            getString(R.string.opHour_7),
+            getString(R.string.opHour_8),
+            getString(R.string.opHour_9),
+            getString(R.string.opHour_10)
         )
 
         address = arrayOf(
@@ -120,7 +148,12 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.addr_2),
             getString(R.string.addr_3),
             getString(R.string.addr_4),
-            getString(R.string.addr_5)
+            getString(R.string.addr_5),
+            getString(R.string.addr_6),
+            getString(R.string.addr_7),
+            getString(R.string.addr_8),
+            getString(R.string.addr_9),
+            getString(R.string.addr_10)
         )
 
         contactNum = arrayOf(
@@ -128,7 +161,12 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.contact_2),
             getString(R.string.contact_3),
             getString(R.string.contact_4),
-            getString(R.string.contact_5)
+            getString(R.string.contact_5),
+            getString(R.string.contact_6),
+            getString(R.string.contact_7),
+            getString(R.string.contact_8),
+            getString(R.string.contact_9),
+            getString(R.string.contact_10)
         )
 
         bus = arrayOf(
@@ -136,7 +174,13 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.bus_2),
             getString(R.string.bus_3),
             getString(R.string.bus_4),
-            getString(R.string.bus_5)
+            getString(R.string.bus_5),
+            getString(R.string.bus_6),
+            getString(R.string.bus_7),
+            getString(R.string.bus_8),
+            getString(R.string.bus_9),
+            getString(R.string.bus_10)
+
         )
 
         train = arrayOf(
@@ -144,13 +188,31 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.train_2),
             getString(R.string.train_3),
             getString(R.string.train_4),
-            getString(R.string.train_5)
+            getString(R.string.train_5),
+            getString(R.string.train_6),
+            getString(R.string.train_7),
+            getString(R.string.train_8),
+            getString(R.string.train_9),
+            getString(R.string.train_10)
+        )
+
+        web = arrayOf(
+            getString(R.string.web_1),
+            getString(R.string.web_2),
+            getString(R.string.web_3),
+            getString(R.string.web_4),
+            getString(R.string.web_5),
+            getString(R.string.web_6),
+            getString(R.string.web_7),
+            getString(R.string.web_8),
+            getString(R.string.web_9),
+            getString(R.string.web_10)
         )
 
 
         for (i in imageId.indices) {
 
-            val store = Store(title[i],details[i],imageId[i],description[i],opHour[i],address[i],contactNum[i], bus[i], train[i])
+            val store = Store(title[i],details[i],imageId[i],description[i],opHour[i],address[i],contactNum[i], bus[i], train[i], web[i])
             storeArrayList.add(store)
 
         }
@@ -180,6 +242,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 intent.putExtra("contact", storeArrayList[position].contactNum)
                 intent.putExtra("bus", storeArrayList[position].busDetails)
                 intent.putExtra("train", storeArrayList[position].trainDetails)
+                intent.putExtra("web", storeArrayList[position].webDetails)
                 startActivity(intent)
 
             }
@@ -338,7 +401,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@StoreNavigation, OnlineShopping::class.java)
+                val intent = Intent(this@StoreNavigation, ActiveOrders::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {

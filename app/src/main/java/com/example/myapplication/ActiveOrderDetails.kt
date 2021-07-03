@@ -29,7 +29,7 @@ import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
@@ -89,6 +89,8 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
         totalPrice = findViewById(R.id.total_price)
 
+        buyAgain.text = "Cancel / Refund Order"
+
         navigationDrawer()
 
         updateNavHeader()
@@ -122,7 +124,7 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
 
                 dbrefOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
-                    .child("Purchase History").child("$orderId").child("Items")
+                    .child("Active Orders").child("$orderId").child("Items")
                 dbrefOrderItems.addValueEventListener( object : ValueEventListener {
                     override fun onCancelled(error: DatabaseError) {
                         TODO("Not yet implemented")
@@ -142,7 +144,7 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
                                     override fun onItemClick(position: Int) {
 
                                         val productName = orderItemArrayList[position].itemName
-                                        Toast.makeText(this@PurchaseHistoryDetails, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this@ActiveOrderDetails, "You clicked on $productName", Toast.LENGTH_SHORT).show()
 
                                     }
 
@@ -170,38 +172,19 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
         buyAgain.setOnClickListener {
 
-            dbrefOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
-                .child("Purchase History").child("$orderId").child("Items")
-            dbrefOrderItems.addValueEventListener( object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
+            val langDialog =  MaterialAlertDialogBuilder(this)
+            langDialog.setMessage("Are you sure of cancelling this order?")
+            langDialog.setPositiveButton("Yes") {
+                    dialog, which ->
+                Toast.makeText(this@ActiveOrderDetails, "Your cancellation will be processed, our team shall contact you shortly.", Toast.LENGTH_LONG).show()
+                dialog.dismiss()
+            }
+            langDialog.setNeutralButton("No") {
+                    dialog, which ->
+                dialog.dismiss()
+            }
+            langDialog.show()
 
-                override fun onDataChange(snapshot: DataSnapshot) {
-
-                    if(snapshot.exists()) {
-                        for (productSnapshot in snapshot.children) {
-                            val product = productSnapshot.getValue(CartItem::class.java)
-
-                            dbrefOrder = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Cart")
-
-                            val productName = product?.itemName.toString().plus("(").plus(product?.store).plus(")")
-
-                            dbrefOrder.child("$productName").setValue(product)
-
-
-                        }
-
-                    }
-
-                }
-
-
-            })
-
-
-            val intent = Intent(this@PurchaseHistoryDetails, CartActivity::class.java)
-            startActivity(intent)
 
         }
 
@@ -285,42 +268,42 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
         when (item.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@PurchaseHistoryDetails, Homepage::class.java)
+                val intent = Intent(this@ActiveOrderDetails, Homepage::class.java)
                 startActivity(intent)
             }
             R.id.nav_profile -> {
-                val intent = Intent(this@PurchaseHistoryDetails, ProfileActivity::class.java)
+                val intent = Intent(this@ActiveOrderDetails, ProfileActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_favourites -> {
-                val intent = Intent(this@PurchaseHistoryDetails, Favourites::class.java)
+                val intent = Intent(this@ActiveOrderDetails, Favourites::class.java)
                 startActivity(intent)
             }
             R.id.nav_order_history -> {
-                val intent = Intent(this@PurchaseHistoryDetails, PurchaseHistoryActivity::class.java)
+                val intent = Intent(this@ActiveOrderDetails, PurchaseHistoryActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@PurchaseHistoryDetails, ActiveOrders::class.java)
+                val intent = Intent(this@ActiveOrderDetails, ActiveOrders::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {
-                val intent = Intent(this@PurchaseHistoryDetails, Favourites::class.java)
+                val intent = Intent(this@ActiveOrderDetails, Favourites::class.java)
                 startActivity(intent)
             }
             R.id.nav_settings -> {
-                val intent = Intent(this@PurchaseHistoryDetails, OnlineShopping::class.java)
+                val intent = Intent(this@ActiveOrderDetails, OnlineShopping::class.java)
                 startActivity(intent)
             }
             R.id.nav_logout -> {
-                val intent = Intent(this@PurchaseHistoryDetails, LoginActivity::class.java)
+                val intent = Intent(this@ActiveOrderDetails, LoginActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_share -> {
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_contact -> {
-                val intent = Intent(this@PurchaseHistoryDetails, Favourites::class.java)
+                val intent = Intent(this@ActiveOrderDetails, Favourites::class.java)
                 startActivity(intent)
             }
 

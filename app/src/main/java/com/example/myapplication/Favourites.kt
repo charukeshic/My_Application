@@ -215,7 +215,7 @@ class Favourites : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@Favourites, OnlineShopping::class.java)
+                val intent = Intent(this@Favourites, ActiveOrders::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {

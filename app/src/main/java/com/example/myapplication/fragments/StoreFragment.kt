@@ -42,6 +42,7 @@ class StoreFragment : Fragment() {
                         adapter.add(MallItem(mall))
 
                     }
+
                 }
 
                 adapter.setOnItemClickListener {item, view ->

@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -28,6 +29,8 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
     lateinit var toolbar: Toolbar
     lateinit var storeNavigation : Button
     lateinit var onlineShopping : Button
+    lateinit var storeImage : ImageView
+    lateinit var shoppingImage : ImageView
 
     lateinit var layoutHeader : View
     lateinit var userImage : ImageView
@@ -50,9 +53,12 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         storeNavigation = findViewById(R.id.store_navigation)
         onlineShopping = findViewById(R.id.online_shopping)
 
+        storeImage = findViewById(R.id.store_image)
+        shoppingImage = findViewById(R.id.shopping_image)
+
 
         /*------------Toolbar--------------*/
-        setSupportActionBar(toolbar)
+        //setSupportActionBar(toolbar)
 
         /*------------Navigation Drawer Menu--------------*/
         navigationView.bringToFront()
@@ -73,7 +79,19 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
             drawerLayout.closeDrawer(GravityCompat.START)
         })
 
+        storeImage.setOnClickListener(View.OnClickListener { view ->
+            val intent = Intent(this@Homepage, StoreNavigation::class.java)
+            startActivity(intent)
+            drawerLayout.closeDrawer(GravityCompat.START)
+        })
+
         onlineShopping.setOnClickListener(View.OnClickListener { view ->
+            val intent = Intent(this@Homepage, OnlineShoppingActivity::class.java)
+            startActivity(intent)
+            drawerLayout.closeDrawer(GravityCompat.START)
+        })
+
+        shoppingImage.setOnClickListener(View.OnClickListener { view ->
             val intent = Intent(this@Homepage, OnlineShoppingActivity::class.java)
             startActivity(intent)
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -146,7 +164,7 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@Homepage, Favourites::class.java)
+                val intent = Intent(this@Homepage, ActiveOrders::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {

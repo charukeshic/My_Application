@@ -17,8 +17,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 
 class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +41,8 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
     lateinit var userName : TextView
     lateinit var userEmail : TextView
 
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +60,7 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
         favBtn = findViewById(R.id.fav_btn)
 
         productArrayList = arrayListOf<ProductDetails>()
+        firebaseAnalytics = Firebase.analytics
 
         val mall = intent.getStringExtra("MALL").toString()
         val category = intent.getStringExtra("CATEGORY").toString()
@@ -207,8 +214,12 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
             .addOnSuccessListener {
                 Toast.makeText(this@GetProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
             }
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+            param(FirebaseAnalytics.Param.ITEM_ID, productName)
+        }
 
     }
+
 
     private fun removeFromFavourites(product : ProductDetails) {
 
@@ -354,7 +365,7 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@GetProductDetails, OnlineShopping::class.java)
+                val intent = Intent(this@GetProductDetails, ActiveOrders::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {

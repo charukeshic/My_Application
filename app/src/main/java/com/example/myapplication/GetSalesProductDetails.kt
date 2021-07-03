@@ -21,8 +21,12 @@ import com.example.myapplication.adapters.ProductAdapter
 import com.example.myapplication.adapters.ProductDetailsAdapter
 import com.example.myapplication.fragments.ProductFragment
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 
@@ -32,9 +36,12 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
     lateinit var navigationView: NavigationView
     lateinit var menuIcon: ImageView
     lateinit var cartIcon: ImageView
+    lateinit var favBtn : ImageView
 
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var productArrayList: ArrayList<SalesProduct>
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +56,11 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
         cartIcon = findViewById(R.id.cart_icon)
+        favBtn = findViewById(R.id.fav_btn)
 
 
         productArrayList = arrayListOf<SalesProduct>()
+        firebaseAnalytics = Firebase.analytics
 
         val mall = intent.getStringExtra("SALE_MALL").toString()
         val product = intent.getStringExtra("SALE_PRODUCT").toString()
@@ -120,6 +129,8 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
                     val title = "Reminder to buy ".plus(product?.itemName.toString()).plus(" from ").plus(product?.store.toString())
 
+                    checkFavourites(product!!)
+
                     addEvent.setOnClickListener {
                         val intent = Intent(Intent.ACTION_INSERT)
                         intent.data = CalendarContract.Events.CONTENT_URI
@@ -154,7 +165,14 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
                         val productDetail = ProductDetails(name, store, image, price, details)
 
-                        addToFavourites(productDetail)
+                        if(favBtn.drawable.constantState == resources.getDrawable(R.drawable.heart_icon).constantState){
+                            addToFavourites(productDetail)
+                            favBtn.setImageResource(R.drawable.fav_icon_pink)
+                        }
+                        else if(favBtn.drawable.constantState == resources.getDrawable(R.drawable.fav_icon_pink).constantState){
+                            removeFromFavourites(productDetail)
+                            favBtn.setImageResource(R.drawable.heart_icon)
+                        }
                         //Toast.makeText(this@GetSalesProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
                     }
 
@@ -194,6 +212,34 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
     }
 
+    private fun checkFavourites(product: SalesProduct) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+
+
+        val productName = product.itemName.toString().plus("(").plus(product.store).plus(")")
+
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites").child("$productName")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if(snapshot.exists()) {
+                    favBtn.setImageResource(R.drawable.fav_icon_pink)
+                }
+                else
+                    favBtn.setImageResource(R.drawable.heart_icon)
+
+            }
+
+        })
+
+    }
+
     private fun addToFavourites(product : ProductDetails) {
 
         val uid = FirebaseAuth.getInstance().currentUser?.uid
@@ -205,6 +251,28 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
         ref.child("$productName").setValue(product)
             .addOnSuccessListener {
                 Toast.makeText(this@GetSalesProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
+
+            }
+
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+            param(FirebaseAnalytics.Param.ITEM_ID, productName)
+        }
+
+
+    }
+
+
+    private fun removeFromFavourites(product : ProductDetails) {
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("Profile Activity", "username: $uid")
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites")
+
+        val productName = product.itemName.toString().plus("(").plus(product.store).plus(")")
+
+        ref.child("$productName").removeValue()
+            .addOnSuccessListener {
+                Toast.makeText(this@GetSalesProductDetails, "$productName removed from Favourites", Toast.LENGTH_SHORT).show()
             }
 
     }
@@ -284,7 +352,7 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
                 startActivity(intent)
             }
             R.id.nav_orders -> {
-                val intent = Intent(this@GetSalesProductDetails, OnlineShopping::class.java)
+                val intent = Intent(this@GetSalesProductDetails, ActiveOrders::class.java)
                 startActivity(intent)
             }
             R.id.nav_events -> {

@@ -91,6 +91,18 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Promotion"
+                            android:textColor="@color/dark_teal"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="2dp"/>
+
+                        <TextView
                             android:id="@+id/item_details"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -98,9 +110,23 @@
                             android:text="Promotion"
                             android:textSize="20dp"
                             android:textStyle="bold"
+                            android:breakStrategy="high_quality"
+                            android:ellipsize="none"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/item_title" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Operation Hours"
+                            android:textColor="@color/dark_teal"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="2dp"/>
 
                         <TextView
                             android:id="@+id/item_opHour"
@@ -109,10 +135,24 @@
                             android:padding="10dp"
                             android:text="Operation Hours"
                             android:textSize="20dp"
+                            android:breakStrategy="high_quality"
+                            android:ellipsize="none"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/item_details" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Address"
+                            android:textColor="@color/dark_teal"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="2dp"/>
 
                         <TextView
                             android:id="@+id/item_address"
@@ -120,11 +160,25 @@
                             android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:text="Address"
+                            android:breakStrategy="high_quality"
+                            android:ellipsize="none"
                             android:textSize="20dp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/item_opHour" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Contact"
+                            android:textColor="@color/dark_teal"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="2dp"/>
 
                         <TextView
                             android:id="@+id/item_contact"
@@ -145,6 +199,8 @@
                             android:padding="10dp"
                             android:text="Description"
                             android:textSize="20dp"
+                            android:breakStrategy="simple"
+                            android:ellipsize="none"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/item_contact" />
@@ -156,6 +212,8 @@
                             android:padding="10dp"
                             android:text="Transportation"
                             android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/dark_teal"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/item_description" />
