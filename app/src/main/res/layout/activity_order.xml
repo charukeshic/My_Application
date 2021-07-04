@@ -162,10 +162,38 @@
                 android:layout_marginTop="600dp">
 
                 <TextView
-                    android:id="@+id/total_text"
+                    android:id="@+id/sub_price_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Total"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tax_price_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Service Tax(6%)"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/delivery_price_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Delivery Fee"
+                    android:gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/total_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Grand Total"
+                    android:layout_marginTop="60dp"
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textSize="18sp"/>
@@ -176,17 +204,17 @@
                     android:gravity="right"
                     android:paddingRight="10dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="RM"
-                    android:paddingRight="50dp"
-                    android:gravity="right"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RM"
+                        android:textStyle="bold"
+                        android:paddingRight="50dp"
+                        android:gravity="right"
+                        android:textSize="18sp"/>
 
                     <TextView
-                        android:id="@id/total_price"
+                        android:id="@+id/sub_total_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10.00"
@@ -197,12 +225,92 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:layout_marginTop="20dp"
+                    android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RM"
+                    android:paddingRight="50dp"
+                    android:gravity="right"
+                    android:textSize="18sp"/>
+
+                    <TextView
+                        android:id="@+id/tax_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10.00"
+                        android:gravity="right"
+                        android:paddingLeft="30dp"
+                        android:textSize="18sp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="40dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RM"
+                        android:paddingRight="50dp"
+                        android:gravity="right"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:id="@+id/delivery_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10.00"
+                        android:gravity="right"
+                        android:paddingLeft="30dp"
+                        android:textSize="18sp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="60dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RM"
+                        android:paddingRight="50dp"
+                        android:gravity="right"
+                        android:textStyle="bold"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:id="@+id/total_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingLeft="30dp"
+                        android:text="10.00"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
                 <TextView
                     android:id="@+id/payment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Payment Details"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="90dp"
                     android:paddingLeft="10dp"
                     android:textStyle="bold" />
 

@@ -46,12 +46,16 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
     lateinit var totalPrice : TextView
     lateinit var purchaseId : TextView
     lateinit var orderDate: TextView
+    lateinit var taxPrice : TextView
+    lateinit var deliveryPrice : TextView
+    lateinit var subTotal : TextView
 
     lateinit var paymentMethod : TextView
     lateinit var merchantName : TextView
     lateinit var buyAgain : MaterialButton
 
     private lateinit var orderItemArrayList : ArrayList<CartItem>
+    private lateinit var totalCostArrayList: ArrayList<Double>
     private lateinit var productRecyclerView: RecyclerView
 
     private lateinit var dbrefOrder : DatabaseReference
@@ -86,8 +90,12 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
         productRecyclerView.setHasFixedSize(true)
         productRecyclerView.layoutManager = LinearLayoutManager(productRecyclerView.context)
         orderItemArrayList = arrayListOf<CartItem>()
+        totalCostArrayList = arrayListOf<Double>()
 
         totalPrice = findViewById(R.id.total_price)
+        deliveryPrice = findViewById(R.id.delivery_price)
+        taxPrice = findViewById(R.id.tax_price)
+        subTotal = findViewById(R.id.sub_total_price)
 
         buyAgain.text = "Cancel / Refund Order"
 
@@ -121,6 +129,7 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
                 merchantName.text = order?.paymentMerchant.toString()
 
                 totalPrice.text = String.format("%.2f", order?.orderPayment)
+                deliveryPrice.text = String.format("%.2f", 5.00)
 
 
                 dbrefOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
@@ -136,6 +145,7 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
                             for (productSnapshot in snapshot.children) {
                                 val product = productSnapshot.getValue(CartItem::class.java)
                                 orderItemArrayList.add(product!!)
+                                totalCostArrayList.add(product.total)
 
                                 var adapter = CartItemAdapter2(orderItemArrayList)
                                 productRecyclerView.adapter = adapter
@@ -153,7 +163,12 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
 
                             }
 
+                            subTotal.text = String.format("%.2f", totalCostArrayList.sum())
+                            taxPrice.text = String.format("%.2f", (totalCostArrayList.sum() * 0.06))
+
+
                         }
+
 
                     }
 
@@ -163,6 +178,7 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
 
 
             }
+
 
 
         })

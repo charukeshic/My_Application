@@ -42,6 +42,9 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     lateinit var orUserPhone : TextView
     lateinit var orUserAddr : TextView
     lateinit var totalPrice : TextView
+    lateinit var taxPrice : TextView
+    lateinit var deliveryPrice : TextView
+    lateinit var subTotal : TextView
 
     lateinit var edit : TextView
     lateinit var selectPaymentMethod : TextView
@@ -101,13 +104,21 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         productArrayList = arrayListOf<CartItem>()
 
         totalPrice = findViewById(R.id.total_price)
+        deliveryPrice = findViewById(R.id.delivery_price)
+        taxPrice = findViewById(R.id.tax_price)
+        subTotal = findViewById(R.id.sub_total_price)
 
         navigationDrawer()
 
         updateNavHeader()
 
         val totalCost = intent.getStringExtra("Total")
-        totalPrice.text = totalCost.toString()
+
+        subTotal.text = String.format("%.2f", totalCost!!.toDouble())
+        deliveryPrice.text = String.format("%.2f", 5.00)
+        taxPrice.text = String.format("%.2f", (totalCost!!.toDouble() * 0.06))
+        val sum = (totalCost.toDouble().plus(5.00).plus((totalCost!!.toDouble() * 0.06.toDouble())))
+        totalPrice.text = String.format("%.2f", sum)
 
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 
