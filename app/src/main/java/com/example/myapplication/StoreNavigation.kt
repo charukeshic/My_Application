@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +20,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -53,6 +55,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
     lateinit var userEmail : TextView
 
     lateinit var search_toolbar: Toolbar
+    lateinit var chatbot : FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -65,6 +68,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         search_toolbar = findViewById(R.id.my_toolbar)
         setSupportActionBar(findViewById(R.id.my_toolbar))
+        chatbot = findViewById(R.id.chatbot)
 
 
         recyclerView = findViewById(R.id.recyclerView)
@@ -261,6 +265,15 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         updateNavHeader()
 
+        chatbot.setOnClickListener {
+
+            val chat = "https://bot.dialogflow.com/4b46cec3-39cf-469f-a214-6853462738be"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("$chat")))
+            startActivity(intent)
+
+        }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -307,6 +320,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         return super.onCreateOptionsMenu(menu)
     }
+
 
 
     private fun navigationDrawer() {
