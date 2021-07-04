@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "614625193008",
+    "project_id": "ai-online-shopping-assist",
+    "storage_bucket": "ai-online-shopping-assist.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614625193008:android:49ca47e4c5def0912751f5",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "614625193008-afqqblige90utout58smg4fh9o4stl1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo1U8BsbiYVrpCE_uc_VxSM6yjgP0l-o8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "614625193008-afqqblige90utout58smg4fh9o4stl1a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
