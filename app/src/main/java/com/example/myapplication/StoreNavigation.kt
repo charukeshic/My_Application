@@ -10,10 +10,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -48,6 +46,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
     lateinit var bus : Array<String>
     lateinit var train : Array<String>
     lateinit var web : Array<String>
+    lateinit var category : Array<String>
 
     lateinit var layoutHeader : View
     lateinit var userImage : ImageView
@@ -56,6 +55,8 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     lateinit var search_toolbar: Toolbar
     lateinit var chatbot : FloatingActionButton
+
+    lateinit var spinner : Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -69,6 +70,8 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
         search_toolbar = findViewById(R.id.my_toolbar)
         setSupportActionBar(findViewById(R.id.my_toolbar))
         chatbot = findViewById(R.id.chatbot)
+
+        spinner = findViewById(R.id.category_spinner)
 
 
         recyclerView = findViewById(R.id.recyclerView)
@@ -213,10 +216,23 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.web_10)
         )
 
+        category = arrayOf(
+            getString(R.string.cat_1),
+            getString(R.string.cat_2),
+            getString(R.string.cat_3),
+            getString(R.string.cat_1),
+            getString(R.string.cat_2),
+            getString(R.string.cat_3),
+            getString(R.string.cat_1),
+            getString(R.string.cat_2),
+            getString(R.string.cat_3),
+            getString(R.string.cat_1)
+        )
+
 
         for (i in imageId.indices) {
 
-            val store = Store(title[i],details[i],imageId[i],description[i],opHour[i],address[i],contactNum[i], bus[i], train[i], web[i])
+            val store = Store(title[i],details[i],imageId[i],description[i],opHour[i],address[i],contactNum[i], bus[i], train[i], web[i], category[i])
             storeArrayList.add(store)
 
         }
@@ -265,16 +281,66 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         updateNavHeader()
 
+        val options = arrayOf("All", "Restaurant", "Salon", "Grocery Store")
+
+        spinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,options)
+
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+                tempArrayList.clear()
+                val searchText = options[position]
+                if (searchText.isNotEmpty()) {
+                    storeArrayList.forEach {
+
+                        if (it.category!!.equals(searchText)) {
+
+                            tempArrayList.add(it)
+
+                        }
+                        else if (options[position].equals("All")) {
+
+                            tempArrayList.addAll(storeArrayList)
+
+                        }
+
+
+                    }
+
+                    recyclerView.adapter!!.notifyDataSetChanged()
+
+                }
+
+            }
+
+        }
+
+
+
         chatbot.setOnClickListener {
 
-            val chat = "https://bot.dialogflow.com/4b46cec3-39cf-469f-a214-6853462738be"
+            val chat = "https://dialogflow.cloud.google.com/#/agent/shoppingchatbot-alpv/integrations"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("$chat")))
             startActivity(intent)
+
 
         }
 
 
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 

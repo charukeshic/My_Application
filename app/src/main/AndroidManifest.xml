@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myapplication">
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:replace="android:theme">
+        <activity android:name=".ChatbotActivity"></activity>
         <activity android:name=".ActiveOrders" />
         <activity android:name=".ActiveOrderDetails" />
         <activity android:name=".PurchaseHistoryActivity" />

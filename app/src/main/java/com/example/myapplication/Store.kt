@@ -10,5 +10,6 @@ data class Store(var itemTitle : String,
                  var contactNum : String,
                  var busDetails : String,
                  var trainDetails : String,
-                 var webDetails : String
+                 var webDetails : String,
+                 var category : String
 )
