@@ -15,6 +15,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,28 +36,31 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private lateinit var recyclerView: RecyclerView
     private lateinit var storeArrayList: ArrayList<Store>
     private lateinit var tempArrayList: ArrayList<Store>
+    private lateinit var tempArrayList2: ArrayList<Store>
 
-    lateinit var imageId : Array<Int>
-    lateinit var title : Array<String>
-    lateinit var details : Array<String>
-    lateinit var description : Array<String>
-    lateinit var opHour : Array<String>
-    lateinit var address : Array<String>
-    lateinit var contactNum : Array<String>
-    lateinit var bus : Array<String>
-    lateinit var train : Array<String>
-    lateinit var web : Array<String>
-    lateinit var category : Array<String>
+    lateinit var imageId: Array<Int>
+    lateinit var title: Array<String>
+    lateinit var details: Array<String>
+    lateinit var description: Array<String>
+    lateinit var opHour: Array<String>
+    lateinit var address: Array<String>
+    lateinit var contactNum: Array<String>
+    lateinit var bus: Array<String>
+    lateinit var train: Array<String>
+    lateinit var web: Array<String>
+    lateinit var category: Array<String>
+    lateinit var promotion: Array<String>
 
-    lateinit var layoutHeader : View
-    lateinit var userImage : ImageView
-    lateinit var userName : TextView
-    lateinit var userEmail : TextView
+    lateinit var layoutHeader: View
+    lateinit var userImage: ImageView
+    lateinit var userName: TextView
+    lateinit var userEmail: TextView
 
     lateinit var search_toolbar: Toolbar
-    lateinit var chatbot : FloatingActionButton
+    lateinit var chatbot: FloatingActionButton
 
-    lateinit var spinner : Spinner
+    lateinit var spinner: Spinner
+    lateinit var promoCheckBox: CheckBox
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -72,7 +76,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
         chatbot = findViewById(R.id.chatbot)
 
         spinner = findViewById(R.id.category_spinner)
-
+        promoCheckBox = findViewById(R.id.promo_check)
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -81,6 +85,9 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
         storeArrayList = arrayListOf<Store>()
 
         tempArrayList = arrayListOf<Store>()
+
+        tempArrayList2 = arrayListOf<Store>()
+
 
 
         imageId = arrayOf(
@@ -229,10 +236,36 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.cat_1)
         )
 
+        promotion = arrayOf(
+            getString(R.string.promo_2),
+            getString(R.string.promo_1),
+            getString(R.string.promo_1),
+            getString(R.string.promo_2),
+            getString(R.string.promo_1),
+            getString(R.string.promo_1),
+            getString(R.string.promo_2),
+            getString(R.string.promo_1),
+            getString(R.string.promo_1),
+            getString(R.string.promo_1)
+        )
+
 
         for (i in imageId.indices) {
 
-            val store = Store(title[i],details[i],imageId[i],description[i],opHour[i],address[i],contactNum[i], bus[i], train[i], web[i], category[i])
+            val store = Store(
+                title[i],
+                details[i],
+                imageId[i],
+                description[i],
+                opHour[i],
+                address[i],
+                contactNum[i],
+                bus[i],
+                train[i],
+                web[i],
+                category[i],
+                promotion[i]
+            )
             storeArrayList.add(store)
 
         }
@@ -253,16 +286,16 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             override fun onItemClick(position: Int) {
 
                 val intent = Intent(this@StoreNavigation, StoreDescription::class.java)
-                intent.putExtra("title", storeArrayList[position].itemTitle)
-                intent.putExtra("image", storeArrayList[position].itemImage)
-                intent.putExtra("details", storeArrayList[position].itemDetails)
-                intent.putExtra("description", storeArrayList[position].itemDescription)
-                intent.putExtra("operation", storeArrayList[position].opHour)
-                intent.putExtra("address", storeArrayList[position].address)
-                intent.putExtra("contact", storeArrayList[position].contactNum)
-                intent.putExtra("bus", storeArrayList[position].busDetails)
-                intent.putExtra("train", storeArrayList[position].trainDetails)
-                intent.putExtra("web", storeArrayList[position].webDetails)
+                intent.putExtra("title", tempArrayList[position].itemTitle)
+                intent.putExtra("image", tempArrayList[position].itemImage)
+                intent.putExtra("details", tempArrayList[position].itemDetails)
+                intent.putExtra("description", tempArrayList[position].itemDescription)
+                intent.putExtra("operation", tempArrayList[position].opHour)
+                intent.putExtra("address", tempArrayList[position].address)
+                intent.putExtra("contact", tempArrayList[position].contactNum)
+                intent.putExtra("bus", tempArrayList[position].busDetails)
+                intent.putExtra("train", tempArrayList[position].trainDetails)
+                intent.putExtra("web", tempArrayList[position].webDetails)
                 startActivity(intent)
 
             }
@@ -283,12 +316,11 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         val options = arrayOf("All", "Restaurant", "Salon", "Grocery Store")
 
-        spinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,options)
+        spinner.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options)
 
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
 
             }
 
@@ -301,30 +333,138 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
                 tempArrayList.clear()
                 val searchText = options[position]
+
                 if (searchText.isNotEmpty()) {
-                    storeArrayList.forEach {
 
-                        if (it.category!!.equals(searchText)) {
+                    if(promoCheckBox.isChecked) {
 
-                            tempArrayList.add(it)
+                        tempArrayList.clear()
+
+                        storeArrayList.forEach {
+
+                            if (it.category!!.equals(searchText) and it.promotion.equals("Yes")) {
+
+                                tempArrayList.add(it)
+
+
+                            }
+
 
                         }
-                        else if (options[position].equals("All")) {
 
-                            tempArrayList.addAll(storeArrayList)
+                    }
+                    else {
+
+                        tempArrayList.clear()
+                        storeArrayList.forEach {
+
+                            if (it.category!!.equals(searchText)) {
+
+                                tempArrayList.add(it)
+
+
+                            }
+
+
+                        }
+
+                    }
+
+
+                }
+                if (searchText.isNotEmpty() and searchText.equals("All")) {
+
+                    if(promoCheckBox.isChecked) {
+
+                        tempArrayList.clear()
+                        storeArrayList.forEach {
+
+                            if(it.promotion.equals("Yes")) {
+                                tempArrayList.add(it)
+                            }
 
                         }
 
 
                     }
+                    else {
 
-                    recyclerView.adapter!!.notifyDataSetChanged()
+                        tempArrayList.clear()
+                        tempArrayList.addAll(storeArrayList)
+
+                    }
+
+
 
                 }
+
+                recyclerView.adapter!!.notifyDataSetChanged()
+
+
+            }
+
+
+        }
+
+        promoCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            if(isChecked) {
+
+                tempArrayList.clear()
+
+                if(spinner.selectedItem.toString().equals("All")) {
+                    storeArrayList.forEach {
+
+                        if(it.promotion.equals("Yes")) {
+                            tempArrayList.add(it)
+                        }
+
+
+                    }
+
+                }
+                else {
+
+                    storeArrayList.forEach {
+
+                        if(it.category.equals(spinner.selectedItem.toString()) and it.promotion.equals("Yes")) {
+                            tempArrayList.add(it)
+                        }
+
+
+                    }
+
+                }
+                recyclerView.adapter!!.notifyDataSetChanged()
+
+
+            }
+            else {
+
+                tempArrayList.clear()
+
+                if(spinner.selectedItem.toString().equals("All")) {
+                    tempArrayList.addAll(storeArrayList)
+
+                }
+                else {
+
+                    storeArrayList.forEach {
+
+                        if(it.category.equals(spinner.selectedItem.toString())) {
+                            tempArrayList.add(it)
+                        }
+
+
+                    }
+
+                }
+                recyclerView.adapter!!.notifyDataSetChanged()
 
             }
 
         }
+
 
 
 
