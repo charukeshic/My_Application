@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:replace="android:theme">
-        <activity android:name=".ChatbotActivity"></activity>
+        <activity android:name=".ForgotPasswordActivity"></activity>
+        <activity android:name=".ChatbotActivity" />
         <activity android:name=".ActiveOrders" />
         <activity android:name=".ActiveOrderDetails" />
         <activity android:name=".PurchaseHistoryActivity" />
@@ -22,6 +23,7 @@
         <activity android:name=".CartActivity" />
         <activity android:name=".GetProductDetails" />
         <activity android:name=".GetSalesProductDetails" />
+        <activity android:name=".GetRecommendedProductDetails" />
         <activity android:name=".StoreProductsNew" />
         <activity android:name=".OnlineShoppingActivity" />
         <activity android:name=".StoreDescription" />

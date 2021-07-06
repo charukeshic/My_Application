@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.CategoryAdapter
 import com.example.myapplication.adapters.ProductAdapter
 import com.example.myapplication.adapters.ProductDetailsAdapter
+import com.example.myapplication.adapters.RecommendedProductAdapter
 import com.example.myapplication.fragments.CategoryFragment
 import com.example.myapplication.fragments.ProductFragment
 import com.google.android.material.navigation.NavigationView
@@ -38,14 +39,17 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     private lateinit var categoryRecyclerView: RecyclerView
     private lateinit var productRecyclerView: RecyclerView
+    private lateinit var recommendedRecyclerView : RecyclerView
 
     private lateinit var dbrefCategories : DatabaseReference
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var dbrefgetProducts : DatabaseReference
-    private lateinit var dbrefcatProducts : DatabaseReference
+    private lateinit var dbrefOrder : DatabaseReference
+    private lateinit var dbrefRecommendedProducts : DatabaseReference
     private lateinit var dbrefcatStore : DatabaseReference
     private lateinit var categoryArrayList: ArrayList<Category>
     private lateinit var productArrayList: ArrayList<ProductDetails>
+    private lateinit var recommendedArrayList: ArrayList<CartItem>
 
     lateinit var layoutHeader : View
     lateinit var userImage : ImageView
@@ -86,6 +90,14 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         productArrayList = arrayListOf<ProductDetails>()
         getProducts()
 
+
+        recommendedRecyclerView = findViewById(R.id.recommended_recyclerView)
+        recommendedRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recommendedRecyclerView.setHasFixedSize(true)
+
+        recommendedArrayList = arrayListOf<CartItem>()
+        getProducts2()
+
         cartIcon.setOnClickListener {
             getCartItems()
         }
@@ -94,18 +106,11 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     private fun getProducts2() {
-        val categoryName = intent.getStringExtra(CategoryFragment.CATEGORY_KEY)
 
-        productRecyclerView = findViewById(R.id.product_recyclerView)
-        productRecyclerView.setHasFixedSize(true)
-        productRecyclerView.layoutManager = GridLayoutManager(productRecyclerView.context,2)
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
 
-        productArrayList = arrayListOf<ProductDetails>()
-
-        dbrefcatStore = FirebaseDatabase.getInstance().getReference("/Store")
-
-
-        dbrefcatStore.addValueEventListener(object: ValueEventListener {
+        dbrefOrder = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Purchase History")
+        dbrefOrder.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
 
             }
@@ -113,51 +118,60 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 if(snapshot.exists()) {
-                    for(store in snapshot.children) {
-                        val store = store.getValue(Mall::class.java)
-                        val storeName = store!!.title.toString()
+                    for(orderSnapshot in snapshot.children) {
+                        val order = orderSnapshot.getValue(Order::class.java)
+                        val orderID = order?.orderId
 
-                        dbrefcatProducts = FirebaseDatabase.getInstance().getReference("/Store").child("$storeName").
-                        child("categories").child("$categoryName")
-
-                        dbrefcatProducts.addValueEventListener(object : ValueEventListener {
+                        dbrefRecommendedProducts = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+                            .child("Purchase History").child("$orderID").child("Items")
+                        dbrefRecommendedProducts.addValueEventListener(object : ValueEventListener {
                             override fun onCancelled(error: DatabaseError) {
 
                             }
 
                             override fun onDataChange(snapshot: DataSnapshot) {
-                                if(snapshot.exists()) {
-
-                                    val product = snapshot.getValue(ProductDetails::class.java)
-                                    product?.store = storeName.toString()
-
-                                    productArrayList.add(product!!)
-
-
-                                    var adapter = ProductAdapter(productArrayList)
-                                    productRecyclerView.adapter = adapter
-                                    adapter.setOnItemClickListener(object : ProductAdapter.onItemClickListener{
-
-                                        override fun onItemClick(position: Int) {
-
-                                            val productName = productArrayList[position].itemName
-                                            Toast.makeText(this@StoreProducts, "You clicked on $productName", Toast.LENGTH_SHORT).show()
-
-                                        }
-
-                                    })
-
+                                for(productSnapshot in snapshot.children) {
+                                    val product = productSnapshot.getValue(CartItem::class.java)
+                                    recommendedArrayList.add(product!!)
 
                                 }
+
+                                var adapter = RecommendedProductAdapter(recommendedArrayList)
+                                recommendedRecyclerView.adapter = adapter
+                                adapter.setOnItemClickListener(object : RecommendedProductAdapter.onItemClickListener{
+                                    override fun onItemClick(position: Int) {
+
+                                        val productName = recommendedArrayList[position].itemName
+                                        val mallName = recommendedArrayList[position].store
+                                        val price = recommendedArrayList[position].price.toString()
+                                        val details = recommendedArrayList[position].itemDetails
+                                        val image = recommendedArrayList[position].image
+
+                                        Toast.makeText(this@StoreProducts, "You clicked on $productName", Toast.LENGTH_SHORT).show()
+
+                                        //productArrayList.clear()
+
+                                        val intent = Intent(this@StoreProducts, GetRecommendedProductDetails::class.java)
+                                        intent.putExtra("MALL", mallName)
+                                        intent.putExtra("PRODUCT", productName)
+                                        intent.putExtra("IMAGE", image)
+                                        intent.putExtra("PRICE", price)
+                                        intent.putExtra("DETAILS", details)
+                                        startActivity(intent)
+
+
+                                    }
+
+
+                                })
+
+
                             }
+
 
                         })
 
-
-
                     }
-
-
 
                 }
 
@@ -165,6 +179,8 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
 
         })
+
+
 
     }
 
@@ -198,7 +214,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
                     }
 
-                    var adapter = ProductAdapter(productArrayList)
+                    val adapter = ProductAdapter(productArrayList)
                     productRecyclerView.adapter = adapter
                     adapter.setOnItemClickListener(object : ProductAdapter.onItemClickListener{
                         override fun onItemClick(position: Int) {

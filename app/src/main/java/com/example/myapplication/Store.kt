@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-
 data class Store(var itemTitle : String,
                  var itemDetails : String,
                  var itemImage : Int,
@@ -14,3 +13,7 @@ data class Store(var itemTitle : String,
                  var category : String,
                  var promotion : String
 )
+
+
+
+

@@ -67,10 +67,18 @@ class LoginTabFragment : Fragment() {
                     getActivity()?.startActivity(intent)
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this@LoginTabFragment.context, "Invalid email & password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginTabFragment.context, "Invalid combination of email & password", Toast.LENGTH_SHORT).show()
                 }
 
         }
+
+
+        forgetPass.setOnClickListener {
+            val intent = Intent(getActivity(), ForgotPasswordActivity::class.java)
+            getActivity()?.startActivity(intent)
+
+        }
+
 
         return root
     }

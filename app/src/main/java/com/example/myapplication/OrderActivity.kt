@@ -1,7 +1,6 @@
 package com.example.myapplication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -11,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +25,6 @@ import com.squareup.picasso.Picasso
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
 class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -205,8 +204,9 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
             Toast.makeText(this@OrderActivity, "Your order will be processed", Toast.LENGTH_LONG).show()
             createOrder()
-            val intent = Intent(this@OrderActivity, OnlineShoppingActivity::class.java)
-            startActivity(intent)
+            finish()
+//            val intent = Intent(this@OrderActivity, OnlineShoppingActivity::class.java)
+//            startActivity(intent)
 
 
         }
@@ -255,6 +255,7 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
 
     }
+
 
     fun selectedPaymentMethod(view: View) {
         var selectItem = paymentMethods[selectedIndex]
@@ -444,3 +445,5 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
 
 }
+
+

@@ -73,6 +73,10 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -86,18 +90,42 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"/>
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/product_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             android:layout_below="@id/category_recyclerView"
+            tools:itemCount="6"
             android:orientation="vertical"
             app:spanCount="2"
             tools:listitem="@layout/rv_products"/>
 
+        <TextView
+            android:id="@+id/recommended_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recommended For You"
+            android:textColor="@color/dark_teal"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_below="@id/product_recyclerView"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recommended_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/rv_products2"
+            android:layout_below="@id/recommended_text"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            android:layout_marginBottom="30dp"/>
+
     </RelativeLayout>
 
+    </ScrollView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
