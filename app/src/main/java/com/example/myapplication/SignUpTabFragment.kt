@@ -3,17 +3,18 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import java.util.*
+
+
 
 class SignUpTabFragment : Fragment() {
 
@@ -72,6 +73,11 @@ class SignUpTabFragment : Fragment() {
             return
         }
 
+        if(!isValidMobile(mobileNo)) {
+            Toast.makeText(this@SignUpTabFragment.context, "Invalid mobile number", Toast.LENGTH_LONG).show()
+            return
+        }
+
         //FirebaseAuthentication to create user with email and password
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailAddr, passWord)
             .addOnCompleteListener {
@@ -87,6 +93,11 @@ class SignUpTabFragment : Fragment() {
                 Toast.makeText(this@SignUpTabFragment.context, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
             }
 
+    }
+
+
+    private fun isValidMobile(mobile: String): Boolean {
+        return Patterns.PHONE.matcher(mobile).matches();
     }
 
     private fun saveUserToDatabase(uid : String) {

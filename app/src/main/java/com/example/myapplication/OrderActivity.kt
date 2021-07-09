@@ -62,6 +62,10 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     private lateinit var dbrefActiveOrder : DatabaseReference
     private lateinit var dbrefActiveOrderItems : DatabaseReference
 
+    private lateinit var dbrefPendingOrders : DatabaseReference
+    private lateinit var dbrefCompletedOrders : DatabaseReference
+
+
     var selectedIndex = 0
     var selected = 0
     val paymentMethods = arrayOf(
@@ -221,6 +225,8 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         dbrefOrder = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Purchase History")
         dbrefActiveOrder = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Active Orders")
+        dbrefPendingOrders = FirebaseDatabase.getInstance().getReference("/Orders").child("Pending Orders")
+        dbrefCompletedOrders = FirebaseDatabase.getInstance().getReference("/Orders").child("Completed Orders")
 
         val orderId = UUID.randomUUID().toString().substring(0,8)
         val orderUser = orUsername.text.toString()
@@ -230,16 +236,22 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         val orderPaymentMerchantName = merchantName.text.toString()
         val orderPayment = totalPrice.text.toString().toDouble()
         val currentDateTime = LocalDateTime.now()
+        val orderStatus = "Pending"
+        val orderTracking = "https://www.ninjavan.co/en-my/tracking"
         val paymentDate = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
-        val createOrder = Order(orderId, orderUser, orderPhone, orderAddr, orderPaymentMethod, orderPaymentMerchantName, orderPayment, paymentDate)
+        val createOrder = Order(orderId, orderUser, orderPhone, orderAddr, orderPaymentMethod, orderPaymentMerchantName, orderPayment, paymentDate, orderStatus, orderTracking)
 
         dbrefOrder.child("$orderId").setValue(createOrder)
         dbrefActiveOrder.child("$orderId").setValue(createOrder)
 
-        dbrefOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Purchase History")
+        dbrefPendingOrders.child("$orderId").setValue(createOrder)
+        dbrefCompletedOrders.child("$orderId").setValue(createOrder)
 
+        dbrefOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Purchase History")
         dbrefActiveOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Active Orders")
+
+
 
         for(items in productArrayList) {
 
@@ -247,6 +259,9 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
             dbrefOrderItems.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
             dbrefActiveOrderItems.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
+
+            dbrefPendingOrders.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
+            dbrefCompletedOrders.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
 
             dbrefProducts = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Cart")
             dbrefProducts.child("$nameOfItem").removeValue()

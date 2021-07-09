@@ -89,7 +89,6 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
         tempArrayList2 = arrayListOf<Store>()
 
 
-
         imageId = arrayOf(
             R.drawable.marini,
             R.drawable.troika,

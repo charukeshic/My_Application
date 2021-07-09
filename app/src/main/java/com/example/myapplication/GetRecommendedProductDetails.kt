@@ -108,85 +108,48 @@ class GetRecommendedProductDetails : AppCompatActivity(), NavigationView.OnNavig
         storeName.text = getStore
         Picasso.get().load(getImage).into(productImage)
 
+        var selectedProduct = ProductDetails(getName, getStore, getImage, getPrice, getDetails)
 
 
-//        dbrefProducts = FirebaseDatabase.getInstance().getReference("/Store").child("$mallName").
-//        child("categories").child("$categoryName").child("$productName")
-//
-//
-//        dbrefProducts.addListenerForSingleValueEvent (object: ValueEventListener {
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                val storeName : TextView = findViewById(R.id.mall_name)
-//                val productImage : ImageView = findViewById(R.id.mall_image)
-//                val itemName : TextView = findViewById(R.id.product_name)
-//                val productPrice : TextView = findViewById(R.id.product_price)
-//                val productDetails : TextView = findViewById(R.id.item_details)
-//
-//                val addEvent : LinearLayout = findViewById(R.id.create_event)
-//                val addToFav : LinearLayout = findViewById(R.id.add_to_fav)
-//                val addToCart : LinearLayout = findViewById(R.id.add_to_cart)
-//
-//
-//                if(snapshot.exists()) {
-//                    val product = snapshot.getValue(ProductDetails::class.java)
-//                    product?.store = mallName.toString()
-//
-//                    itemName.text = product?.itemName.toString()
-//                    productPrice.text = product?.price.toString()
-//                    productDetails.text = product?.itemDetails.toString()
-//                    storeName.text = product?.store.toString()
-//                    Picasso.get().load(product?.image).into(productImage)
-//
-//                    val title = "Reminder to buy ".plus(product?.itemName.toString()).plus(" from ").plus(product?.store.toString())
-//
-//                    checkFavourites(product!!)
-//
-//                    addEvent.setOnClickListener {
-//                        val intent = Intent(Intent.ACTION_INSERT)
-//                        intent.data = CalendarContract.Events.CONTENT_URI
-//                        intent.putExtra(CalendarContract.Events.TITLE, title)
-//
-//                        if(intent.resolveActivity(getPackageManager()) != null){
-//                            addTheEvent(product!!)
-//                            startActivity(intent);
-//                        }
-//                        else{
-//                            Toast.makeText(this@GetRecommendedProductDetails, "There is no app that support this action", Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                    }
-//
-//                    addToFav.setOnClickListener {
-//
-//                        if(favBtn.drawable.constantState == resources.getDrawable(R.drawable.heart_icon).constantState){
-//                            addToFavourites(product!!)
-//                            favBtn.setImageResource(R.drawable.fav_icon_pink)
-//                        }
-//                        else if(favBtn.drawable.constantState == resources.getDrawable(R.drawable.fav_icon_pink).constantState){
-//                            removeFromFavourites(product!!)
-//                            favBtn.setImageResource(R.drawable.heart_icon)
-//                        }
-//
-//                        //Toast.makeText(this@GetProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
-//                    }
-//
-//                    addToCart.setOnClickListener {
-//                        addToCart(product!!)
-//                        //Toast.makeText(this@GetProductDetails, "$productName added to Cart", Toast.LENGTH_SHORT).show()
-//                    }
-//
-//
-//                }
-//
-//            }
-//
-//
-//        })
+        val title = "Reminder to buy ".plus(getName).plus(" from ").plus(getStore)
+
+        checkFavourites(selectedProduct!!)
+
+        addEvent.setOnClickListener {
+            val intent = Intent(Intent.ACTION_INSERT)
+            intent.data = CalendarContract.Events.CONTENT_URI
+            intent.putExtra(CalendarContract.Events.TITLE, title)
+
+            if(intent.resolveActivity(getPackageManager()) != null){
+                addTheEvent(selectedProduct!!)
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(this@GetRecommendedProductDetails, "There is no app that support this action", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        addToFav.setOnClickListener {
+
+            if(favBtn.drawable.constantState == resources.getDrawable(R.drawable.heart_icon).constantState){
+                addToFavourites(selectedProduct!!)
+                favBtn.setImageResource(R.drawable.fav_icon_pink)
+            }
+            else if(favBtn.drawable.constantState == resources.getDrawable(R.drawable.fav_icon_pink).constantState){
+                removeFromFavourites(selectedProduct!!)
+                favBtn.setImageResource(R.drawable.heart_icon)
+            }
+
+            //Toast.makeText(this@GetProductDetails, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
+        }
+
+        addToCart.setOnClickListener {
+            addToCart(selectedProduct!!)
+            //Toast.makeText(this@GetProductDetails, "$productName added to Cart", Toast.LENGTH_SHORT).show()
+        }
+
+
 
     }
 

@@ -50,70 +50,68 @@ class RecommendedProductAdapter(private val productList : ArrayList<CartItem>) :
         holder.storeName.text = currentItem.store
         Picasso.get().load(currentItem.image).into(holder.productImage)
 
-//        val uid = FirebaseAuth.getInstance().currentUser?.uid
-//
-//        val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
-//
-//        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites").child("$productName")
-//
-//        ref.addValueEventListener(object : ValueEventListener {
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                if(snapshot.exists()) {
-//                    holder.favBtn.setImageResource(R.drawable.fav_icon_pink)
-//                }
-//                else
-//                    holder.favBtn.setImageResource(R.drawable.heart_icon)
-//
-//            }
-//
-//        })
-//
-//        holder.addToFav.setOnClickListener {
-//
-//            if(holder.favBtn.drawable.constantState == holder.favBtn.resources.getDrawable(R.drawable.heart_icon).constantState){
-//
-//                val uid = FirebaseAuth.getInstance().currentUser?.uid
-//                Log.d("Profile Activity", "username: $uid")
-//                val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites")
-//
-//                val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
-//
-//                ref.child("$productName").setValue(currentItem)
-//                    .addOnSuccessListener {
-//                        Toast.makeText(holder.itemView.context, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
-//                    }
-//
-//                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-//                    param(FirebaseAnalytics.Param.ITEM_ID, productName)
-//                }
-//
-//                holder.favBtn.setImageResource(R.drawable.fav_icon_pink)
-//            }
-//            else if(holder.favBtn.drawable.constantState == holder.favBtn.resources.getDrawable(R.drawable.fav_icon_pink).constantState){
-//
-//                val uid = FirebaseAuth.getInstance().currentUser?.uid
-//                Log.d("Profile Activity", "username: $uid")
-//                val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites")
-//
-//                val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
-//
-//                ref.child("$productName").removeValue()
-//                    .addOnSuccessListener {
-//                        Toast.makeText(holder.itemView.context, "$productName removed from Favourites", Toast.LENGTH_SHORT).show()
-//                    }
-//
-//
-//                holder.favBtn.setImageResource(R.drawable.heart_icon)
-//            }
-//
-//        }
-//
-//
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
+
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites").child("$productName")
+
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if(snapshot.exists()) {
+                    holder.favBtn.setImageResource(R.drawable.fav_icon_pink)
+                }
+                else
+                    holder.favBtn.setImageResource(R.drawable.heart_icon)
+
+            }
+
+        })
+
+        holder.addToFav.setOnClickListener {
+
+            if(holder.favBtn.drawable.constantState == holder.favBtn.resources.getDrawable(R.drawable.heart_icon).constantState){
+
+                val uid = FirebaseAuth.getInstance().currentUser?.uid
+                Log.d("Profile Activity", "username: $uid")
+                val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites")
+
+                val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
+
+                val selectedProduct = ProductDetails(currentItem.itemName, currentItem.store, currentItem.image, currentItem.price.toString(), currentItem.itemDetails)
+
+                ref.child("$productName").setValue(selectedProduct)
+                    .addOnSuccessListener {
+                        Toast.makeText(holder.itemView.context, "$productName added to Favourites", Toast.LENGTH_SHORT).show()
+                    }
+
+                holder.favBtn.setImageResource(R.drawable.fav_icon_pink)
+            }
+            else if(holder.favBtn.drawable.constantState == holder.favBtn.resources.getDrawable(R.drawable.fav_icon_pink).constantState){
+
+                val uid = FirebaseAuth.getInstance().currentUser?.uid
+                Log.d("Profile Activity", "username: $uid")
+                val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Favourites")
+
+                val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
+
+                ref.child("$productName").removeValue()
+                    .addOnSuccessListener {
+                        Toast.makeText(holder.itemView.context, "$productName removed from Favourites", Toast.LENGTH_SHORT).show()
+                    }
+
+
+                holder.favBtn.setImageResource(R.drawable.heart_icon)
+            }
+
+        }
+
+
     }
 
 
