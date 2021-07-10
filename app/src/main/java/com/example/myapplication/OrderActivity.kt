@@ -206,11 +206,19 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         orderBtn.setOnClickListener {
 
-            Toast.makeText(this@OrderActivity, "Your order will be processed", Toast.LENGTH_LONG).show()
-            createOrder()
-            finish()
-//            val intent = Intent(this@OrderActivity, OnlineShoppingActivity::class.java)
-//            startActivity(intent)
+
+
+            if(orUserAddr.text.equals("Not Updated") or orUserAddr.text.isEmpty()) {
+
+                Toast.makeText(this@OrderActivity, "Please use a valid address", Toast.LENGTH_LONG).show()
+
+            }
+            else {
+
+                createOrder()
+                finish()
+                Toast.makeText(this@OrderActivity, "Your order will be processed", Toast.LENGTH_LONG).show()
+            }
 
 
         }
