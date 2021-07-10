@@ -43,6 +43,7 @@ class OrderHistoryAdapter(private val productList : ArrayList<Order>) : Recycler
 
         holder.totalCost.text = String.format("%.2f", currentItem.orderPayment)
         holder.orderDate.text = currentItem.paymentDate.toString()
+        holder.orderStatus.text = currentItem.orderStatus.toString()
 
 
 
@@ -53,6 +54,7 @@ class OrderHistoryAdapter(private val productList : ArrayList<Order>) : Recycler
 
         val orderDate : TextView = itemView.findViewById(R.id.order_date)
         val totalCost : TextView = itemView.findViewById(R.id.order_total)
+        val orderStatus : TextView = itemView.findViewById(R.id.order_status)
 
 
         init {

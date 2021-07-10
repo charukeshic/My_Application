@@ -236,7 +236,7 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         val orderPaymentMerchantName = merchantName.text.toString()
         val orderPayment = totalPrice.text.toString().toDouble()
         val currentDateTime = LocalDateTime.now()
-        val orderStatus = "Pending"
+        val orderStatus = "Processing"
         val orderTracking = "https://www.ninjavan.co/en-my/tracking"
         val paymentDate = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 

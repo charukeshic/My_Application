@@ -49,6 +49,8 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
     lateinit var taxPrice : TextView
     lateinit var deliveryPrice : TextView
     lateinit var subTotal : TextView
+    lateinit var orderStatus : TextView
+    lateinit var orderTracker : TextView
 
     lateinit var paymentMethod : TextView
     lateinit var merchantName : TextView
@@ -60,6 +62,7 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     private lateinit var dbrefOrder : DatabaseReference
     private lateinit var dbrefOrderItems : DatabaseReference
+    private lateinit var dbrefPendingOrders : DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,6 +99,8 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
         deliveryPrice = findViewById(R.id.delivery_price)
         taxPrice = findViewById(R.id.tax_price)
         subTotal = findViewById(R.id.sub_total_price)
+        orderStatus = findViewById(R.id.order_status)
+        orderTracker = findViewById(R.id.order_tracker)
 
         buyAgain.text = "Cancel / Refund Order"
 
@@ -108,7 +113,7 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 
         dbrefOrder = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
-            .child("Purchase History").child("$orderId")
+            .child("Active Orders").child("$orderId")
 
         dbrefOrder.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
@@ -120,6 +125,8 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
 
                 purchaseId.text = order?.orderId.toString()
                 orderDate.text = order?.paymentDate.toString()
+                orderStatus.text = order?.orderStatus.toString()
+                orderTracker.text= order?.orderTracking.toString()
 
                 orUsername.text = order?.username.toString()
                 orUserPhone.text = order?.mobile.toString()
@@ -194,6 +201,17 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
                     dialog, which ->
                 Toast.makeText(this@ActiveOrderDetails, "Your cancellation will be processed, our team shall contact you shortly.", Toast.LENGTH_LONG).show()
                 dialog.dismiss()
+
+                dbrefPendingOrders = FirebaseDatabase.getInstance().getReference("/Orders").child("Pending Orders")
+                    .child("$orderId")
+                dbrefPendingOrders.child("orderStatus").setValue("Requested for Cancellation")
+
+                dbrefOrder.child("orderStatus").setValue("Requested for Cancellation")
+
+                val intent = Intent(this@ActiveOrderDetails, ActiveOrders::class.java)
+                startActivity(intent)
+
+
             }
             langDialog.setNeutralButton("No") {
                     dialog, which ->
