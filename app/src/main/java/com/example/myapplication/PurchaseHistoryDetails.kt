@@ -49,6 +49,8 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
     lateinit var taxPrice : TextView
     lateinit var deliveryPrice : TextView
     lateinit var subTotal : TextView
+    lateinit var orderStatus : TextView
+    lateinit var orderTracker : TextView
 
     lateinit var paymentMethod : TextView
     lateinit var merchantName : TextView
@@ -81,9 +83,12 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
         purchaseId = findViewById(R.id.order_id)
         orderDate = findViewById(R.id.order_date)
 
+
         paymentMethod = findViewById(R.id.payment_method)
         merchantName = findViewById(R.id.merchant_name)
         buyAgain = findViewById(R.id.order_btn)
+        orderStatus = findViewById(R.id.order_status)
+        orderTracker = findViewById(R.id.order_tracker)
 
 
         productRecyclerView = findViewById(R.id.product_recyclerView)
@@ -118,6 +123,8 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
                 purchaseId.text = order?.orderId.toString()
                 orderDate.text = order?.paymentDate.toString()
+                orderStatus.text = order?.orderStatus.toString()
+                orderTracker.text= order?.orderTracking.toString()
 
                 orUsername.text = order?.username.toString()
                 orUserPhone.text = order?.mobile.toString()
@@ -320,10 +327,6 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
             }
             R.id.nav_events -> {
                 val intent = Intent(this@PurchaseHistoryDetails, Favourites::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_settings -> {
-                val intent = Intent(this@PurchaseHistoryDetails, OnlineShopping::class.java)
                 startActivity(intent)
             }
             R.id.nav_logout -> {

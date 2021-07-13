@@ -226,10 +226,6 @@ class PurchaseHistoryActivity : AppCompatActivity(), NavigationView.OnNavigation
                 val intent = Intent(this@PurchaseHistoryActivity, Favourites::class.java)
                 startActivity(intent)
             }
-            R.id.nav_settings -> {
-                val intent = Intent(this@PurchaseHistoryActivity, OnlineShopping::class.java)
-                startActivity(intent)
-            }
             R.id.nav_logout -> {
                 val intent = Intent(this@PurchaseHistoryActivity, LoginActivity::class.java)
                 startActivity(intent)

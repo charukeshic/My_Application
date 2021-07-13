@@ -233,10 +233,6 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this@CartActivity, Favourites::class.java)
                 startActivity(intent)
             }
-            R.id.nav_settings -> {
-                val intent = Intent(this@CartActivity, OnlineShopping::class.java)
-                startActivity(intent)
-            }
             R.id.nav_logout -> {
                 val intent = Intent(this@CartActivity, LoginActivity::class.java)
                 startActivity(intent)

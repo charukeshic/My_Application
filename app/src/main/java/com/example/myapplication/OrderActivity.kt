@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.StrictMode
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.OrderActivity.Mailer.sendMail
 import com.example.myapplication.adapters.CartItemAdapter2
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -22,9 +24,19 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.bouncycastle.jce.provider.BouncyCastleProvider
+import java.security.Security
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import javax.mail.*
+import javax.mail.Message.RecipientType
+import javax.mail.internet.InternetAddress
+import javax.mail.internet.MimeMessage
+
 
 class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -276,8 +288,118 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         }
 
+        sendMail("$orderId", createOrder)
+
 
     }
+
+    object Config {
+        const val EMAIL_FROM = "onlineaishoppingassistant@gmail.com"
+        const val PASS_FROM = "PERFECTFYP"
+    }
+
+
+    object Mailer {
+
+        init {
+            Security.addProvider(BouncyCastleProvider())
+        }
+
+        private fun props(): Properties = Properties().also {
+            // Smtp server
+            it["mail.smtp.host"] = "smtp.gmail.com"
+            // Change when necessary
+            it["mail.smtp.auth"] = "true"
+            it["mail.smtp.port"] = "465"
+            // Easy and fast way to enable ssl in JavaMail
+            it["mail.smtp.ssl.enable"] = true
+        }
+
+        // Dont ever use "getDefaultInstance" like other examples do!
+        private fun session(emailFrom: String, emailPass: String): Session =
+            Session.getInstance(props(), object : Authenticator() {
+                override fun getPasswordAuthentication(): PasswordAuthentication {
+                    return PasswordAuthentication(emailFrom, emailPass)
+                }
+            })
+
+        private fun builtMessage(firstName: String, order: Order): String {
+            return """
+            <b>Your order will reach you in a jiffy!</b> <br/>
+            <br/>
+            <b>Order ID:</b> $firstName  <br/>
+            <b>Recipient Name:</b> ${order.username}  <br/>
+            <b>Mobile:</b> ${order.mobile}  <br/>
+            <b>Delivery Address:</b> ${order.address}  <br/>
+            <b>Payment Amount:</b> RM ${order.orderPayment}  <br/>
+            <b>Order Date:</b> ${order.paymentDate}  <br/>
+            <b>Payment Method:</b> ${order.paymentMethod}  <br/>
+            <b>Order Status:</b> ${order.orderStatus}  <br/>
+            <b>Order Tracker:</b> ${order.orderTracking}  <br/>
+            <br/>
+            If you have any enquiries or did not place this order please contact us at 011-31074570 <br/>
+            
+        """.trimIndent()
+        }
+
+        private fun builtSubject(firstName: String, order: Order): String {
+            return """
+            Order placed successfully
+        """.trimIndent()
+        }
+
+        private fun sendMessageTo(
+            emailFrom: String,
+            session: Session,
+            message: String,
+            subject: String
+        ) {
+            try {
+                MimeMessage(session).let { mime ->
+                    mime.setFrom(InternetAddress(emailFrom))
+                    // Adding receiver
+                    val uid = FirebaseAuth.getInstance().currentUser?.email.toString()
+                    mime.addRecipient(Message.RecipientType.TO, InternetAddress(uid))
+                    // Adding subject
+                    mime.subject = subject
+                    // Adding message
+                    mime.setText(message)
+                    // Set Content of Message to Html if needed
+                    mime.setContent(message, "text/html")
+                    // send mail
+                    Transport.send(mime)
+                }
+
+            } catch (e: MessagingException) {
+                Log.e("", "") // Or use timber, it really doesn't matter
+            }
+        }
+
+        fun sendMail(firstName: String, order: Order) {
+            // Open a session
+            val session = session(Config.EMAIL_FROM, Config.PASS_FROM)
+
+            // Create a message
+            val message = builtMessage(firstName, order)
+
+            // Create subject
+            val subject = builtSubject(firstName, order)
+
+            // Send Email
+            CoroutineScope(Dispatchers.IO).launch {
+                sendMessageTo(
+                    Config.EMAIL_FROM,
+                    session,
+                    message,
+                    subject
+                )
+            }
+        }
+
+    }
+
+
+
 
 
     fun selectedPaymentMethod(view: View) {
@@ -439,10 +561,6 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
             R.id.nav_events -> {
                 val intent = Intent(this@OrderActivity, Favourites::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_settings -> {
-                val intent = Intent(this@OrderActivity, OnlineShopping::class.java)
                 startActivity(intent)
             }
             R.id.nav_logout -> {

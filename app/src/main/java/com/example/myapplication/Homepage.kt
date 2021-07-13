@@ -1,8 +1,11 @@
 package com.example.myapplication
 
+import android.content.ContentUris
 import android.content.Intent
 import android.media.Image
+import android.net.Uri
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -169,10 +172,6 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
             }
             R.id.nav_events -> {
                 val intent = Intent(this@Homepage, Favourites::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_settings -> {
-                val intent = Intent(this@Homepage, OnlineShopping::class.java)
                 startActivity(intent)
             }
             R.id.nav_logout -> {

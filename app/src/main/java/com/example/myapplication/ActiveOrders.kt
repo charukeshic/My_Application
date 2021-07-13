@@ -231,10 +231,6 @@ class ActiveOrders : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this@ActiveOrders, Favourites::class.java)
                 startActivity(intent)
             }
-            R.id.nav_settings -> {
-                val intent = Intent(this@ActiveOrders, OnlineShopping::class.java)
-                startActivity(intent)
-            }
             R.id.nav_logout -> {
                 val intent = Intent(this@ActiveOrders, LoginActivity::class.java)
                 startActivity(intent)

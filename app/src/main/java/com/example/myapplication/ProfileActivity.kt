@@ -369,10 +369,6 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 val intent = Intent(this@ProfileActivity, Favourites::class.java)
                 startActivity(intent)
             }
-            R.id.nav_settings -> {
-                val intent = Intent(this@ProfileActivity, OnlineShopping::class.java)
-                startActivity(intent)
-            }
             R.id.nav_logout -> {
                 val intent = Intent(this@ProfileActivity, LoginActivity::class.java)
                 startActivity(intent)

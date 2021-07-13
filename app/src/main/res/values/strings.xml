@@ -153,6 +153,9 @@
     <string name="cat_1">Restaurant</string>
     <string name="cat_2">Salon</string>
     <string name="cat_3">Grocery Store</string>
+    <string name="cat_4">Stationery</string>
+    <string name="cat_5">Furniture</string>
+    <string name="cat_6">Bakery</string>
 
     <string name="promo_1">Yes</string>
     <string name="promo_2">No</string>

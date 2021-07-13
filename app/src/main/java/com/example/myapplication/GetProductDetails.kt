@@ -372,10 +372,6 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 val intent = Intent(this@GetProductDetails, Favourites::class.java)
                 startActivity(intent)
             }
-            R.id.nav_settings -> {
-                val intent = Intent(this@GetProductDetails, OnlineShopping::class.java)
-                startActivity(intent)
-            }
             R.id.nav_logout -> {
                 val intent = Intent(this@GetProductDetails, LoginActivity::class.java)
                 startActivity(intent)

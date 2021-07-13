@@ -228,9 +228,9 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.cat_3),
             getString(R.string.cat_1),
             getString(R.string.cat_2),
-            getString(R.string.cat_3),
-            getString(R.string.cat_1),
-            getString(R.string.cat_2),
+            getString(R.string.cat_4),
+            getString(R.string.cat_5),
+            getString(R.string.cat_6),
             getString(R.string.cat_3),
             getString(R.string.cat_1)
         )
@@ -313,7 +313,7 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         updateNavHeader()
 
-        val options = arrayOf("All", "Restaurant", "Salon", "Grocery Store")
+        val options = arrayOf("All", "Restaurant", "Salon", "Grocery Store", "Stationery", "Furniture", "Bakery")
 
         spinner.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options)
 
@@ -625,10 +625,6 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
             R.id.nav_events -> {
                 val intent = Intent(this@StoreNavigation, Favourites::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_settings -> {
-                val intent = Intent(this@StoreNavigation, OnlineShopping::class.java)
                 startActivity(intent)
             }
             R.id.nav_logout -> {
