@@ -239,7 +239,7 @@ class ActiveOrders : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_contact -> {
-                val intent = Intent(this@ActiveOrders, Favourites::class.java)
+                val intent = Intent(this@ActiveOrders, ContactInformation::class.java)
                 startActivity(intent)
             }
 

@@ -205,7 +205,7 @@ class StoreProducts2 : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_contact -> {
-                val intent = Intent(this@StoreProducts2, Favourites::class.java)
+                val intent = Intent(this@StoreProducts2, ContactInformation::class.java)
                 startActivity(intent)
             }
 

@@ -230,7 +230,7 @@ class Favourites : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_contact -> {
-                val intent = Intent(this@Favourites, Favourites::class.java)
+                val intent = Intent(this@Favourites, ContactInformation::class.java)
                 startActivity(intent)
             }
 

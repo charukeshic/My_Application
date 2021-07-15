@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:replace="android:theme">
-        <activity android:name=".ForgotPasswordActivity"></activity>
+        <activity android:name=".ContactInformation" />
+        <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".ChatbotActivity" />
         <activity android:name=".ActiveOrders" />
         <activity android:name=".ActiveOrderDetails" />

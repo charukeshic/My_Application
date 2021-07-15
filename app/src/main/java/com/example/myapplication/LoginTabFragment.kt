@@ -11,6 +11,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,8 +21,10 @@ import com.google.firebase.database.ValueEventListener
 
 
 class LoginTabFragment : Fragment() {
-    lateinit var email: EditText
-    lateinit var pass: EditText
+    lateinit var email: TextInputEditText
+    lateinit var test : TextInputLayout
+    lateinit var test2 : TextInputLayout
+    lateinit var pass: TextInputEditText
     lateinit var forgetPass: TextView
     lateinit var login: Button
 
@@ -31,21 +35,26 @@ class LoginTabFragment : Fragment() {
 
         email = root.findViewById(R.id.email)
         pass = root.findViewById(R.id.pass)
+        test = root.findViewById(R.id.test)
+        test2 = root.findViewById(R.id.test2)
         forgetPass = root.findViewById(R.id.forgetPass)
         login = root.findViewById(R.id.loginButton)
 
-        email.translationX = 800f
-        pass.translationX = 800f
+
+        test.translationX = 800f
+        test2.translationX = 800f
         forgetPass.translationX = 800f
         login.translationX = 800f
 
-        email.alpha = v
-        pass.alpha = v
+        
+        test.alpha = v
+        test2.alpha = v
         forgetPass.alpha = v
         login.alpha = v
 
-        email.animate().translationX(0f).alpha(1f).setDuration(800).setStartDelay(300).start()
-        pass.animate().translationX(0f).alpha(1f).setDuration(800).setStartDelay(300).start()
+
+        test.animate().translationX(0f).alpha(1f).setDuration(800).setStartDelay(300).start()
+        test2.animate().translationX(0f).alpha(1f).setDuration(800).setStartDelay(300).start()
         forgetPass.animate().translationX(0f).alpha(1f).setDuration(800).setStartDelay(500).start()
         login.animate().translationX(0f).alpha(1f).setDuration(800).setStartDelay(700).start()
 
@@ -69,6 +78,7 @@ class LoginTabFragment : Fragment() {
                 .addOnFailureListener {
                     Toast.makeText(this@LoginTabFragment.context, "Invalid combination of email & password", Toast.LENGTH_SHORT).show()
                 }
+
 
         }
 

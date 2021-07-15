@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -187,6 +188,14 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
         })
 
 
+        orderTracker.setOnClickListener {
+
+            val trackingUrl = orderTracker.text.toString()
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("$trackingUrl")))
+            startActivity(intent)
+
+        }
+
 
 
         buyAgain.setOnClickListener {
@@ -337,7 +346,7 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_contact -> {
-                val intent = Intent(this@PurchaseHistoryDetails, Favourites::class.java)
+                val intent = Intent(this@PurchaseHistoryDetails, ContactInformation::class.java)
                 startActivity(intent)
             }
 

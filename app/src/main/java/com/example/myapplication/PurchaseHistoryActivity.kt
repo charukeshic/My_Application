@@ -234,7 +234,7 @@ class PurchaseHistoryActivity : AppCompatActivity(), NavigationView.OnNavigation
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_contact -> {
-                val intent = Intent(this@PurchaseHistoryActivity, Favourites::class.java)
+                val intent = Intent(this@PurchaseHistoryActivity, ContactInformation::class.java)
                 startActivity(intent)
             }
 

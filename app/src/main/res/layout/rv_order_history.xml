@@ -178,6 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="www.ninjavan.com"
+                    android:textColor="#1589FF"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:paddingRight="10dp"

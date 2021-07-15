@@ -241,7 +241,7 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_contact -> {
-                val intent = Intent(this@CartActivity, Favourites::class.java)
+                val intent = Intent(this@CartActivity, ContactInformation::class.java)
                 startActivity(intent)
             }
 
