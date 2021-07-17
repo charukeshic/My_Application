@@ -1,8 +1,6 @@
 package com.example.myapplication
 
-import android.content.ContentUris
 import android.content.Intent
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -10,7 +8,10 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -39,6 +40,7 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
     lateinit var userImage : ImageView
     lateinit var userName : TextView
     lateinit var userEmail : TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -151,7 +153,7 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
 
         when (item.itemId) {
             R.id.nav_home -> {
-                val intent = Intent(this@Homepage, Favourites::class.java)
+                val intent = Intent(this@Homepage, Homepage::class.java)
                 startActivity(intent)
             }
             R.id.nav_profile -> {
@@ -171,15 +173,25 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
                 startActivity(intent)
             }
             R.id.nav_events -> {
-                val intent = Intent(this@Homepage, Favourites::class.java)
-                startActivity(intent)
+                //val intent = Intent(this@Homepage, Favourites::class.java)
+                //startActivity(intent)
+
+                val calendarUri: Uri = CalendarContract.CONTENT_URI
+                    .buildUpon()
+                    .appendPath("time")
+                    .build()
+                startActivity(Intent(Intent.ACTION_VIEW, calendarUri))
+                navigationView.setCheckedItem(R.id.nav_events)
+
             }
             R.id.nav_logout -> {
                 val intent = Intent(this@Homepage, LoginActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_share -> {
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@Homepage, ShareActivity::class.java)
+                startActivity(intent)
+
             }
             R.id.nav_contact -> {
                 val intent = Intent(this@Homepage, ContactInformation::class.java)

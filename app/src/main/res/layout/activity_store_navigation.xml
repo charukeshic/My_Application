@@ -139,7 +139,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_margin="10dp"
-                android:backgroundTint="@color/white"
                 android:src="@drawable/profile_icon" />
 
         </LinearLayout>

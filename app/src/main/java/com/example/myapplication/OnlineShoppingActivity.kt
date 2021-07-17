@@ -1,8 +1,10 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -190,15 +192,20 @@ class OnlineShoppingActivity : AppCompatActivity(), NavigationView.OnNavigationI
                 startActivity(intent)
             }
             R.id.nav_events -> {
-                val intent = Intent(this@OnlineShoppingActivity, Favourites::class.java)
-                startActivity(intent)
+                val calendarUri: Uri = CalendarContract.CONTENT_URI
+                    .buildUpon()
+                    .appendPath("time")
+                    .build()
+                startActivity(Intent(Intent.ACTION_VIEW, calendarUri))
+                navigationView.setCheckedItem(R.id.nav_events)
             }
             R.id.nav_logout -> {
                 val intent = Intent(this@OnlineShoppingActivity, LoginActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_share -> {
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@OnlineShoppingActivity, ShareActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_contact -> {
                 val intent = Intent(this@OnlineShoppingActivity, ContactInformation::class.java)

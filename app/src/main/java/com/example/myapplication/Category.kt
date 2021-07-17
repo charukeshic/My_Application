@@ -35,3 +35,7 @@ data class Order (var orderId : String, var username : String, var mobile : Stri
     constructor() : this("","", "", "", "", ""
         ,0.0,"", "", "")
 }
+
+data class Feedback (var feedbackId : String, var image : String, var feedback : String, var feedbackDate : String, var user : String) {
+    constructor() : this("", "", "", "", "")
+}

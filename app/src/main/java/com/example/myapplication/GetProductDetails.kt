@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.util.Log
@@ -281,7 +282,7 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         navigationView.bringToFront()
         navigationView.setNavigationItemSelectedListener(this)
-        //navigationView.setCheckedItem(R.id.nav_home)
+        navigationView.setCheckedItem(R.id.nav_home)
 
         menuIcon.setOnClickListener(View.OnClickListener {
             if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
@@ -369,15 +370,20 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 startActivity(intent)
             }
             R.id.nav_events -> {
-                val intent = Intent(this@GetProductDetails, Favourites::class.java)
-                startActivity(intent)
+                val calendarUri: Uri = CalendarContract.CONTENT_URI
+                    .buildUpon()
+                    .appendPath("time")
+                    .build()
+                startActivity(Intent(Intent.ACTION_VIEW, calendarUri))
+                navigationView.setCheckedItem(R.id.nav_events)
             }
             R.id.nav_logout -> {
                 val intent = Intent(this@GetProductDetails, LoginActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_share -> {
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@GetProductDetails, ShareActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_contact -> {
                 val intent = Intent(this@GetProductDetails, ContactInformation::class.java)

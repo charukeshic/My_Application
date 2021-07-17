@@ -1,8 +1,10 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.StrictMode
+import android.provider.CalendarContract
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -471,7 +473,7 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         navigationView.bringToFront()
         navigationView.setNavigationItemSelectedListener(this)
-        //navigationView.setCheckedItem(R.id.nav_favourites)
+        navigationView.setCheckedItem(R.id.nav_home)
 
         menuIcon.setOnClickListener(View.OnClickListener {
             if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
@@ -560,15 +562,20 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 startActivity(intent)
             }
             R.id.nav_events -> {
-                val intent = Intent(this@OrderActivity, Favourites::class.java)
-                startActivity(intent)
+                val calendarUri: Uri = CalendarContract.CONTENT_URI
+                    .buildUpon()
+                    .appendPath("time")
+                    .build()
+                startActivity(Intent(Intent.ACTION_VIEW, calendarUri))
+                navigationView.setCheckedItem(R.id.nav_events)
             }
             R.id.nav_logout -> {
                 val intent = Intent(this@OrderActivity, LoginActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_share -> {
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@OrderActivity, ShareActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_contact -> {
                 val intent = Intent(this@OrderActivity, ContactInformation::class.java)

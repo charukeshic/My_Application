@@ -12,6 +12,8 @@
     <string name="nav_drawer_open">Open navigation drawer</string>
     <string name="nav_drawer_close">Close navigation drawer</string>
     <string name="chooser_title">Grab</string>
+    <string name="share_title">We are more than happy to assist you in online shopping
+        and we hope you are satisfied with our service. Do share your experience with us to your friends!</string>
 
     //Store details for recycler view
     <string name="title_1">Marini’s on 57</string>
