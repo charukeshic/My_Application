@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.CartItemAdapter2
 import com.example.myapplication.adapters.OrderHistoryAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -30,6 +31,7 @@ class PurchaseHistoryActivity : AppCompatActivity(), NavigationView.OnNavigation
     lateinit var navigationView: NavigationView
     lateinit var menuIcon: ImageView
     lateinit var cartIcon: ImageView
+    lateinit var chatbot: FloatingActionButton
 
     lateinit var layoutHeader : View
     lateinit var userImage : ImageView
@@ -59,6 +61,7 @@ class PurchaseHistoryActivity : AppCompatActivity(), NavigationView.OnNavigation
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
         cartIcon = findViewById(R.id.cart_icon)
+        chatbot = findViewById(R.id.chatbot)
 
         productRecyclerView = findViewById(R.id.product_recyclerView)
         productRecyclerView.setHasFixedSize(true)
@@ -117,6 +120,15 @@ class PurchaseHistoryActivity : AppCompatActivity(), NavigationView.OnNavigation
 
         cartIcon.setOnClickListener {
             getCartItems()
+        }
+
+        chatbot.setOnClickListener {
+
+            val chat = "https://dialogflow.cloud.google.com/#/agent/shoppingchatbot-alpv/integrations"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("$chat")))
+            startActivity(intent)
+
+
         }
 
 

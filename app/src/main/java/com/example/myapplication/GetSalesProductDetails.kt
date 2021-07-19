@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.ProductAdapter
 import com.example.myapplication.adapters.ProductDetailsAdapter
 import com.example.myapplication.fragments.ProductFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -38,6 +39,7 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
     lateinit var menuIcon: ImageView
     lateinit var cartIcon: ImageView
     lateinit var favBtn : ImageView
+    lateinit var chatbot: FloatingActionButton
 
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var productArrayList: ArrayList<SalesProduct>
@@ -58,6 +60,7 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
         menuIcon = findViewById(R.id.menu_icon)
         cartIcon = findViewById(R.id.cart_icon)
         favBtn = findViewById(R.id.fav_btn)
+        chatbot = findViewById(R.id.chatbot)
 
 
         productArrayList = arrayListOf<SalesProduct>()
@@ -76,6 +79,15 @@ class GetSalesProductDetails : AppCompatActivity(), NavigationView.OnNavigationI
 
         cartIcon.setOnClickListener {
             getCartItems()
+        }
+
+        chatbot.setOnClickListener {
+
+            val chat = "https://dialogflow.cloud.google.com/#/agent/shoppingchatbot-alpv/integrations"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("$chat")))
+            startActivity(intent)
+
+
         }
 
 

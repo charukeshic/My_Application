@@ -16,6 +16,7 @@ import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -42,6 +43,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     lateinit var address : EditText
 
     private lateinit var ImageUri : Uri
+    lateinit var chatbot: FloatingActionButton
 
     lateinit var layoutHeader : View
     lateinit var userName : TextView
@@ -65,6 +67,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         saveChanges = findViewById(R.id.signUpButton)
         selectPhoto = findViewById(R.id.select_image)
         userImage = findViewById(R.id.user_image2)
+        chatbot = findViewById(R.id.chatbot)
 
         email = findViewById(R.id.email1)
         username = findViewById(R.id.username1)
@@ -112,6 +115,15 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
 
         })
+
+        chatbot.setOnClickListener {
+
+            val chat = "https://dialogflow.cloud.google.com/#/agent/shoppingchatbot-alpv/integrations"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("$chat")))
+            startActivity(intent)
+
+
+        }
 
 
 

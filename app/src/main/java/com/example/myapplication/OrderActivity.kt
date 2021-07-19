@@ -231,6 +231,8 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
                 createOrder()
                 finish()
+                val intent = Intent(this@OrderActivity, ProfileActivity::class.java)
+                startActivity(intent)
                 Toast.makeText(this@OrderActivity, "Your order will be processed", Toast.LENGTH_LONG).show()
             }
 

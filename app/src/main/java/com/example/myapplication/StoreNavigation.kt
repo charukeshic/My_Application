@@ -59,9 +59,13 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     lateinit var search_toolbar: Toolbar
     lateinit var chatbot: FloatingActionButton
+    lateinit var searchView : SearchView
+    lateinit var testIcon : ImageView
 
     lateinit var spinner: Spinner
     lateinit var promoCheckBox: CheckBox
+
+    var v = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -72,9 +76,11 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
         )
         setContentView(R.layout.activity_store_navigation)
 
-        search_toolbar = findViewById(R.id.my_toolbar)
-        setSupportActionBar(findViewById(R.id.my_toolbar))
+//        search_toolbar = findViewById(R.id.my_toolbar)
+//        setSupportActionBar(findViewById(R.id.my_toolbar))
         chatbot = findViewById(R.id.chatbot)
+        searchView = findViewById(R.id.search_view)
+        testIcon = findViewById(R.id.test_icon)
 
         spinner = findViewById(R.id.category_spinner)
         promoCheckBox = findViewById(R.id.promo_check)
@@ -478,54 +484,127 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
 
 
-    }
+        searchView.alpha = v
 
 
+        testIcon.setOnClickListener {
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+            searchView.translationX = 800f
+            testIcon.alpha = v
+            searchView.isIconified = false
+            searchView.animate().translationX(0f).alpha(1f).setDuration(400).setStartDelay(0).start()
 
-        menuInflater.inflate(R.menu.menu_search, menu)
-        val item = menu?.findItem(R.id.action_filter_search)
-        val searchView = item?.actionView as SearchView
+            searchView.setQueryHint("Search for a store")
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("Not yet implemented")
-            }
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    TODO("Not yet implemented")
+                }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                tempArrayList.clear()
-                val searchText = newText!!.toLowerCase(Locale.getDefault())
-                if (searchText.isNotEmpty()) {
-                    storeArrayList.forEach {
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    tempArrayList.clear()
+                    val searchText = newText!!.toLowerCase(Locale.getDefault())
+                    if (searchText.isNotEmpty()) {
+                        storeArrayList.forEach {
 
-                        if (it.itemTitle!!.toLowerCase(Locale.getDefault()).contains(searchText) ||
-                            it.itemDetails!!.toLowerCase(Locale.getDefault()).contains(searchText) ||
-                            it.itemDescription!!.toLowerCase(Locale.getDefault()).contains(searchText) ) {
+                            if (it.itemTitle!!.toLowerCase(Locale.getDefault()).contains(searchText) ||
+                                it.itemDetails!!.toLowerCase(Locale.getDefault()).contains(searchText) ||
+                                it.itemDescription!!.toLowerCase(Locale.getDefault()).contains(searchText) ) {
 
-                            tempArrayList.add(it)
+                                tempArrayList.add(it)
+
+                            }
+
 
                         }
 
+                        recyclerView.adapter!!.notifyDataSetChanged()
 
                     }
+                    else {
+                        tempArrayList.clear()
+                        tempArrayList.addAll(storeArrayList)
+                        recyclerView.adapter!!.notifyDataSetChanged()
+                    }
 
-                    recyclerView.adapter!!.notifyDataSetChanged()
-
+                    return false
                 }
-                else {
-                    tempArrayList.clear()
-                    tempArrayList.addAll(storeArrayList)
-                    recyclerView.adapter!!.notifyDataSetChanged()
+
+
+            })
+
+            searchView.setOnCloseListener(object : SearchView.OnCloseListener {
+                override fun onClose(): Boolean {
+                    searchView.alpha = v
+                    testIcon.alpha = 1.0f
+                    return false
                 }
 
-                return false
-            }
 
-        })
+            })
 
-        return super.onCreateOptionsMenu(menu)
+
+
+        }
+
+
+
     }
+
+
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//
+//        menuInflater.inflate(R.menu.menu_search, menu)
+//        val item = menu?.findItem(R.id.action_filter_search)
+//        val searchView = item?.actionView as SearchView
+//
+//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                tempArrayList.clear()
+//                val searchText = newText!!.toLowerCase(Locale.getDefault())
+//                if (searchText.isNotEmpty()) {
+//                    storeArrayList.forEach {
+//
+//                        if (it.itemTitle!!.toLowerCase(Locale.getDefault()).contains(searchText) ||
+//                            it.itemDetails!!.toLowerCase(Locale.getDefault()).contains(searchText) ||
+//                            it.itemDescription!!.toLowerCase(Locale.getDefault()).contains(searchText) ) {
+//
+//                            tempArrayList.add(it)
+//
+//                        }
+//
+//
+//                    }
+//
+//                    recyclerView.adapter!!.notifyDataSetChanged()
+//
+//                }
+//                else {
+//                    tempArrayList.clear()
+//                    tempArrayList.addAll(storeArrayList)
+//                    recyclerView.adapter!!.notifyDataSetChanged()
+//                }
+//
+//                return false
+//            }
+//
+//        })
+//
+//        return super.onCreateOptionsMenu(menu)
+//    }
+
+// layout
+//    <include
+//    android:id="@+id/my_toolbar"
+//    layout="@layout/toolbar"
+//    android:layout_width="match_parent"
+//    android:layout_height="wrap_content"
+//    android:layout_marginLeft="50dp" />
 
 
 

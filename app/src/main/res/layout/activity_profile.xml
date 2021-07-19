@@ -122,6 +122,7 @@
         <EditText
             android:id="@+id/username1"
             android:layout_width="0dp"
+            android:inputType="textPersonName"
             android:layout_height="wrap_content"
             app:layout_constraintWidth_percent=".8"
             app:layout_constraintVertical_bias=".3"
@@ -148,6 +149,7 @@
 
         <EditText
             android:id="@+id/mobile1"
+            android:inputType="number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintWidth_percent=".8"
@@ -175,6 +177,7 @@
 
         <EditText
             android:id="@+id/address1"
+            android:inputType="textPostalAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintWidth_percent=".8"

@@ -17,6 +17,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -36,6 +37,7 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var productArrayList: ArrayList<ProductDetails>
+    lateinit var chatbot: FloatingActionButton
 
     lateinit var layoutHeader : View
     lateinit var userImage : ImageView
@@ -59,6 +61,7 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
         menuIcon = findViewById(R.id.menu_icon)
         cartIcon = findViewById(R.id.cart_icon)
         favBtn = findViewById(R.id.fav_btn)
+        chatbot = findViewById(R.id.chatbot)
 
         productArrayList = arrayListOf<ProductDetails>()
         firebaseAnalytics = Firebase.analytics
@@ -80,6 +83,15 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         cartIcon.setOnClickListener {
             getCartItems()
+        }
+
+        chatbot.setOnClickListener {
+
+            val chat = "https://dialogflow.cloud.google.com/#/agent/shoppingchatbot-alpv/integrations"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("$chat")))
+            startActivity(intent)
+
+
         }
 
 
@@ -171,6 +183,17 @@ class GetProductDetails : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
         })
+
+
+        chatbot.setOnClickListener {
+
+            val chat = "https://dialogflow.cloud.google.com/#/agent/shoppingchatbot-alpv/integrations"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("$chat")))
+            startActivity(intent)
+
+
+        }
+
 
     }
 

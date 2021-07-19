@@ -18,6 +18,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -36,6 +37,7 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
     lateinit var bookBtn: Button
     lateinit var navigateBtn: Button
     lateinit var grabBtn: Button
+    lateinit var chatbot: FloatingActionButton
 
     lateinit var layoutHeader : View
     lateinit var userImage : ImageView
@@ -96,6 +98,7 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
+        chatbot = findViewById(R.id.chatbot)
 
 
         navigationDrawer()
@@ -133,6 +136,15 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 Log.d("Start", "what happen to this function")
                 Toast.makeText(this, "Grab app not installed", Toast.LENGTH_SHORT)
             }
+
+        }
+
+        chatbot.setOnClickListener {
+
+            val chat = "https://dialogflow.cloud.google.com/#/agent/shoppingchatbot-alpv/integrations"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("$chat")))
+            startActivity(intent)
+
 
         }
 

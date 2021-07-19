@@ -25,6 +25,7 @@ import com.example.myapplication.adapters.ProductDetailsAdapter
 import com.example.myapplication.adapters.RecommendedProductAdapter
 import com.example.myapplication.fragments.CategoryFragment
 import com.example.myapplication.fragments.ProductFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -58,6 +59,8 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     lateinit var userName : TextView
     lateinit var userEmail : TextView
 
+    lateinit var chatbot: FloatingActionButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getWindow().setFlags(
@@ -71,6 +74,7 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
         cartIcon = findViewById(R.id.cart_icon)
+        chatbot = findViewById(R.id.chatbot)
 
         navigationDrawer()
 
@@ -102,6 +106,15 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         cartIcon.setOnClickListener {
             getCartItems()
+        }
+
+        chatbot.setOnClickListener {
+
+            val chat = "https://dialogflow.cloud.google.com/#/agent/shoppingchatbot-alpv/integrations"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(("$chat")))
+            startActivity(intent)
+
+
         }
 
 
