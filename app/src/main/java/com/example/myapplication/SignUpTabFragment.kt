@@ -86,7 +86,6 @@ class SignUpTabFragment : Fragment() {
                 saveUserToDatabase(it.result?.user?.uid.toString())
 
 
-
             }
             .addOnFailureListener {
                 Log.d("Main", "Failed to create user: ${it.message}")
@@ -97,7 +96,20 @@ class SignUpTabFragment : Fragment() {
 
 
     private fun isValidMobile(mobile: String): Boolean {
-        return Patterns.PHONE.matcher(mobile).matches();
+
+        if(mobile.length >= 11) {
+            //Toast.makeText(this@SignUpTabFragment.context, "Mobile number too long",Toast.LENGTH_LONG).show()
+            return false
+        }
+        else if(mobile.length <= 5) {
+            //Toast.makeText(this@SignUpTabFragment.context, "Mobile number too long",Toast.LENGTH_LONG).show()
+            return false
+        }
+        else {
+            return true
+        }
+        //return Patterns.PHONE.matcher(mobile).matches();
+
     }
 
     private fun saveUserToDatabase(uid : String) {

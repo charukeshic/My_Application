@@ -70,6 +70,8 @@ class ActiveOrders : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         productRecyclerView.layoutManager = LinearLayoutManager(productRecyclerView.context)
         productArrayList = arrayListOf<Order>()
 
+        navigationView.setCheckedItem(R.id.nav_orders)
+
         idTabs = findViewById(R.id.tabs)
         idTabs.text = "Active Orders"
 

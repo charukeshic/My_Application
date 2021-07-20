@@ -30,13 +30,15 @@ class ShareActivity : AppCompatActivity() {
             val installed  : Boolean = appInstalledOrNot("com.facebook.katana")
 
             if (installed) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com"))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/KFCMalaysia/"))
                 startActivity(intent)
 
 
             }
             else {
                 Log.d("Start", "what happen to this function")
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/KFCMalaysia/"))
+                startActivity(intent)
                 Toast.makeText(this, "Grab app not installed", Toast.LENGTH_SHORT)
             }
 
@@ -47,13 +49,15 @@ class ShareActivity : AppCompatActivity() {
             val installed  : Boolean = appInstalledOrNot("com.instagram.android")
 
             if (installed) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com"))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/kfcmalaysia/?hl=en"))
                 startActivity(intent)
 
 
             }
             else {
                 Log.d("Start", "what happen to this function")
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/kfcmalaysia/?hl=en"))
+                startActivity(intent)
                 Toast.makeText(this, "Grab app not installed", Toast.LENGTH_SHORT)
             }
 
@@ -64,13 +68,15 @@ class ShareActivity : AppCompatActivity() {
             val installed  : Boolean = appInstalledOrNot("com.twitter.android")
 
             if (installed) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/login?lang=en"))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/kfcmalaysia?lang=en"))
                 startActivity(intent)
 
 
             }
             else {
                 Log.d("Start", "what happen to this function")
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/kfcmalaysia?lang=en"))
+                startActivity(intent)
                 Toast.makeText(this, "Grab app not installed", Toast.LENGTH_SHORT)
             }
 

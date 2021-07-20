@@ -73,6 +73,8 @@ class ContactInformation : AppCompatActivity(), NavigationView.OnNavigationItemS
         menuIcon = findViewById(R.id.menu_icon)
         chatbot = findViewById(R.id.chatbot)
 
+        navigationView.setCheckedItem(R.id.nav_contact)
+
         saveChanges = findViewById(R.id.signUpButton)
         selectPhoto = findViewById(R.id.select_image)
         userImage = findViewById(R.id.user_image2)

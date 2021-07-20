@@ -73,8 +73,8 @@
             android:id="@+id/product_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:layout_below="@id/tabs"
-            android:background="@color/dark_teal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/rv_cart_item"
             android:layout_marginBottom="115dp"/>

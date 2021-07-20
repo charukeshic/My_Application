@@ -44,6 +44,7 @@
 
     <EditText
         android:id="@+id/pass1"
+        android:inputType="textVisiblePassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_bg"

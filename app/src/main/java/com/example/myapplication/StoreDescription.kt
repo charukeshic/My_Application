@@ -18,6 +18,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -69,6 +70,7 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
         bookBtn = findViewById(R.id.book_btn)
         navigateBtn = findViewById(R.id.nav_btn)
         grabBtn = findViewById(R.id.grab_btn)
+
 
 
         val bundle : Bundle?= intent.extras
@@ -127,8 +129,16 @@ class StoreDescription : AppCompatActivity(), NavigationView.OnNavigationItemSel
             val installed  : Boolean = appInstalledOrNot("com.grabtaxi.passenger")
 
             if (installed) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0, 0?q=$address"))
-                startActivity(intent)
+
+                val langDialog =  MaterialAlertDialogBuilder(this)
+                langDialog.setTitle("Use the promo code GRABRIDE30SD to get 30% off your Grab ride")
+                langDialog.setPositiveButton("Ok") {
+                        dialog, which ->
+                    dialog.dismiss()
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0, 0?q=$address"))
+                    startActivity(intent)
+                }
+                langDialog.show()
 
 
             }

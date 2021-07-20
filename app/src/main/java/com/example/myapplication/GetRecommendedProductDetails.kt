@@ -62,6 +62,8 @@ class GetRecommendedProductDetails : AppCompatActivity(), NavigationView.OnNavig
         favBtn = findViewById(R.id.fav_btn)
         chatbot = findViewById(R.id.chatbot)
 
+        navigationView.setCheckedItem(R.id.nav_home)
+
         productArrayList = arrayListOf<ProductDetails>()
 
 

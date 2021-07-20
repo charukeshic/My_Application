@@ -58,6 +58,8 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         totalCost = findViewById(R.id.total_price)
         placeOrder = findViewById(R.id.order_btn)
 
+        navigationView.setCheckedItem(R.id.nav_home)
+
         productRecyclerView = findViewById(R.id.product_recyclerView)
         productRecyclerView.setHasFixedSize(true)
         productRecyclerView.layoutManager = LinearLayoutManager(productRecyclerView.context)

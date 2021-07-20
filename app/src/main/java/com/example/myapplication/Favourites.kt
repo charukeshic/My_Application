@@ -59,6 +59,8 @@ class Favourites : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         cartIcon = findViewById(R.id.cart_icon)
         chatbot = findViewById(R.id.chatbot)
 
+        navigationView.setCheckedItem(R.id.nav_favourites)
+
         productRecyclerView = findViewById(R.id.product_recyclerView)
         productRecyclerView.setHasFixedSize(true)
         productRecyclerView.layoutManager = LinearLayoutManager(productRecyclerView.context)

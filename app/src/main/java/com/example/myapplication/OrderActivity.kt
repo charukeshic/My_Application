@@ -107,6 +107,8 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         orUserPhone = findViewById(R.id.user_phone)
         orUserAddr = findViewById(R.id.user_address)
 
+        navigationView.setCheckedItem(R.id.nav_home)
+
         edit = findViewById(R.id.edit_details)
         selectPaymentMethod = findViewById(R.id.select_payment_method)
         selectMerchant = findViewById(R.id.select_merchant)
@@ -230,9 +232,9 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             else {
 
                 createOrder()
-                finish()
                 val intent = Intent(this@OrderActivity, ProfileActivity::class.java)
                 startActivity(intent)
+                finish()
                 Toast.makeText(this@OrderActivity, "Your order will be processed", Toast.LENGTH_LONG).show()
             }
 
@@ -401,8 +403,6 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
 
     }
-
-
 
 
 

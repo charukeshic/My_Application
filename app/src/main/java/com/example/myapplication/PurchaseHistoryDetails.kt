@@ -85,6 +85,8 @@ class PurchaseHistoryDetails : AppCompatActivity(), NavigationView.OnNavigationI
         purchaseId = findViewById(R.id.order_id)
         orderDate = findViewById(R.id.order_date)
 
+        navigationView.setCheckedItem(R.id.nav_order_history)
+
 
         paymentMethod = findViewById(R.id.payment_method)
         merchantName = findViewById(R.id.merchant_name)

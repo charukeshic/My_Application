@@ -63,6 +63,8 @@ class PurchaseHistoryActivity : AppCompatActivity(), NavigationView.OnNavigation
         cartIcon = findViewById(R.id.cart_icon)
         chatbot = findViewById(R.id.chatbot)
 
+        navigationView.setCheckedItem(R.id.nav_order_history)
+
         productRecyclerView = findViewById(R.id.product_recyclerView)
         productRecyclerView.setHasFixedSize(true)
         productRecyclerView.layoutManager = LinearLayoutManager(productRecyclerView.context)

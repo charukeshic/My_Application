@@ -69,6 +69,8 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         userImage = findViewById(R.id.user_image2)
         chatbot = findViewById(R.id.chatbot)
 
+        navigationView.setCheckedItem(R.id.nav_profile)
+
         email = findViewById(R.id.email1)
         username = findViewById(R.id.username1)
         mobile = findViewById(R.id.mobile1)
@@ -84,9 +86,9 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
 
         saveChanges.setOnClickListener {
-            update()
-            val intent = Intent(this@ProfileActivity, ProfileActivity::class.java)
-            startActivity(intent)
+            checkLength()
+            //val intent = Intent(this@ProfileActivity, ProfileActivity::class.java)
+            //startActivity(intent)
         }
 
         updateNavHeader()
@@ -129,30 +131,24 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     }
 
-    private fun getUserData() {
-        val uid = intent.getStringExtra("userId").toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/Users").child("$uid")
+    private fun checkLength() {
+        if(mobile.text.toString().length >= 11) {
+            Toast.makeText(this@ProfileActivity, "Mobile number too long",Toast.LENGTH_LONG).show()
+        }
+        else if(mobile.text.toString().length <= 5) {
+            Toast.makeText(this@ProfileActivity, "Mobile number too short",Toast.LENGTH_LONG).show()
+        }
+        else {
 
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val user = snapshot.getValue(User::class.java)
-                email.setText(user?.email.toString())
-                username.setText(user?.username.toString())
-                mobile.setText(user?.mobileNo.toString())
-                address.setText(user?.address.toString())
-                //password.setText(user?.password.toString())
-                //Picasso.get().load(user?.image).into(userImage)
-
-            }
-
-        })
+            update()
+            finish()
+            val intent = Intent(this@ProfileActivity, Homepage::class.java)
+            startActivity(intent)
+        }
 
 
     }
+
 
     private fun updateNavHeader() {
 
@@ -190,8 +186,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         if (isMobileNoChanged() or isNameChanged() or isAddressChanged()) {
             Toast.makeText(this@ProfileActivity, "Data has been updated",Toast.LENGTH_LONG).show()
         }
-
-        else
+        else if (!isMobileNoChanged() and !isNameChanged() and !isAddressChanged())
             Toast.makeText(this@ProfileActivity, "No changes in data",Toast.LENGTH_LONG).show()
 
     }
@@ -242,7 +237,6 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             ref.child("address").setValue(address.text.toString())
             return true
         }
-
         else
             return false
 

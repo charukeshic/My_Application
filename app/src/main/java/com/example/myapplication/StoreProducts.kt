@@ -76,6 +76,8 @@ class StoreProducts : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         cartIcon = findViewById(R.id.cart_icon)
         chatbot = findViewById(R.id.chatbot)
 
+        navigationView.setCheckedItem(R.id.nav_home)
+
         navigationDrawer()
 
         //fetchCategory()

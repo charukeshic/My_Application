@@ -61,9 +61,8 @@ class Homepage : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLis
         storeImage = findViewById(R.id.store_image)
         shoppingImage = findViewById(R.id.shopping_image)
 
+        navigationView.setCheckedItem(R.id.nav_home)
 
-        /*------------Toolbar--------------*/
-        //setSupportActionBar(toolbar)
 
         /*------------Navigation Drawer Menu--------------*/
         navigationView.bringToFront()

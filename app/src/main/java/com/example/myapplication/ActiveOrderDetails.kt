@@ -90,6 +90,8 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
         merchantName = findViewById(R.id.merchant_name)
         buyAgain = findViewById(R.id.order_btn)
 
+        navigationView.setCheckedItem(R.id.nav_orders)
+
 
         productRecyclerView = findViewById(R.id.product_recyclerView)
         productRecyclerView.setHasFixedSize(true)

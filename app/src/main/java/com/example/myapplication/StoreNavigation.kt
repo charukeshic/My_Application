@@ -315,7 +315,6 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
         navigationView = findViewById(R.id.nav_view)
         menuIcon = findViewById(R.id.menu_icon)
 
-
         navigationDrawer()
 
         updateNavHeader()
