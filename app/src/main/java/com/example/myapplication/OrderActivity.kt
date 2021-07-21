@@ -3,7 +3,6 @@ package com.example.myapplication
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.StrictMode
 import android.provider.CalendarContract
 import android.util.Log
 import android.view.MenuItem
@@ -33,9 +32,9 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider
 import java.security.Security
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
 import javax.mail.*
-import javax.mail.Message.RecipientType
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 
@@ -232,8 +231,8 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             else {
 
                 createOrder()
-                val intent = Intent(this@OrderActivity, ProfileActivity::class.java)
-                startActivity(intent)
+                //val intent = Intent(this@OrderActivity, ProfileActivity::class.java)
+                //startActivity(intent)
                 finish()
                 Toast.makeText(this@OrderActivity, "Your order will be processed", Toast.LENGTH_LONG).show()
             }
@@ -264,15 +263,17 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         val currentDateTime = LocalDateTime.now()
         val orderStatus = "Processing"
         val orderTracking = "https://www.ninjavan.co/en-my/tracking"
-        val paymentDate = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        //val paymentDate = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+        val paymentDate: String = currentDateTime.format(formatter)
 
         val createOrder = Order(orderId, orderUser, orderPhone, orderAddr, orderPaymentMethod, orderPaymentMerchantName, orderPayment, paymentDate, orderStatus, orderTracking)
 
-        dbrefOrder.child("$orderId").setValue(createOrder)
+//        dbrefOrder.child("$orderId").setValue(createOrder)
         dbrefActiveOrder.child("$orderId").setValue(createOrder)
 
-        dbrefPendingOrders.child("$orderId").setValue(createOrder)
-        dbrefCompletedOrders.child("$orderId").setValue(createOrder)
+//        dbrefPendingOrders.child("$orderId").setValue(createOrder)
+//        dbrefCompletedOrders.child("$orderId").setValue(createOrder)
 
         dbrefOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Purchase History")
         dbrefActiveOrderItems = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Active Orders")
@@ -283,11 +284,11 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
             val nameOfItem = items.itemName.plus("(").plus(items.store).plus(")")
 
-            dbrefOrderItems.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
+//            dbrefOrderItems.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
             dbrefActiveOrderItems.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
 
-            dbrefPendingOrders.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
-            dbrefCompletedOrders.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
+//            dbrefPendingOrders.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
+//            dbrefCompletedOrders.child("$orderId").child("Items").child("$nameOfItem").setValue(items)
 
             dbrefProducts = FirebaseDatabase.getInstance().getReference("/Users").child("$uid").child("Cart")
             dbrefProducts.child("$nameOfItem").removeValue()
@@ -316,9 +317,11 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             it["mail.smtp.host"] = "smtp.gmail.com"
             // Change when necessary
             it["mail.smtp.auth"] = "true"
-            it["mail.smtp.port"] = "465"
+            it["mail.gmail"]
+            it["mail.smtp.port"] = "587"
             // Easy and fast way to enable ssl in JavaMail
-            it["mail.smtp.ssl.enable"] = true
+            //it["mail.smtp.ssl.enable"] = true
+            it["mail.smtp.starttls.enable"] = true
         }
 
         // Dont ever use "getDefaultInstance" like other examples do!

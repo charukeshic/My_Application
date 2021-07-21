@@ -221,6 +221,7 @@ class ActiveOrderDetails : AppCompatActivity(), NavigationView.OnNavigationItemS
 
                 val intent = Intent(this@ActiveOrderDetails, ActiveOrders::class.java)
                 startActivity(intent)
+                finish()
 
 
             }

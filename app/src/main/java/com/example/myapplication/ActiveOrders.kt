@@ -111,9 +111,6 @@ class ActiveOrders : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 intent.putExtra("OrderID", productName)
                                 startActivity(intent)
 
-                                finish()
-
-
 
                             }
 
