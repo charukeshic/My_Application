@@ -39,6 +39,7 @@ class Favourites : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     lateinit var userName : TextView
     lateinit var userEmail : TextView
     lateinit var chatbot: FloatingActionButton
+    lateinit var emptyText : TextView
 
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var productArrayList: ArrayList<ProductDetails>
@@ -58,6 +59,7 @@ class Favourites : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         menuIcon = findViewById(R.id.menu_icon)
         cartIcon = findViewById(R.id.cart_icon)
         chatbot = findViewById(R.id.chatbot)
+        emptyText = findViewById(R.id.empty_text)
 
         navigationView.setCheckedItem(R.id.nav_favourites)
 
@@ -69,6 +71,8 @@ class Favourites : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         navigationDrawer()
 
         updateNavHeader()
+
+        emptyText.alpha = 0f
 
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 
@@ -106,6 +110,10 @@ class Favourites : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                         })
                     }
 
+                }
+                else {
+                    emptyText.alpha = 1f
+                    productRecyclerView.alpha = 0f
                 }
 
             }

@@ -245,7 +245,7 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -257,7 +257,7 @@
                                 <TextView
                                     android:id="@+id/bus_details"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:breakStrategy="simple"
                                     android:ellipsize="none"
                                     android:maxLines="3"
@@ -298,7 +298,7 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -310,10 +310,10 @@
                                 <TextView
                                     android:id="@+id/train_details"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:breakStrategy="simple"
                                     android:ellipsize="none"
-                                    android:maxLines="3"
+                                    android:maxLines="5"
                                     android:gravity="center_vertical"
                                     android:layout_marginBottom="10dp"/>
 

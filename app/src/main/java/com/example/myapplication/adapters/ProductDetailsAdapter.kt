@@ -111,13 +111,13 @@ class ProductDetailsAdapter(private val productList : ArrayList<ProductDetails>)
 
                 val productName = currentItem.itemName.toString().plus("(").plus(currentItem.store).plus(")")
 
+
                 ref.child("$productName").removeValue()
                     .addOnSuccessListener {
                         Toast.makeText(holder.itemView.context, "$productName removed from Favourites", Toast.LENGTH_SHORT).show()
                     }
 
-
-                holder.favBtn.setImageResource(R.drawable.heart_icon)
+                //holder.favBtn.setImageResource(R.drawable.heart_icon)
             }
 
         }

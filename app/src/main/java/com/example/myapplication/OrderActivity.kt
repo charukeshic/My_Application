@@ -1,6 +1,9 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -29,14 +32,21 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.bouncycastle.jce.provider.BouncyCastleProvider
+import java.io.File
+import java.io.FileOutputStream
 import java.security.Security
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.*
+import javax.activation.DataHandler
+import javax.activation.DataSource
+import javax.activation.FileDataSource
 import javax.mail.*
 import javax.mail.internet.InternetAddress
+import javax.mail.internet.MimeBodyPart
 import javax.mail.internet.MimeMessage
+import javax.mail.internet.MimeMultipart
 
 
 class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -223,7 +233,7 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
 
 
-            if(orUserAddr.text.equals("Not Updated") or orUserAddr.text.isEmpty()) {
+            if(orUserAddr.text.equals("Not Updated") or orUserAddr.text.isEmpty() or checkLength(orUserAddr.text.toString())) {
 
                 Toast.makeText(this@OrderActivity, "Please use a valid address", Toast.LENGTH_LONG).show()
 
@@ -241,6 +251,17 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
 
 
+
+    }
+
+    private fun checkLength(address : String) : Boolean {
+
+        if(address.length <= 10) {
+            Toast.makeText(this@OrderActivity, "Your order will be processed", Toast.LENGTH_LONG).show()
+            return true
+        }
+        else
+            return false
 
     }
 
@@ -300,6 +321,43 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     }
 
+
+    private fun printPDF(order : Order) : File {
+
+        val receipt = PdfDocument()
+        val paint = Paint()
+        val receiptInfo = PdfDocument.PageInfo.Builder(250, 350, 1).create()
+        val receiptPage = receipt.startPage(receiptInfo)
+        val receiptCanvas = receiptPage.canvas
+
+        paint.textSize = 15.5f
+        paint.setColor(Color.rgb(0,0,0))
+
+        receiptCanvas.drawText("Order Receipt", 20f, 20f, paint)
+        paint.textSize = 8.5f
+
+        receiptCanvas.drawText("Order ID : " + order.orderId, 20f, 40f, paint)
+        receiptCanvas.drawText("Order Date : " + order.paymentDate, 20f, 55f, paint)
+        receiptCanvas.drawText("Recipient Name : " + order.username, 20f, 70f, paint)
+        receiptCanvas.drawText("Mobile : " + order.mobile, 20f, 85f, paint)
+        receiptCanvas.drawText("Delivery Address : " + order.username, 20f, 100f, paint)
+        receiptCanvas.drawText("Payment Amount : RM " + String.format("%.2f", order.orderPayment.toString()), 20f, 115f, paint)
+        receiptCanvas.drawText("Payment Method : " + order.paymentMethod, 20f, 130f, paint)
+        receiptCanvas.drawText("Order Status : " + order.orderStatus, 20f, 145f, paint)
+        receiptCanvas.drawText("Order Date : " + order.orderId, 20f, 160f, paint)
+        receiptCanvas.drawText("Order Tracker : " + order.orderTracking, 20f, 175f, paint)
+
+        receipt.finishPage(receiptPage)
+        val file = File(this.getExternalFilesDir("/"), "Order Receipt.pdf")
+        receipt.writeTo(FileOutputStream(file))
+
+        receipt.close()
+
+        return file
+
+    }
+
+
     object Config {
         const val EMAIL_FROM = "onlineaishoppingassistant@gmail.com"
         const val PASS_FROM = "PERFECTFYP"
@@ -318,6 +376,7 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             // Change when necessary
             it["mail.smtp.auth"] = "true"
             it["mail.gmail"]
+            //it["mail.smtp.port"] = "465"
             it["mail.smtp.port"] = "587"
             // Easy and fast way to enable ssl in JavaMail
             //it["mail.smtp.ssl.enable"] = true
@@ -393,6 +452,7 @@ class OrderActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
             // Create subject
             val subject = builtSubject(firstName, order)
+
 
             // Send Email
             CoroutineScope(Dispatchers.IO).launch {

@@ -51,6 +51,19 @@
 
         </RelativeLayout>
 
+
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/dark_teal"
+            android:textSize="20dp"
+            android:text="Nothing in cart yet"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
@@ -75,6 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:layout_below="@id/tabs"
+            android:background="@color/light_green"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/rv_cart_item"
             android:layout_marginBottom="115dp"/>

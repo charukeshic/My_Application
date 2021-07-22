@@ -106,7 +106,15 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             R.drawable.toroloco,
             R.drawable.positano,
             R.drawable.roof_top4,
-            R.drawable.qureshi
+            R.drawable.qureshi,
+            R.drawable.hairsecret,
+            R.drawable.a_saloon_1,
+            R.drawable.b_i_g__ipc,
+            R.drawable.village_grocer,
+            R.drawable.typo,
+            R.drawable.retail_cziplee_southkey,
+            R.drawable.urban_edge,
+            R.drawable.levain
         )
 
         title = arrayOf(
@@ -119,7 +127,15 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.title_7),
             getString(R.string.title_8),
             getString(R.string.title_9),
-            getString(R.string.title_10)
+            getString(R.string.title_10),
+            getString(R.string.title_11),
+            getString(R.string.title_12),
+            getString(R.string.title_13),
+            getString(R.string.title_14),
+            getString(R.string.title_15),
+            getString(R.string.title_16),
+            getString(R.string.title_17),
+            getString(R.string.title_18)
 
         )
 
@@ -133,7 +149,15 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.details_7),
             getString(R.string.details_8),
             getString(R.string.details_9),
-            getString(R.string.details_10)
+            getString(R.string.details_10),
+            getString(R.string.details_11),
+            getString(R.string.details_12),
+            getString(R.string.details_13),
+            getString(R.string.details_14),
+            getString(R.string.details_15),
+            getString(R.string.details_16),
+            getString(R.string.details_17),
+            getString(R.string.details_18)
         )
 
         description = arrayOf(
@@ -146,7 +170,15 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.description_7),
             getString(R.string.description_8),
             getString(R.string.description_9),
-            getString(R.string.description_10)
+            getString(R.string.description_10),
+            getString(R.string.description_11),
+            getString(R.string.description_12),
+            getString(R.string.description_13),
+            getString(R.string.description_14),
+            getString(R.string.description_15),
+            getString(R.string.description_16),
+            getString(R.string.description_17),
+            getString(R.string.description_18)
 
         )
 
@@ -160,7 +192,16 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.opHour_7),
             getString(R.string.opHour_8),
             getString(R.string.opHour_9),
-            getString(R.string.opHour_10)
+            getString(R.string.opHour_10),
+            getString(R.string.opHour_11),
+            getString(R.string.opHour_12),
+            getString(R.string.opHour_13),
+            getString(R.string.opHour_14),
+            getString(R.string.opHour_15),
+            getString(R.string.opHour_16),
+            getString(R.string.opHour_17),
+            getString(R.string.opHour_18)
+
         )
 
         address = arrayOf(
@@ -173,7 +214,15 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.addr_7),
             getString(R.string.addr_8),
             getString(R.string.addr_9),
-            getString(R.string.addr_10)
+            getString(R.string.addr_10),
+            getString(R.string.addr_11),
+            getString(R.string.addr_12),
+            getString(R.string.addr_13),
+            getString(R.string.addr_14),
+            getString(R.string.addr_15),
+            getString(R.string.addr_16),
+            getString(R.string.addr_17),
+            getString(R.string.addr_18)
         )
 
         contactNum = arrayOf(
@@ -186,7 +235,15 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.contact_7),
             getString(R.string.contact_8),
             getString(R.string.contact_9),
-            getString(R.string.contact_10)
+            getString(R.string.contact_10),
+            getString(R.string.contact_11),
+            getString(R.string.contact_12),
+            getString(R.string.contact_13),
+            getString(R.string.contact_14),
+            getString(R.string.contact_15),
+            getString(R.string.contact_16),
+            getString(R.string.contact_17),
+            getString(R.string.contact_18)
         )
 
         bus = arrayOf(
@@ -199,7 +256,15 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.bus_7),
             getString(R.string.bus_8),
             getString(R.string.bus_9),
-            getString(R.string.bus_10)
+            getString(R.string.bus_10),
+            getString(R.string.bus_11),
+            getString(R.string.bus_12),
+            getString(R.string.bus_13),
+            getString(R.string.bus_14),
+            getString(R.string.bus_15),
+            getString(R.string.bus_16),
+            getString(R.string.bus_17),
+            getString(R.string.bus_18)
 
         )
 
@@ -213,7 +278,16 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.train_7),
             getString(R.string.train_8),
             getString(R.string.train_9),
-            getString(R.string.train_10)
+            getString(R.string.train_10),
+            getString(R.string.train_11),
+            getString(R.string.train_12),
+            getString(R.string.train_13),
+            getString(R.string.train_14),
+            getString(R.string.train_15),
+            getString(R.string.train_16),
+            getString(R.string.train_17),
+            getString(R.string.train_18)
+
         )
 
         web = arrayOf(
@@ -226,20 +300,36 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.web_7),
             getString(R.string.web_8),
             getString(R.string.web_9),
-            getString(R.string.web_10)
+            getString(R.string.web_10),
+            getString(R.string.web_11),
+            getString(R.string.web_12),
+            getString(R.string.web_13),
+            getString(R.string.web_14),
+            getString(R.string.web_15),
+            getString(R.string.web_16),
+            getString(R.string.web_17),
+            getString(R.string.web_18)
         )
 
         category = arrayOf(
             getString(R.string.cat_1),
-            getString(R.string.cat_2),
-            getString(R.string.cat_3),
+            getString(R.string.cat_1),
+            getString(R.string.cat_1),
+            getString(R.string.cat_1),
+            getString(R.string.cat_1),
+            getString(R.string.cat_1),
+            getString(R.string.cat_1),
+            getString(R.string.cat_1),
+            getString(R.string.cat_1),
             getString(R.string.cat_1),
             getString(R.string.cat_2),
+            getString(R.string.cat_2),
+            getString(R.string.cat_3),
+            getString(R.string.cat_3),
+            getString(R.string.cat_4),
             getString(R.string.cat_4),
             getString(R.string.cat_5),
-            getString(R.string.cat_6),
-            getString(R.string.cat_3),
-            getString(R.string.cat_1)
+            getString(R.string.cat_6)
         )
 
         promotion = arrayOf(
@@ -252,7 +342,16 @@ class StoreNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSele
             getString(R.string.promo_2),
             getString(R.string.promo_1),
             getString(R.string.promo_1),
+            getString(R.string.promo_2),
+            getString(R.string.promo_1),
+            getString(R.string.promo_1),
+            getString(R.string.promo_1),
+            getString(R.string.promo_1),
+            getString(R.string.promo_1),
+            getString(R.string.promo_1),
+            getString(R.string.promo_1),
             getString(R.string.promo_1)
+
         )
 
 

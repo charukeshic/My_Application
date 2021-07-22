@@ -37,6 +37,7 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var userEmail : TextView
     lateinit var totalCost : TextView
     lateinit var placeOrder : MaterialButton
+    lateinit var emptyText : TextView
 
     private lateinit var dbrefProducts : DatabaseReference
     private lateinit var productArrayList: ArrayList<CartItem>
@@ -57,6 +58,7 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         menuIcon = findViewById(R.id.menu_icon)
         totalCost = findViewById(R.id.total_price)
         placeOrder = findViewById(R.id.order_btn)
+        emptyText = findViewById(R.id.empty_text)
 
         navigationView.setCheckedItem(R.id.nav_home)
 
@@ -65,6 +67,8 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         productRecyclerView.layoutManager = LinearLayoutManager(productRecyclerView.context)
         productArrayList = arrayListOf<CartItem>()
         totalCostArrayList = arrayListOf<Double>()
+
+        emptyText.alpha = 0f
 
         navigationDrawer()
 
@@ -116,6 +120,7 @@ class CartActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 else {
                     totalCost.text = "0.00"
+                    emptyText.alpha = 1f
                     placeOrder.setOnClickListener {
                         Toast.makeText(this@CartActivity, "Nothing in cart", Toast.LENGTH_SHORT).show()
                     }

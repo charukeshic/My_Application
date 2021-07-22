@@ -26,6 +26,15 @@
     <string name="title_8">Positano Risto</string>
     <string name="title_9">Canopy Rooftop Bar and Lounge</string>
     <string name="title_10">Qureshi Malaysia</string>
+    <string name="title_11">Hair Secret</string>
+    <string name="title_12">A-SALOON+ Sunway Putra Mall</string>
+    <string name="title_13">Ben\'s Independent Grocer, Publika</string>
+    <string name="title_14">Village Grocer (Bangsar Village)</string>
+    <string name="title_15">Typo (KLCC)</string>
+    <string name="title_16">CzipLee Bangsar</string>
+    <string name="title_17">Urban Edge Home Gallery</string>
+    <string name="title_18">Levain Boulangerie &amp; Patisserie</string>
+
 
     <string name="description_1">An exclusive Italian ristorante on the 57th floor of PETRONAS Tower 3
         (adjacent to Suria KLCC), Marini’s on 57 is a fine dining Kuala Lumpur restaurant offering gorgeous,
@@ -68,6 +77,32 @@
     <string name="description_10">The distinction of making Indian Heritage cuisine world famous undoubtedly belongs to Grand Master Chef Imtiaz Qureshi. He was responsible for introducing the concept of the \'Stand-up Tandoor\' and \'Dum\'
         by researching and perfecting them as Chef, at the various restaurants. Chef Imtiaz created recipes that are now on the menus of numerous
         Indian restaurants world over. Qureshi’s name has been synonymous with good eating for over 200 years that they have been in operation.</string>
+    <string name="description_11">At Hair Secret, our staff of highly trained, professional hairstylists helps you find
+        the look that is right for your personality and lifestyle.</string>
+    <string name="description_12">Since 2009, A-Saloon has been revolutionizing your hair care experience which is why
+        we are recognized as Malaysia’s National Largest Chains of Salons. With more than 20 salons available, we aim to
+        provide you with a 6-star service and experience. Step into any A-Saloon and you will see that it is created with
+        the client in mind. Not only is it luxurious and comfortable, our outlets are also equipped with a private area for our
+        Muslim clients. Every client is given professional advice and personalized home care by our professional stylists, according to the client’s needs.</string>
+    <string name="description_13">Ben’s Independent Grocer (B.I.G.) was established with one idea in mind, to be a one-stop EAT. DRINK. SHOP.
+        avenue for people who love food as much as we do! Experience a complete grocery adventure through our impressive array of specialised ingredient themed sections like Barn Butchery,
+        Bay Seafood, B.Organic and Malaya Kitchen (just to name a few). But wait! B.I.G. offers more than your everyday essentials and consumables! We also aim
+        to satiate your appetite for discovery through live demonstrations, community driven events at our Little Big Market, and many other fun creative activities!</string>
+    <string name="description_14">Sections are well-organised, staff are friendly and well-trained, pricing is reasonable and most importantly, entire place is kept clean all the time. There\'s a
+        wide range of produce regardless whether fresh or frozen.</string>
+    <string name="description_15">We\'ve got plenty more where that came from. Check out LITERALLY everything we\'ve got! Homewares to vibe check your space, stationery and desk
+        accessories to fuel your organisation, tech gear to keep you pro-tech-ted and so much more. A few of our favourite things? Well since you asked so nicely . . . Socks, Mugs, Lighting, Laptop &amp; Phone Cases, Drink Bottles, Candles, Pens, Diaries . . . the list goes on!</string>
+    <string name="description_16">CzipLee Plus is CzipLee\'s concept store that pushes the envelope with fine paper goods and writing instruments. Find a range of notebooks, planners and
+        sketchbooks to pen down ideas by renowned notebook makers.Explore the variety of classic pens for the ultimate writing experience. We handpick products for you that are more than
+        just aesthetics but with lasting functionality for years to come. We\'re a family that\'s passionate about stationery. Once in a while we find an exceptional pencil, a well
+        crafted pen, or a quirky notebook.</string>
+    <string name="description_17">"There is pride in craftsmanship, especially when beautiful objects are created from inception through build." Discover our captivating collection of
+        curated Southeast Asian designer pieces, crafted for life. Experience new perspectives for your space. Welcome to Urban Edge..</string>
+    <string name="description_18">In the quiet streets off Jalan Imbi, where colonial-style bungalows dot the landscape, you will find Levain
+        Boulangerie &amp; Patisserie, a warm and lovely French-style bakery and café where you can savour soft, warm and superbly fresh
+        breads and pastries while enjoying a cup of coffee.At Levain, breads and pastries are baked all day using natural yeast, in a
+        traditional stone oven which imparts a unique flavour and texture to the breads and pastries.</string>
+
 
 
     <string name="details_1">Collection of bottles that include single cask whiskies from independent
@@ -84,17 +119,37 @@
     <string name="details_9">For those with pure food indulgence in mind, choose from our authentically delicious Indian cuisine, from our mouth-watering dessert menu alongside our expertly made
         cocktails guaranteed to spice up your evening. Our Kitchen is open till late night!</string>
     <string name="details_10">Family Meals price range RM 45 - RM 70</string>
+    <string name="details_11">Reasonable price, qualified stylists, professional services plus friendly staff.</string>
+    <string name="details_12">Wash &amp; Blow (Straight &amp; Forward) – RM45 onwards(female), Wash &amp; Blow – RM25 onwards(male)</string>
+    <string name="details_13">Get RM4 Cashback with ShopeePay</string>
+    <string name="details_14">Cashback with ShopeePay</string>
+    <string name="details_15">Are you a #stationeryaddict? SAME! Welcome to your safe place, the place where you will find the
+        most useful, unique and functional stationery items to add to your collection. We\'ve got the pen\'s, you\'ve got the power.</string>
+    <string name="details_16">Laser engraving | Customizable Stationery | Notebook Embossing</string>
+    <string name="details_17">Price Range starts from RM 299 (discounts available for walk-in customers)</string>
+    <string name="details_18">Price Range starts at RM 5</string>
 
-    <string name="opHour_1">Monday – Thursday 15:00 – 01:30, Friday and Saturday 15:00 - 03:00, Sunday 17:00 - 01:30</string>
-    <string name="opHour_2">Daily 12:00 – 15:00 and 18:00 – 23:00 (Strato), 16:00 – 01:00 (Claret), 18:30 – 22:30 (Cantaloupe Dining Room)</string>
-    <string name="opHour_3">12:00 – 15:00 and 18:00 – 23:00</string>
-    <string name="opHour_4">12:00 – 01:00</string>
-    <string name="opHour_5">Monday - Friday 12:00 - 14:00, 18:00 - 22:30, Saturday and Sunday 14:30 - 16:30, 18:00 - 23:00</string>
-    <string name="opHour_6">Lunch - 12 pm to 2.30 pm, last call 2.15 pm; Dinner - 7 pm to 11 pm, last call 10.45 pm</string>
-    <string name="opHour_7">Lunch - 12 pm to 2.30 pm, last call 2.15 pm; Dinner - 7 pm to 11 pm, last call 10.45 pm</string>
+
+    <string name="opHour_1">Monday – Thursday 3:00 pm – 1:30 am, Friday and Saturday 3:00 pm - 3:00 am, Sunday 5:00 pm - 1:30 am</string>
+    <string name="opHour_2">Daily 12:00 pm – 3:00 pm and 6:00 pm – 11:00 pm (Strato), 4:00 pm – 1:00 am (Claret), 6:30 pm – 10:30 pm (Cantaloupe Dining Room)</string>
+    <string name="opHour_3">12:00 pm – 3:00 pm and 6:00 pm – 11:00 pm</string>
+    <string name="opHour_4">12:00 pm – 1:00 am</string>
+    <string name="opHour_5">Monday - Friday 12:00 pm - 2:00 pm, 6:00 pm - 10:30 pm, Saturday and Sunday 2:30 pm - 4:30 pm, 6:00 pm - 11:00 pm</string>
+    <string name="opHour_6">Lunch - 12 pm to 2:30 pm, last call 2:15 pm; Dinner - 7 pm to 11 pm, last call 10.45 pm</string>
+    <string name="opHour_7">Lunch - 12 pm to 2:30 pm, last call 2:15 pm; Dinner - 7 pm to 11 pm, last call 10.45 pm</string>
     <string name="opHour_8">Lunch, Dinner, Brunch</string>
     <string name="opHour_9">Our opening times are 3pm – 10pm only valid for takeaway &amp; delivery and no dine in</string>
-    <string name="opHour_10">11.30am - 10:30pm</string>
+    <string name="opHour_10">11.30am - 10:30pm (Daily)</string>
+    <string name="opHour_11">11 am to 8:30 pm (Daily)</string>
+    <string name="opHour_12">Monday - Friday 9:00 am - 6:00 pm</string>
+    <string name="opHour_13">9:00am - 8:00pm (Daily)</string>
+    <string name="opHour_14">10.00am - 7.00pm</string>
+    <string name="opHour_15">11.00am - 6.00pm</string>
+    <string name="opHour_16">11.00am - 6.00pm</string>
+    <string name="opHour_17">11.00am - 6.00pm</string>
+    <string name="opHour_18">8.00am - 5.00pm</string>
+    <string name="opHour_19">11.30am - 10.30pm</string>
+    <string name="opHour_20">11.30am - 10.30pm</string>
 
 
     <string name="addr_1">Level 57, Menara 3 Petronas, Persiaran KLCC, Kuala Lumpur</string>
@@ -107,6 +162,15 @@
     <string name="addr_8">Block C1, Lot 2, Level G3, Publika Shopping Gallery, No. 1, Jalan Dutamas 1, Solaris Dutamas, 50480 Kuala Lumpur, Malaysia</string>
     <string name="addr_9">2nd Floor 183 Jalan Mayang Off Jalan Yap Kwan Seng, Kuala Lumpur 50450 Malaysia</string>
     <string name="addr_10">1 Ground Floor, East Wing, TPC Kuala Lumpur , No 10 Jalan 1/70D Off Jalan Bukit Kiara, Kuala Lumpur 60000 Malaysia</string>
+    <string name="addr_11">28 G floor, Jalan 14/48a, Sentul Raya Boulevard, 51000 Kuala Lumpur</string>
+    <string name="addr_12">Lot 2–6, 2nd Floor, 100, Jalan Putra, 50350 Kuala Lumpur</string>
+    <string name="addr_13">Publika, Lot 1A, 83–95, Jalan Dutamas 1, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur</string>
+    <string name="addr_14">Unit G1 Ground Floor Bangsar Village I No.1, 1, Jalan Telawi, Bangsar Baru, 59100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur</string>
+    <string name="addr_15">Lot C15K, Persiaran KLCC, Kuala Lumpur City Centre, 50888 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur</string>
+    <string name="addr_16">1 &amp; 3, Jalan Telawi 3, Bangsar, 59100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur</string>
+    <string name="addr_17">Lot 3–57, 3rd Floor, Quill City Mall No, 1018, Jalan Sultan Ismail, 50250 Kuala Lumpur</string>
+    <string name="addr_18">7, Jalan Delima, Imbi, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur</string>
+
 
     <string name="contact_1">+603 2386 6030</string>
     <string name="contact_2">+603 2162 0886</string>
@@ -118,6 +182,14 @@
     <string name="contact_8">+60 3-6411 3799</string>
     <string name="contact_9">+60 11-5139 8301</string>
     <string name="contact_10">+60 17-244 0135</string>
+    <string name="contact_11">+60 3-4042 8172</string>
+    <string name="contact_12">+60 3-2856 9921</string>
+    <string name="contact_13">+60 3-6205 2036</string>
+    <string name="contact_14">+603-2282 0633</string>
+    <string name="contact_15">+603-2181 5205</string>
+    <string name="contact_16">+61-700-81-7262</string>
+    <string name="contact_17">+61-700-81-7262</string>
+    <string name="contact_18">+603-2142 6611</string>
 
     <string name="bus_1">303, 402, GREEN, PURPLE</string>
     <string name="bus_2">402, GREEN, PURPLE</string>
@@ -129,17 +201,34 @@
     <string name="bus_8">303, 402, GREEN, PURPLE</string>
     <string name="bus_9">303, 402, GREEN, PURPLE</string>
     <string name="bus_10">303, 402, GREEN, PURPLE</string>
+    <string name="bus_11">103, 170, 171, 180, 201, GOKL(Maroon)</string>
+    <string name="bus_12">303, 402, GREEN, PURPLE</string>
+    <string name="bus_13">190, T852</string>
+    <string name="bus_14">780, 822, T850</string>
+    <string name="bus_15">300, 303, 402, GREEN, PURPLE</string>
+    <string name="bus_16">300, 303, 402, GREEN, PURPLE</string>
+    <string name="bus_17">104</string>
+    <string name="bus_18">402, PURPLE</string>
 
-    <string name="train_1">LRT - Bukit Nanas, Dang Wangi, Raja Chulan, Monorail - Raja Chulan</string>
-    <string name="train_2">LRT - KLCC, Ampang Park, Damai, Monorail - Raja Chulan</string>
-    <string name="train_3">LRT - KLCC, Bukit Bintang, Monorail - Raja Chulan</string>
-    <string name="train_4">LRT - Bukit Bintang, Monorail - Raja Chulan</string>
-    <string name="train_5">LRT - Bukit Nanas, Dang Wangi, Monorail - Raja Chulan</string>
-    <string name="train_6">LRT - Bukit Nanas, Dang Wangi, Raja Chulan, Monorail - Raja Chulan</string>
-    <string name="train_7">LRT - Bukit Nanas, Dang Wangi, Monorail - Raja Chulan</string>
-    <string name="train_8">LRT - Bukit Nanas, Dang Wangi, Monorail - Raja Chulan</string>
-    <string name="train_9">LRT - Bukit Nanas, Dang Wangi, Monorail - Raja Chulan</string>
-    <string name="train_10">LRT - Bukit Nanas, Dang Wangi, Monorail - Raja Chulan</string>
+
+    <string name="train_1">LRT - Bukit Nanas(2 mins walk), Dang Wangi(6 mins walk), Monorail - Raja Chulan(8 mins walk)</string>
+    <string name="train_2">LRT - KLCC(2 mins walk), Ampang Park(6 mins walk), Damai(7 mins walk), Monorail - Raja Chulan(8 mins walk)</string>
+    <string name="train_3">LRT - KLCC(2 mins walk), Bukit Bintang(4 mins walk), Monorail - Raja Chulan(8 mins walk)</string>
+    <string name="train_4">LRT - Bukit Bintang(2 mins walk), Monorail - Raja Chulan(8 mins walk)</string>
+    <string name="train_5">LRT - Bukit Nanas(3 mins walk), Dang Wangi(6 mins walk), Monorail - Raja Chulan(8 mins walk)</string>
+    <string name="train_6">LRT - Bukit Nanas(4 mins walk), Dang Wangi(5 mins walk), Raja Chulan, Monorail - Raja Chulan(8 mins walk)</string>
+    <string name="train_7">LRT - Bukit Nanas(5 mins walk), Dang Wangi(7 mins walk), Monorail - Raja Chulan(8 mins walk)</string>
+    <string name="train_8">LRT - Bukit Nanas(3 mins walk), Dang Wangi(4 mins walk), Monorail - Raja Chulan(8 mins walk)</string>
+    <string name="train_9">LRT - Bukit Nanas(2 mins walk), Dang Wangi(8 mins walk), Monorail - Raja Chulan(8 mins walk)</string>
+    <string name="train_10">LRT - Bukit Nanas(2 mins walk), Dang Wangi(5 mins walk), Monorail - Raja Chulan(8 mins walk)</string>
+    <string name="train_11">LRT - Sentul Timur(4 mins walk), Monorail - Titiwangsa(21 mins walk), KTM - Sentul(8 mins away)</string>
+    <string name="train_12">LRT - PWTC(2 mins walk), KTM - Putra(22 min walk)</string>
+    <string name="train_13">KTM - Segambut(33 mins walk), Sentul(52 mins walk)</string>
+    <string name="train_14">LRT - Bangsar(16 mins walk), Abdullah Hukum(22 mins walk), MRT - Pusat Bandar Damansara(34 mins walk), KTM - Mid Valley(27 mins walk)</string>
+    <string name="train_15">LRT - KLCC(5 mins walk)</string>
+    <string name="train_16">LRT - Bangsar(28 mins walk), Abdullah Hukum(29 mins walk), MRT - Pusat Bandar Damansara(29 mins walk)</string>
+    <string name="train_17">LRT - Dang Wangi(6 mins walk), Sultan Ismail(11 mins walk)</string>
+    <string name="train_18">LRT - Ampang Park(27 mins walk), MRT - Tun Razak Exchange(Trx)(6 mins walk)</string>
 
     <string name="web_1">https://www.marble-8.com/online-reservation/</string>
     <string name="web_2">https://etlkl.com/</string>
@@ -151,6 +240,15 @@
     <string name="web_8">https://positanoristo.com.my/reservations/</string>
     <string name="web_9">https://www.canopylounge.my/reservations/</string>
     <string name="web_10">https://www.qureshi-intl.com/2/reservation.php</string>
+    <string name="web_11">https://mobile.facebook.com/HairSecretSalon1/?refsrc=http://www.google.com/</string>
+    <string name="web_12">https://a-saloon.appolous.com/booking</string>
+    <string name="web_13">https://big.com.my/latest/</string>
+    <string name="web_14">https://villagegrocer.com.my/whats-in-store/</string>
+    <string name="web_15">https://cottonon.com/MY/typo-home/typo-shop-all/</string>
+    <string name="web_16">https://www.cziplee.com/czipplus/</string>
+    <string name="web_17">https://www.urbanedge.com.my/shipping-returns</string>
+    <string name="web_18">http://www.levain.com.my/contact.html</string>
+
 
     <string name="cat_1">Restaurant</string>
     <string name="cat_2">Salon</string>
